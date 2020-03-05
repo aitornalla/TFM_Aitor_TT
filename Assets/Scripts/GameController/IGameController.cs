@@ -5,7 +5,31 @@ using System.Text;
 
 namespace Assets.Scripts.GameController
 {
+	/// <summary>
+	/// 	Implements generic game actions across all the game so the controller implementation can be abstracted.
+	/// </summary>
     public interface IGameController
     {
+		#region Player
+		bool PlayerAttack ();
+		bool PlayerJump ();
+		bool PlayerLeft ();
+		bool PlayerRight ();
+		bool PlayerUp ();
+		bool PlayerDown ();
+		#endregion
+
+		#region Options
+		bool Pause ();
+		bool Accept ();
+		bool Cancel ();
+		#endregion
+
+		#region Menu
+		bool MenuLeft ();
+		bool MenuRight ();
+		bool MenuUp ();
+		bool MenuDown ();
+		#endregion
     }
 }

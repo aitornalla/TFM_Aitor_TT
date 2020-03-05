@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.GameController
 {
-	public class PS4GameController : MonoBehaviour, IGameController
+	public class PS4GameController : MonoBehaviour//, IGameController
 	{
 		private PS4Controller _controller = null;
 

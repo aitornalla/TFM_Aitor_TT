@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.GameController
 {
-	public class PSPGameController : MonoBehaviour, IGameController
+	public class PSPGameController : MonoBehaviour//, IGameController
 	{
 		private PSPController _controller = null;
 

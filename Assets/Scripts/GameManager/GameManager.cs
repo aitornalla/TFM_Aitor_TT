@@ -3,6 +3,7 @@ using Assets.Scripts.GameController.PlatformControllers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
@@ -14,7 +15,8 @@ namespace Assets.Scripts.GameManager
 		private static GameManager _instance = null;
 		private static IGameController _gameControllerInstance = null;
 
-		private const string ControllersXMLPath = @"Assets/ConfigFiles/controllers.xml";
+		private readonly string ControllersXMLPath = string.Join (Path.DirectorySeparatorChar.ToString (), new string[] { "Assets", "ConfigFiles", "controllers.xml" });
+
 
 		#region Properties
 		//public static GameManager Instance { get { return _instance; } }
@@ -57,6 +59,10 @@ namespace Assets.Scripts.GameManager
 		#endregion
 
 		#region Private methods
+		/// <summary>
+		/// 	Adds controller components to GameManager gameObject.
+		/// 	One component must implement interface <see cref="IGameController"/> and the other must implement specific methods from controller buttons/axis
+		/// </summary>
 		private void SetUpController ()
 		{
 			try
@@ -70,7 +76,7 @@ namespace Assets.Scripts.GameManager
 				// If null, controller not in the list
 				if (l_xElem == null)
 				{
-					throw new ArgumentNullException ("l_xElem", "Connected controller not in the controllers list! Default: keyboard");
+					throw new ArgumentNullException ("l_xElem", "Connected controller not in the controllers list");
 				}
 				// Combine namespace and name to get full name
 				string l_fullName = string.Join(".", new string[] { l_xElem.Element("namespace").Value, l_xElem.Element("name").Value });
@@ -81,22 +87,24 @@ namespace Assets.Scripts.GameManager
 			}
 			catch (IndexOutOfRangeException e)
 			{
-				Debug.Log("No controller connected! Default: keyboard");
+				Debug.LogException (e);
+				Debug.LogWarning ("No controller connected");
 			}
 			catch (ArgumentNullException e)
 			{
-				Debug.Log(e.Message);
+				Debug.LogException (e);
 			}
 			catch (Exception e)
 			{
-				Debug.Log (e.InnerException.Message);
-				Debug.Log("Switching to default: keyboard");
+				Debug.LogException (e);
 			}
 			finally
 			{
 				if (_gameControllerInstance == null)
 				{
 					_gameControllerInstance = (IGameController)gameObject.AddComponent<KeyboardGameController>();
+
+					Debug.Log("Default controller: keyboard");
 				}
 			}
 		}

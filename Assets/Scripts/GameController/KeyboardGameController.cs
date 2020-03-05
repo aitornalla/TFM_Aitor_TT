@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.GameController
 {
-	public class KeyboardGameController : MonoBehaviour, IGameController
+	public class KeyboardGameController : MonoBehaviour//, IGameController
 	{
 		private KeyboardController _controller = null;
 
