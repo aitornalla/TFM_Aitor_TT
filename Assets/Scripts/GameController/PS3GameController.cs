@@ -21,12 +21,15 @@ namespace Assets.Scripts.GameController
 
 			_controller = gameObject.AddComponent<PS3Controller>();
 
-			_controller.IsDebugEnabled = true;
-
 		}
 		#endregion
 
 		#region IGameController implementation
+		public void ControllerDebug (bool enable)
+		{
+			_controller.IsDebugEnabled = enable;
+		}
+
 		public bool PlayerAttack ()
 		{
 			return _controller.PS3SquareButtonDown ();

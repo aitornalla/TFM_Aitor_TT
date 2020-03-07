@@ -106,6 +106,9 @@ namespace Assets.Scripts.GameManager
 
 					Debug.Log("Default controller: keyboard");
 				}
+
+				// Enables controller debug in development mode
+				_gameControllerInstance.ControllerDebug (true);
 			}
 		}
 		#endregion

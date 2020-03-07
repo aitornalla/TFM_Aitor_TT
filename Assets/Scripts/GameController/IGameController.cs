@@ -10,6 +10,12 @@ namespace Assets.Scripts.GameController
 	/// </summary>
     public interface IGameController
     {
+		/// <summary>
+		/// 	Enables or disable the controller debug implementation
+		/// </summary>
+		/// <param name="enable">If set to <c>true</c> debug is enabled.</param>
+		void ControllerDebug (bool enable);
+
 		#region Player
 		bool PlayerAttack ();
 		bool PlayerJump ();
