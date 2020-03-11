@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.GameController.PlatformControllers
 {
-	public class PSPController : MonoBehaviour
+	public sealed class PSPController : MonoBehaviour
 	{
 	}
 }

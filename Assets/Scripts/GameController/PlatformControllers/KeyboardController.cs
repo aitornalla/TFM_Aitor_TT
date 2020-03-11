@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.GameController.PlatformControllers
 {
-	public class KeyboardController : MonoBehaviour
+	public sealed class KeyboardController : MonoBehaviour
     {
 		public bool IsDebugEnabled { get; set; }
 

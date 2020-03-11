@@ -7,7 +7,7 @@ namespace Assets.Scripts.GameController.PlatformControllers
 	/// <summary>
 	/// 	PS3 controller implementation for all buttons/axis and states: down, up, held down
 	/// </summary>
-	public class PS3Controller : MonoBehaviour
+	public sealed class PS3Controller : MonoBehaviour
 	{
 		public bool IsDebugEnabled { get; set; }
 

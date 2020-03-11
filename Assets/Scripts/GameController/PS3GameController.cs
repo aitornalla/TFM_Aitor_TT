@@ -8,7 +8,7 @@ namespace Assets.Scripts.GameController
 	/// <summary>
 	/// 	PS3 controller game implementation
 	/// </summary>
-	public class PS3GameController : MonoBehaviour, IGameController
+	public sealed class PS3GameController : MonoBehaviour, IGameController
     {
 		private PS3Controller _controller = null;
 
