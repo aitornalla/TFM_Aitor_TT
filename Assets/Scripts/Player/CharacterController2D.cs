@@ -7,7 +7,9 @@ namespace Assets.Scripts.Player
 	public sealed class CharacterController2D : MonoBehaviour
 	{
 		[SerializeField]
-		private float _jumpForce = 400f;				// Amount of force added when the player jumps
+		private float _jumpForce = 400.0f;              // Amount of force added when the player jumps
+		[SerializeField]
+		private float _downForceDivider = 12.5f;        // Scales down jump force when player is falling after jumping
 		[SerializeField]
 		private float _runSpeed = 40.0f;				// Player run speed
 		[SerializeField] [Range(0, 1)]
@@ -98,8 +100,9 @@ namespace Assets.Scripts.Player
 		}
 		#endregion
 
-		public void Move(float move, bool crouch, bool jump)
+		public void Move(float move, bool jump, bool crouch)
 		{
+            // Apply run speed and fixed delta time to move parameter
 			move = move * _runSpeed * Time.fixedDeltaTime;
 
 			// If crouching, check to see if the character can stand up
@@ -145,33 +148,40 @@ namespace Assets.Scripts.Player
 				}
 
 				// Move the character by finding the target velocity
-				Vector3 l_targetVelocity = new Vector2(move * 10f, _rigidbody2D.velocity.y);
+				Vector3 l_targetVelocity = new Vector2(move * 10.0f, _rigidbody2D.velocity.y);
 				// And then smoothing it out and applying it to the character
 				_rigidbody2D.velocity = Vector3.SmoothDamp(_rigidbody2D.velocity, l_targetVelocity, ref _velocity, _movementSmoothing);
 
 				// If the input is moving the player right and the player is facing left...
-				if (move > 0 && !_facingRight)
+				if (move > 0.0f && !_facingRight)
 				{
 					// ... flip the player.
 					FlipFacingDirection();
 				}
 				// Otherwise if the input is moving the player left and the player is facing right...
-				else if (move < 0 && _facingRight)
+				else if (move < 0.0f && _facingRight)
 				{
 					// ... flip the player.
 					FlipFacingDirection();
 				}
 			}
-			// If the player should jump...
-			if (_grounded && jump)
+            #region Player jump
+            if (_grounded && jump)
 			{
-				// Add a vertical force to the player.
+				// Set grounded to false
 				_grounded = false;
-				_rigidbody2D.AddForce(new Vector2(0f, _jumpForce));
+				// Add a vertical force to the player
+				_rigidbody2D.AddForce(new Vector2(0.0f, _jumpForce));
 			}
-		}
+            else if (!_grounded && _rigidbody2D.velocity.y < 0.0f)
+            {
+                // Add down force to simulate not real jump physics
+				_rigidbody2D.AddForce(new Vector2(0.0f, -_jumpForce / _downForceDivider));
+            }
+            #endregion
+        }
 
-		private void FlipFacingDirection()
+        private void FlipFacingDirection()
 		{
 			// Switch the way the player is labelled as facing.
 			_facingRight = !_facingRight;

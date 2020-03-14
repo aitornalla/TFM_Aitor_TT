@@ -13,44 +13,44 @@ namespace Assets.Scripts.Player
 		private IGameController _gameController;
 
 		private float _horizontalMove = 0.0f;
+		private bool _jump = false;
 
 		#region Start
 		// Use this for initialization
-		void Start ()
+		private void Start ()
 		{
+            // Get IGameController component from GameManager
 			_gameController = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<IGameController> ();
 		}
 		#endregion
 
 		#region Update
 		// Update is called once per frame
-		void Update ()
+		private void Update ()
 		{
-			_horizontalMove = 0.0f;
-
-			if (_gameController.PlayerLeft ())
+			// Player horizontal move
+            if (_gameController.PlayerLeft())
 			{
 				_horizontalMove = -1.0f;
 			}
-			else if (_gameController.PlayerRight ())
+			else if (_gameController.PlayerRight())
 			{
-				//if (_horizontalMove == -1.0f)
-				//{
-				//	_horizontalMove = 0.0f;
-				//}
-				//else
-				//{
-					_horizontalMove = 1.0f;
-				//}
+				_horizontalMove = 1.0f;
 			}
+            // Player jump
+			_jump = _gameController.PlayerJump();
 		}
 		#endregion
 
 		#region FixedUpdate
 		// Update is called once per frame
-		void FixedUpdate ()
+		private void FixedUpdate ()
 		{
-			_characterController2D.Move (_horizontalMove, false, false);
+			_characterController2D.Move (_horizontalMove, _jump, false);
+            // Put movement variable back to 0.0f
+			_horizontalMove = 0.0f;
+            // Put jump variable back to false
+			_jump = false;
 		}
 		#endregion
 	}

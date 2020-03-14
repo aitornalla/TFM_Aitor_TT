@@ -17,10 +17,9 @@ namespace Assets.Scripts.GameController
 		#endregion
 
         #region Awake
-		void Awake () {
-
+		private void Awake ()
+        {
 			_controller = gameObject.AddComponent<PS3Controller>();
-
 		}
 		#endregion
 

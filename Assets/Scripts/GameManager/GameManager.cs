@@ -17,15 +17,14 @@ namespace Assets.Scripts.GameManager
 
 		private readonly string ControllersXMLPath = string.Join (Path.DirectorySeparatorChar.ToString (), new string[] { "Assets", "ConfigFiles", "controllers.xml" });
 
-
 		#region Properties
 		//public static GameManager Instance { get { return _instance; } }
 		//public IGameController GameController { get { return _gameControllerInstance; } }
 		#endregion
 
 		#region Awake
-		void Awake () {
-
+		private void Awake ()
+        {
 			// Singleton creation
 			if (_instance == null) {
 
@@ -40,20 +39,21 @@ namespace Assets.Scripts.GameManager
 				DestroyImmediate (gameObject);
 
 			}
-
 		}
 		#endregion
 
 		#region Start
 		// Use this for initialization
-		void Start () {
+		private void Start ()
+        {
 
 		}
 		#endregion
 
 		#region Update
 		// Update is called once per frame
-		void Update () {
+		private void Update ()
+        {
 
 		}
 		#endregion
