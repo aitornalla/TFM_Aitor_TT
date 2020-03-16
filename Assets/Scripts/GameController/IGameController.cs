@@ -23,6 +23,8 @@ namespace Assets.Scripts.GameController
 		bool PlayerRight ();
 		bool PlayerUp ();
 		bool PlayerDown ();
+		bool PlayerSliding ();
+		bool PlayerQuitSliding();
 		#endregion
 
 		#region Options

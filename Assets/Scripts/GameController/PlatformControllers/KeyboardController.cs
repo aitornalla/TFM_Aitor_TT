@@ -186,10 +186,36 @@ namespace Assets.Scripts.GameController.PlatformControllers
 
 			return false;
 		}
-		#endregion
+        #endregion
 
-		#region Keyboard pause key
-		public bool GetKeyPauseDown ()
+        #region Keyboard slide key
+        public bool GetKeySlideDown ()
+        {
+			if (Input.GetButtonDown("KB_Slide_Key"))
+			{
+				if (IsDebugEnabled) Debug.Log("Keyboard slide key down");
+
+				return true;
+			}
+
+			return false;
+		}
+
+        public bool GetKeySlideUp ()
+        {
+			if (Input.GetButtonUp("KB_Slide_Key"))
+			{
+				if (IsDebugEnabled) Debug.Log("Keyboard slide key up");
+
+				return true;
+			}
+
+			return false;
+		}
+        #endregion
+
+        #region Keyboard pause key
+        public bool GetKeyPauseDown ()
 		{
 			if (Input.GetButtonDown ("KB_Pause_Key"))
 			{

@@ -7,13 +7,11 @@ namespace Assets.Scripts.Player
 	public sealed class CharacterController2D : MonoBehaviour
 	{
 		[SerializeField]
-		private float _jumpForce = 400.0f;              // Amount of force added when the player jumps
+		private float _jumpForce = 525.0f;              // Amount of force added when the player jumps
 		[SerializeField]
-		private float _downForceDivider = 12.5f;        // Scales down jump force when player is falling after jumping
+		private float _slideForce = 125.0f;             // Amount of force added when the player slides
 		[SerializeField]
 		private float _runSpeed = 40.0f;				// Player run speed
-		[SerializeField] [Range(0, 1)]
-		private float _crouchSpeed = 0.36f;				// Amount of maxSpeed applied to crouching movement. 1 = 100%
 		[SerializeField] [Range(0, .3f)]
 		private float _movementSmoothing = 0.05f;		// How much to smooth out the movement
 		[SerializeField]
@@ -24,8 +22,6 @@ namespace Assets.Scripts.Player
 		private Transform _groundCheck;					// A position marking where to check if the player is grounded
 		[SerializeField]
 		private Transform _ceilingCheck;				// A position marking where to check for ceilings
-		[SerializeField]
-		private Collider2D _crouchDisableCollider;		// A collider that will be disabled when crouching
 
 		#region Constants
 		private const float k_GroundedRadius = 0.2f; 	// Radius of the overlap circle to determine if grounded
@@ -35,11 +31,11 @@ namespace Assets.Scripts.Player
 		[Header("Components")]
 		#region Components
 		[SerializeField]
-		private Rigidbody2D _rigidbody2D;				// Rigidbody2D component of the gameObject
+		private Rigidbody2D _rigidbody2D;               // Rigidbody2D component of the gameObject
 		[SerializeField]
-		private BoxCollider2D _boxCollider2D;			// Upper BoxCollider2D component of the gameObject
+		private CapsuleCollider2D _capsuleCollider2D;   // Not-sliding CapsuleCollider2D component of the gameObject
 		[SerializeField]
-		private CircleCollider2D _circleCollider2D;		// Lower CircleCollider2D component of the gameObject
+		private CapsuleCollider2D _slideCapCollider2D;  // Sliding CapsuleCollider2D component of the gameObject
 		[SerializeField]
 		private SpriteRenderer _spriteRenderer;			// SpriteRenderer component of the gameObject
 		#endregion
@@ -47,16 +43,13 @@ namespace Assets.Scripts.Player
 		private Vector3 _velocity = Vector3.zero;		// Velocity Vector3 of the gameObject
 
 		private bool _grounded;							// Whether or not the player is grounded
-		private bool _facingRight = true;				// For determining which way the player is currently facing
-		private bool _wasCrouching = false;
-
+        private bool _facingRight = true;               // For determining which way the player is currently facing
+		private bool _wasSliding = false;               // Was the player sliding in the previous frame?
 
 		[Header("Events")]
 		#region Events
 		public UnityEvent OnLandEvent;
-		[System.Serializable]
-		public class BoolEvent : UnityEvent<bool> { }
-		public BoolEvent OnCrouchEvent;
+		public BoolEvent OnSlideEvent;
 		#endregion
 
 		#region Awake
@@ -65,15 +58,14 @@ namespace Assets.Scripts.Player
 			if (OnLandEvent == null)
 				OnLandEvent = new UnityEvent();
 
-			if (OnCrouchEvent == null)
-				OnCrouchEvent = new BoolEvent();
+			if (OnSlideEvent == null)
+				OnSlideEvent = new BoolEvent();
 		}
 		#endregion
 
 		private void Update()
 		{
-			if (Input.GetKeyDown ("f"))
-				FlipFacingDirection ();
+
 		}
 
 		#region FixedUpdate
@@ -100,99 +92,235 @@ namespace Assets.Scripts.Player
 		}
 		#endregion
 
-		public void Move(float move, bool jump, bool crouch)
+		public void Move(float move, bool jump, bool slide)
 		{
-            // Apply run speed and fixed delta time to move parameter
-			move = move * _runSpeed * Time.fixedDeltaTime;
-
-			// If crouching, check to see if the character can stand up
-			if (!crouch)
+			// Only control the player if grounded or airControl is turned on
+			if (_grounded) // || _airControl)
 			{
-				// If the character has a ceiling preventing them from standing up, keep them crouching
-				if (Physics2D.OverlapCircle(_ceilingCheck.position, k_CeilingRadius, _groundLayer))
+				if (slide)
 				{
-					crouch = true;
-				}
-			}
-
-			//only control the player if grounded or airControl is turned on
-			if (_grounded || _airControl)
-			{
-
-				// If crouching
-				if (crouch)
-				{
-					if (!_wasCrouching)
+					if (!_wasSliding)
 					{
-						_wasCrouching = true;
-						OnCrouchEvent.Invoke(true);
+						// Set sliding flag to true
+						_wasSliding = true;
+						// Trigger slide event
+						OnSlideEvent.Invoke(true);
+						// Disable main CapsuldeCollider2D component
+						if (_capsuleCollider2D != null)
+							_capsuleCollider2D.enabled = false;
+						// Enable slide CapsuleCollider2D component
+						if (_slideCapCollider2D != null)
+							_slideCapCollider2D.enabled = true;
+
+                        if (Mathf.Abs(_rigidbody2D.velocity.x) > 0.01f)
+                        {
+							// Set slide force direction
+							float l_slideForceDirection = _facingRight ? 1.0f : -1.0f;
+							// Apply slide force to rigid body
+							_rigidbody2D.AddForce(new Vector2(l_slideForceDirection * _slideForce, 0.0f));
+						}
+					}
+					//else if (_wasSliding && Mathf.Abs(_rigidbody2D.velocity.x) < 0.01f)
+					//{
+					//    // Set sliding flag to false
+					//    _wasSliding = false;
+					//    // Trigger slide event
+					//    OnSlideEvent.Invoke(false);
+					//    // Enable main CapsuldeCollider2D component
+					//    if (_capsuleCollider2D != null)
+					//        _capsuleCollider2D.enabled = true;
+					//    // Disable slide CapsuleCollider2D component
+					//    if (_slideCapCollider2D != null)
+					//        _slideCapCollider2D.enabled = false;
+					//}
+				}
+				else
+				{
+					if (_wasSliding)
+					{
+						// Set sliding flag to false
+						_wasSliding = false;
+						// Trigger slide event
+						OnSlideEvent.Invoke(false);
+						// Enable main CapsuldeCollider2D component
+						if (_capsuleCollider2D != null)
+							_capsuleCollider2D.enabled = true;
+						// Disable slide CapsuleCollider2D component
+						if (_slideCapCollider2D != null)
+							_slideCapCollider2D.enabled = false;
 					}
 
-					// Reduce the speed by the crouchSpeed multiplier
-					move *= _crouchSpeed;
+					// Apply run speed and fixed delta time to move parameter
+					move *= _runSpeed * Time.fixedDeltaTime;
+					// Move the character by finding the target velocity
+					Vector3 l_targetVelocity = new Vector2(move * 10.0f, _rigidbody2D.velocity.y);
+					// And then smoothing it out and applying it to the character
+					_rigidbody2D.velocity = Vector3.SmoothDamp(_rigidbody2D.velocity, l_targetVelocity, ref _velocity, _movementSmoothing);
 
-					// Disable one of the colliders when crouching
-					if (_crouchDisableCollider != null)
-						_crouchDisableCollider.enabled = false;
-				} else
-				{
-					// Enable the collider when not crouching
-					if (_crouchDisableCollider != null)
-						_crouchDisableCollider.enabled = true;
-
-					if (_wasCrouching)
+					// If the input is moving the player right and the player is facing left...
+					if (move > 0.0f && !_facingRight)
 					{
-						_wasCrouching = false;
-						OnCrouchEvent.Invoke(false);
+						// ... flip the player.
+						FlipFacingDirection();
+					}
+					// Otherwise if the input is moving the player left and the player is facing right...
+					else if (move < 0.0f && _facingRight)
+					{
+						// ... flip the player.
+						FlipFacingDirection();
 					}
 				}
 
-				// Move the character by finding the target velocity
-				Vector3 l_targetVelocity = new Vector2(move * 10.0f, _rigidbody2D.velocity.y);
-				// And then smoothing it out and applying it to the character
-				_rigidbody2D.velocity = Vector3.SmoothDamp(_rigidbody2D.velocity, l_targetVelocity, ref _velocity, _movementSmoothing);
+				#region Player jump
+				if (jump)
+				{
+					// Check if player was sliding to put back main settings
+					if (_wasSliding)
+					{
+						// Set sliding flag to false
+						_wasSliding = false;
+						// Trigger slide event
+						OnSlideEvent.Invoke(false);
+						// Enable main CapsuldeCollider2D component
+						if (_capsuleCollider2D != null)
+							_capsuleCollider2D.enabled = true;
+						// Disable slide CapsuleCollider2D component
+						if (_slideCapCollider2D != null)
+							_slideCapCollider2D.enabled = false;
+					}
 
-				// If the input is moving the player right and the player is facing left...
-				if (move > 0.0f && !_facingRight)
-				{
-					// ... flip the player.
-					FlipFacingDirection();
+					// Set grounded to false
+					_grounded = false;
+					// Add a vertical force to the player
+					_rigidbody2D.AddForce(new Vector2(0.0f, _jumpForce));
 				}
-				// Otherwise if the input is moving the player left and the player is facing right...
-				else if (move < 0.0f && _facingRight)
-				{
-					// ... flip the player.
-					FlipFacingDirection();
-				}
+				#endregion
 			}
-            #region Player jump
-            if (_grounded && jump)
-			{
-				// Set grounded to false
-				_grounded = false;
-				// Add a vertical force to the player
-				_rigidbody2D.AddForce(new Vector2(0.0f, _jumpForce));
-			}
-            else if (!_grounded && _rigidbody2D.velocity.y < 0.0f)
+			else
             {
-                // Add down force to simulate not real jump physics
-				_rigidbody2D.AddForce(new Vector2(0.0f, -_jumpForce / _downForceDivider));
-            }
-            #endregion
-        }
+				
+			}
+		}
 
-        private void FlipFacingDirection()
+		private void FlipFacingDirection()
 		{
 			// Switch the way the player is labelled as facing.
 			_facingRight = !_facingRight;
 			// Flip player sprite in X axis
 			_spriteRenderer.flipX = !_spriteRenderer.flipX;
-			// Change BoxCollider2D X offset so it matches the sprite when flipped
-			Vector2 l_boxCollider2DOffset = _boxCollider2D.offset;
-			_boxCollider2D.offset = new Vector2 (-l_boxCollider2DOffset.x, l_boxCollider2DOffset.y);
-			// Change CircleCollider2D X offset so it matches the sprite when flipped
-			Vector2 l_circleCollider2DOffset = _circleCollider2D.offset;
-			_circleCollider2D.offset = new Vector2 (-l_circleCollider2DOffset.x, l_circleCollider2DOffset.y);
+			// Change not-sliding CapsuleCollider2D X offset so it matches the sprite when flipped
+			Vector2 l_capsuleCollider2DOffset = _capsuleCollider2D.offset;
+			_capsuleCollider2D.offset = new Vector2(-l_capsuleCollider2DOffset.x, l_capsuleCollider2DOffset.y);
+			// Change sliding CapsuleCollider2D X offset so it matches the sprite when flipped
+			Vector2 l_slideCapCollider2DOffset = _slideCapCollider2D.offset;
+			_slideCapCollider2D.offset = new Vector2(-l_slideCapCollider2DOffset.x, l_slideCapCollider2DOffset.y);
 		}
 	}
+
+	[System.Serializable]
+	public class BoolEvent : UnityEvent<bool>
+    {
+
+    }
 }
+
+/*
+ * // Apply run speed and fixed delta time to move parameter
+			move *= _runSpeed * Time.fixedDeltaTime;
+
+			// Only control the player if grounded or airControl is turned on
+			if (_grounded) // || _airControl)
+			{
+                if (slide)
+                {
+                    if (!_wasSliding && Mathf.Abs(_rigidbody2D.velocity.x) > 0.01f)
+                    {
+                        // Set sliding flag to true
+                        _wasSliding = true;
+                        // Trigger slide event
+                        OnSlideEvent.Invoke(true);
+                        // Disable main CapsuldeCollider2D component
+                        if (_capsuleCollider2D != null)
+                            _capsuleCollider2D.enabled = false;
+                        // Enable slide CapsuleCollider2D component
+                        if (_slideCapCollider2D != null)
+                            _slideCapCollider2D.enabled = true;
+                        // Set slide force direction
+						float l_slideForceDirection = _facingRight ? 1.0f : -1.0f;
+                        // Apply slide force to rigid body
+                        _rigidbody2D.AddForce(new Vector2(l_slideForceDirection * _slideForce, 0.0f));
+                    }
+                    //else if (_wasSliding && Mathf.Abs(_rigidbody2D.velocity.x) < 0.01f)
+                    //{
+                    //    // Set sliding flag to false
+                    //    _wasSliding = false;
+                    //    // Trigger slide event
+                    //    OnSlideEvent.Invoke(false);
+                    //    // Enable main CapsuldeCollider2D component
+                    //    if (_capsuleCollider2D != null)
+                    //        _capsuleCollider2D.enabled = true;
+                    //    // Disable slide CapsuleCollider2D component
+                    //    if (_slideCapCollider2D != null)
+                    //        _slideCapCollider2D.enabled = false;
+                    //}
+                }
+                else
+                {
+                    if (_wasSliding)
+                    {
+                        // Set sliding flag to false
+                        _wasSliding = false;
+                        // Trigger slide event
+                        OnSlideEvent.Invoke(false);
+						// Enable main CapsuldeCollider2D component
+						if (_capsuleCollider2D != null)
+                            _capsuleCollider2D.enabled = true;
+						// Disable slide CapsuleCollider2D component
+						if (_slideCapCollider2D != null)
+                            _slideCapCollider2D.enabled = false;
+                    }
+
+					// Move the character by finding the target velocity
+					Vector3 l_targetVelocity = new Vector2(move * 10.0f, _rigidbody2D.velocity.y);
+					// And then smoothing it out and applying it to the character
+					_rigidbody2D.velocity = Vector3.SmoothDamp(_rigidbody2D.velocity, l_targetVelocity, ref _velocity, _movementSmoothing);
+
+					// If the input is moving the player right and the player is facing left...
+					if (move > 0.0f && !_facingRight)
+					{
+						// ... flip the player.
+						FlipFacingDirection();
+					}
+					// Otherwise if the input is moving the player left and the player is facing right...
+					else if (move < 0.0f && _facingRight)
+					{
+						// ... flip the player.
+						FlipFacingDirection();
+					}
+				}
+			}
+            #region Player jump
+            if (_grounded && jump)
+			{
+                // Check if player was sliding to put back main settings
+				if (_wasSliding)
+				{
+					// Set sliding flag to false
+					_wasSliding = false;
+					// Trigger slide event
+					OnSlideEvent.Invoke(false);
+					// Enable main CapsuldeCollider2D component
+					if (_capsuleCollider2D != null)
+						_capsuleCollider2D.enabled = true;
+					// Disable slide CapsuleCollider2D component
+					if (_slideCapCollider2D != null)
+						_slideCapCollider2D.enabled = false;
+				}
+
+				// Set grounded to false
+				_grounded = false;
+				// Add a vertical force to the player
+				_rigidbody2D.AddForce(new Vector2(0.0f, _jumpForce));
+			}
+            #endregion
+ */

@@ -56,6 +56,16 @@ namespace Assets.Scripts.GameController
 			return _controller.GetKeyDownDown () || _controller.GetKeyDown ();
 		}
 
+		public bool PlayerSliding()
+		{
+			return _controller.GetKeySlideDown();
+		}
+
+		public bool PlayerQuitSliding()
+		{
+			return _controller.GetKeySlideUp();
+		}
+
 		public bool Pause ()
 		{
 			return _controller.GetKeyPauseDown ();

@@ -59,6 +59,16 @@ namespace Assets.Scripts.GameController
 			return _controller.PS3PadDownButtonDown () || _controller.PS3PadDownButton ();
 		}
 
+		public bool PlayerSliding()
+		{
+			return _controller.PS3R3ButtonDown ();
+		}
+
+		public bool PlayerQuitSliding()
+		{
+			return _controller.PS3R3ButtonUp ();
+		}
+
 		public bool Pause ()
 		{
 			return _controller.PS3StartButtonDown ();
