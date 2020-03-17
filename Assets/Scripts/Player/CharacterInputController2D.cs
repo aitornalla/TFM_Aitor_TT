@@ -15,8 +15,9 @@ namespace Assets.Scripts.Player
 		private IGameController _gameController;                    // IGameController component for player input
 
 		private float _horizontalMove = 0.0f;                       // Variable to store horizontal move value, range (-1.0f, 1.0f)
-		private bool _jump = false;                                 // Variable to store jump value
-		private bool _slide = false;                                // Variable to store slide value
+		private bool _jump = false;                                 // Flag to store jump value
+		private bool _slide = false;                                // Flag to store slide value
+		private bool _glide = false;                                // Flag to store glide value
 
 		#region Start
 		// Use this for initialization
@@ -48,8 +49,6 @@ namespace Assets.Scripts.Player
 			if (_gameController.PlayerJump())
 			{
 				_jump = true;
-				// Animator player jump parameter setting
-				_animator.SetBool("PlayerJump", true);
 			}
 
 			// Player slide
@@ -61,6 +60,16 @@ namespace Assets.Scripts.Player
 			{
 				_slide = false;
 			}
+
+			// Player glide
+			if (_gameController.PlayerGliding())
+			{
+				_glide = true;
+			}
+			else if (_gameController.PlayerQuitGliding())
+			{
+				_glide = false;
+			}
 		}
 		#endregion
 
@@ -68,7 +77,7 @@ namespace Assets.Scripts.Player
 		// Update is called once per frame
 		private void FixedUpdate ()
 		{
-			_characterController2D.Move (_horizontalMove, _jump, _slide);
+			_characterController2D.Move (_horizontalMove, _jump, _slide, _glide);
             // Put movement variable back to 0.0f
 			_horizontalMove = 0.0f;
             // Put jump variable back to false
@@ -76,14 +85,23 @@ namespace Assets.Scripts.Player
 		}
 		#endregion
 
-        /// <summary>
-        ///     Added to OnLandEvent from CharacterController2D script
-        /// </summary>
-        public void OnLanding()
+		/// <summary>
+		///     Added to OnGroundedEvent from CharacterController2D script
+		/// </summary>
+		/// <param name="playerIsGrounded"><code>true</code> if player is grounded, otherwise <code>false</code></param>
+		public void OnGrounded(bool playerIsGrounded)
         {
-			// Animator player jump parameter setting
-			_animator.SetBool("PlayerJump", false);
-        }
+			// Animator player grounded parameter setting
+			_animator.SetBool("PlayerIsGrounded", playerIsGrounded);
+
+            if (playerIsGrounded)
+            {
+				// Animator player double jump parameter setting
+				_animator.SetBool("PlayerDoubleJump", false);
+				// Animator player glide parameter setting
+				_animator.SetBool("PlayerGlide", false);
+			}
+		}
 
 		/// <summary>
 		///     Added to OnSlideEvent from CharacterController2D script
@@ -94,5 +112,24 @@ namespace Assets.Scripts.Player
             // Animator player slide parameter setting
 			_animator.SetBool("PlayerSlide", playerSliding);
         }
+
+        /// <summary>
+        ///     Added to OnDoubleJumpEvent from CharacterController2D
+        /// </summary>
+        public void OnDoubleJump()
+        {
+			// Animator player double jump parameter setting
+			_animator.SetBool("PlayerDoubleJump", true);
+		}
+
+		/// <summary>
+		///     Added to OnGlideEvent from CharacterController2D script
+		/// </summary>
+		/// <param name="playerGliding"><code>true</code> if player is gliding, otherwise <code>false</code></param>
+		public void OnGliding(bool playerGliding)
+		{
+			// Animator player slide parameter setting
+			_animator.SetBool("PlayerGlide", playerGliding);
+		}
 	}
 }

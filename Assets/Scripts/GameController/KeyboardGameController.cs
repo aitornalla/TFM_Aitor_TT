@@ -26,7 +26,8 @@ namespace Assets.Scripts.GameController
 			_controller.IsDebugEnabled = enable;
 		}
 
-		public bool PlayerAttack ()
+        #region Player
+        public bool PlayerAttack ()
 		{
 			return _controller.GetKeyAttackDown ();
 		}
@@ -66,7 +67,19 @@ namespace Assets.Scripts.GameController
 			return _controller.GetKeySlideUp();
 		}
 
-		public bool Pause ()
+		public bool PlayerGliding()
+		{
+			return _controller.GetKeyGlideDown();
+		}
+
+		public bool PlayerQuitGliding()
+		{
+			return _controller.GetKeyGlideUp();
+		}
+        #endregion
+
+        #region Options
+        public bool Pause ()
 		{
 			return _controller.GetKeyPauseDown ();
 		}
@@ -80,8 +93,10 @@ namespace Assets.Scripts.GameController
 		{
 			return _controller.GetKeyCancelDown ();
 		}
+        #endregion
 
-		public bool MenuLeft ()
+        #region Menu
+        public bool MenuLeft ()
 		{
 			return _controller.GetKeyLeftDown ();
 		}
@@ -100,6 +115,7 @@ namespace Assets.Scripts.GameController
 		{
 			return _controller.GetKeyDownDown ();
 		}
-		#endregion
-	}
+        #endregion
+        #endregion
+    }
 }

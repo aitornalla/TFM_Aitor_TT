@@ -29,7 +29,8 @@ namespace Assets.Scripts.GameController
 			_controller.IsDebugEnabled = enable;
 		}
 
-		public bool PlayerAttack ()
+        #region Player
+        public bool PlayerAttack ()
 		{
 			return _controller.PS3SquareButtonDown ();
 		}
@@ -69,7 +70,19 @@ namespace Assets.Scripts.GameController
 			return _controller.PS3R3ButtonUp ();
 		}
 
-		public bool Pause ()
+		public bool PlayerGliding()
+        {
+			return _controller.PS3L1ButtonDown();
+		}
+
+		public bool PlayerQuitGliding()
+        {
+			return _controller.PS3L1ButtonUp();
+		}
+        #endregion
+
+        #region Options
+        public bool Pause ()
 		{
 			return _controller.PS3StartButtonDown ();
 		}
@@ -83,8 +96,10 @@ namespace Assets.Scripts.GameController
 		{
 			return _controller.PS3CircleButtonDown ();
 		}
+        #endregion
 
-		public bool MenuLeft ()
+        #region Menu
+        public bool MenuLeft ()
 		{
 			return _controller.PS3PadLeftButtonDown ();
 		}
@@ -103,6 +118,7 @@ namespace Assets.Scripts.GameController
 		{
 			return _controller.PS3PadDownButtonDown ();
 		}
-		#endregion
+        #endregion
+        #endregion
     }
 }
