@@ -6,7 +6,7 @@ using UnityEngine.UI;
 namespace Assets.Scripts.HealthBarController
 {
     [RequireComponent(typeof(Slider))]
-    public class HealthBar : MonoBehaviour
+    public sealed class HealthBar : MonoBehaviour
     {
         [SerializeField]
         private Slider _slider;
@@ -23,6 +23,10 @@ namespace Assets.Scripts.HealthBarController
 
         private void Update()
         {
+            // Save resources if current health is equal to target health return
+            if (_health == _targetHealth)
+                return;
+
             // Smooth slider movement
             _health = Mathf.SmoothDamp(_health, _targetHealth, ref _velocity, _smoothTime);
             // Set health value
