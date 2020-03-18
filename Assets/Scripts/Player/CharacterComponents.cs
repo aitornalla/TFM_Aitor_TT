@@ -27,6 +27,16 @@ namespace Assets.Scripts.Player
 	    private SpriteRenderer _spriteRenderer;         // SpriteRenderer component of the gameObject
         #endregion
 
+        [Header("Transform References")]
+        #region Transform References
+        [SerializeField]
+        private Transform _groundCheck;                 // A position marking where to check if the player is grounded
+        [SerializeField]
+        private Transform _ceilingCheck;                // A position marking where to check for ceilings
+        [SerializeField]
+        private Transform _attackCheck;                 // A position marking where to check for attack
+        #endregion
+
         #region Properties
         public CharacterParams CharacterParams
         {
@@ -97,6 +107,30 @@ namespace Assets.Scripts.Player
             get
             {
                 return _spriteRenderer;
+            }
+        }
+
+        public Transform GroundCheck
+        {
+            get
+            {
+                return _groundCheck;
+            }
+        }
+
+        public Transform CeilingCheck
+        {
+            get
+            {
+                return _ceilingCheck;
+            }
+        }
+
+        public Transform AttackCheck
+        {
+            get
+            {
+                return _attackCheck;
             }
         }
         #endregion

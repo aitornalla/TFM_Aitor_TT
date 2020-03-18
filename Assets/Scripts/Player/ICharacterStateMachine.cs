@@ -1,10 +1,13 @@
 ﻿using System;
 
-public interface ICharacterStateMachine
+namespace Assets.Scripts.Player
 {
-    void StateUpdate();
+    public interface ICharacterStateMachine
+    {
+        void StateUpdate();
 
-    void StateFixedUpdate();
+        void StateFixedUpdate();
 
-    void Move(float move, bool jump, bool slide, bool glide, bool attack);
+        void StateMove(float move, bool jump, bool slide, bool glide, bool attack);
+    }
 }

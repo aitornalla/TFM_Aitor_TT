@@ -5,6 +5,11 @@ namespace Assets.Scripts.Player
 {
 	public sealed class CharacterParams : MonoBehaviour
 	{
+        #region Constants
+        public const float GroundedRadius = 0.2f;       // Radius of the overlap circle to determine if grounded
+        public const float CeilingRadius = 0.2f;        // Radius of the overlap circle to determine if the player can stand up
+        #endregion
+
         [Header("Parameters")]
         #region Parameters
         [SerializeField]

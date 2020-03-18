@@ -13,22 +13,7 @@ namespace Assets.Scripts.Player
 	[RequireComponent(typeof(Rigidbody2D))]
 	public sealed class CharacterController2D : MonoBehaviour
 	{
-		[Header("Checkers")]
-        #region Checkers
-        [SerializeField]
-		private Transform _groundCheck;					// A position marking where to check if the player is grounded
-		[SerializeField]
-		private Transform _ceilingCheck;                // A position marking where to check for ceilings
-		[SerializeField]
-		private Transform _attackCheck;                 // A position marking where to check for attack
-        #endregion
-
-        #region Constants
-        private const float k_GroundedRadius = 0.2f; 	// Radius of the overlap circle to determine if grounded
-		private const float k_CeilingRadius = 0.2f;     // Radius of the overlap circle to determine if the player can stand up
-        #endregion
-
-        #region Character Components
+		#region Character Components
         [SerializeField]
 		private CharacterComponents _characterComponents;
         #endregion
@@ -63,7 +48,7 @@ namespace Assets.Scripts.Player
 			// This can be done using layers instead but Sample Assets will not overwrite your project settings.
 			Collider2D[] colliders =
                 Physics2D.
-                OverlapCircleAll(_groundCheck.position, k_GroundedRadius, _characterComponents.CharacterParams.GroundLayer);
+                OverlapCircleAll(_characterComponents.GroundCheck.position, CharacterParams.GroundedRadius, _characterComponents.CharacterParams.GroundLayer);
 
 			for (int i = 0; i < colliders.Length; i++)
 			{
@@ -100,7 +85,7 @@ namespace Assets.Scripts.Player
 						_characterComponents.CharacterEvents.OnSlideEvent.Invoke(false);
 					}
 					// Manage gameObject Collider2Ds
-					ManageCollider2Ds(_characterComponents.AttackCapsuleCollider2D);
+					CharacterController2D.ManageCollider2Ds(_collider2DArrary, _characterComponents.AttackCapsuleCollider2D);
 					// Set "is attacking" flag to true
 					_characterComponents.CharacterFlags.IsAttacking = true;
 
@@ -117,7 +102,7 @@ namespace Assets.Scripts.Player
 						// Trigger slide event for animator state changes
 						_characterComponents.CharacterEvents.OnSlideEvent.Invoke(true);
                         // Manage gameObject Collider2Ds
-						ManageCollider2Ds(_characterComponents.SlideCapsuleCollider2D);
+						CharacterController2D.ManageCollider2Ds(_collider2DArrary, _characterComponents.SlideCapsuleCollider2D);
 
                         if (Mathf.Abs(_characterComponents.Rigidbody2D.velocity.x) > 0.01f)
                         {
@@ -142,7 +127,7 @@ namespace Assets.Scripts.Player
 						_characterComponents.CharacterEvents.OnSlideEvent.Invoke(false);
 					}
 					// Manage gameObject Collider2Ds
-					ManageCollider2Ds(_characterComponents.MainCapsuleCollider2D);
+					CharacterController2D.ManageCollider2Ds(_collider2DArrary, _characterComponents.MainCapsuleCollider2D);
 					// Apply run speed and fixed delta time to move parameter
 					move *= _characterComponents.CharacterParams.RunSpeed * Time.fixedDeltaTime;
 					// Move the character by finding the target velocity
@@ -158,13 +143,19 @@ namespace Assets.Scripts.Player
 					if (move > 0.0f && !_characterComponents.CharacterFlags.IsFacingRight)
 					{
 						// ... flip the player.
-						FlipFacingDirection();
+						_characterComponents.CharacterFlags.IsFacingRight =
+						CharacterController2D.FlipFacingDirection(_characterComponents.CharacterFlags.IsFacingRight, _characterComponents.SpriteRenderer);
+						// ReOffsets gameObject Collider2Ds
+						CharacterController2D.ReOffsetCollider2Ds(_collider2DArrary);
 					}
 					// Otherwise if the input is moving the player left and the player is facing right...
 					else if (move < 0.0f && _characterComponents.CharacterFlags.IsFacingRight)
 					{
 						// ... flip the player.
-						FlipFacingDirection();
+						_characterComponents.CharacterFlags.IsFacingRight =
+						CharacterController2D.FlipFacingDirection(_characterComponents.CharacterFlags.IsFacingRight, _characterComponents.SpriteRenderer);
+						// ReOffsets gameObject Collider2Ds
+						CharacterController2D.ReOffsetCollider2Ds(_collider2DArrary);
 					}
 				}
                 #endregion
@@ -179,7 +170,7 @@ namespace Assets.Scripts.Player
 						// Trigger slide event for animator state changes
 						_characterComponents.CharacterEvents.OnSlideEvent.Invoke(false);
 						// Manage gameObject Collider2Ds
-						ManageCollider2Ds(_characterComponents.MainCapsuleCollider2D);
+						CharacterController2D.ManageCollider2Ds(_collider2DArrary, _characterComponents.MainCapsuleCollider2D);
 					}
 					// Add a vertical force to the player
 					_characterComponents.Rigidbody2D.AddForce(new Vector2(0.0f, _characterComponents.CharacterParams.JumpForce));
@@ -217,7 +208,7 @@ namespace Assets.Scripts.Player
 						// Zero out y velocity before applying glide
 						_characterComponents.Rigidbody2D.velocity = new Vector2(_characterComponents.Rigidbody2D.velocity.x, 0.0f);
 						// Manage gameObject Collider2Ds
-						ManageCollider2Ds(_characterComponents.GlideCapsuleCollider2D);
+						CharacterController2D.ManageCollider2Ds(_collider2DArrary, _characterComponents.GlideCapsuleCollider2D);
 					}
 					// Put glide flag to true
 					_characterComponents.CharacterFlags.WasGliding = true;
@@ -236,7 +227,7 @@ namespace Assets.Scripts.Player
 					// Put glide flag to false
 					_characterComponents.CharacterFlags.WasGliding = false;
 					// Manage gameObject Collider2Ds
-					ManageCollider2Ds(_characterComponents.MainCapsuleCollider2D);
+					CharacterController2D.ManageCollider2Ds(_collider2DArrary, _characterComponents.MainCapsuleCollider2D);
 					// Trigger glide event for animator state changes
 					_characterComponents.CharacterEvents.OnGlideEvent.Invoke(false);
 				}
@@ -244,52 +235,81 @@ namespace Assets.Scripts.Player
             }
             #endregion
         }
-        #endregion
+		#endregion
 
-        /// <summary>
-        ///     Changes facing right flag and reoffsets gameObject colliders
-        /// </summary>
-        private void FlipFacingDirection()
+		/// <summary>
+		///     Changes facing right flag and reoffsets gameObject colliders
+		/// </summary>
+		//private void FlipFacingDirection()
+		//{
+		// Switch the way the player is labelled as facing.
+		//	_characterComponents.CharacterFlags.IsFacingRight = !_characterComponents.CharacterFlags.IsFacingRight;
+		// Flip player sprite in X axis
+		//	_characterComponents.SpriteRenderer.flipX = !_characterComponents.SpriteRenderer.flipX;
+		// ReOffsets gameObject Collider2Ds
+		//	ReOffsetCollider2Ds();
+		//}
+		public static bool FlipFacingDirection(bool isFacingRight, SpriteRenderer spriteRenderer)
 		{
 			// Switch the way the player is labelled as facing.
-			_characterComponents.CharacterFlags.IsFacingRight = !_characterComponents.CharacterFlags.IsFacingRight;
+			isFacingRight = !isFacingRight;
 			// Flip player sprite in X axis
-			_characterComponents.SpriteRenderer.flipX = !_characterComponents.SpriteRenderer.flipX;
-            // ReOffsets gameObject Collider2Ds
-			ReOffsetCollider2Ds();
+			spriteRenderer.flipX = !spriteRenderer.flipX;
+			// ReOffsets gameObject Collider2Ds
+			//ReOffsetCollider2Ds();
+
+			return isFacingRight;
 		}
 
-        /// <summary>
-        ///     Enables one Collider2D and disables the other gameObject Collider2Ds
-        /// </summary>
-        /// <param name="col"><see cref="Collider2D"/> to enable</param>
-        private void ManageCollider2Ds(Collider2D col)
-        {
-            for (int i = 0; i < _collider2DArrary.Length; i++)
-            {
-				_collider2DArrary[i].enabled = col.Equals(_collider2DArrary[i]) ? true : false;
-            }
-        }
-
-        /// <summary>
-        ///     ReOffsets gameObject Collider2Ds when changing facing direction
-        /// </summary>
-        private void ReOffsetCollider2Ds()
-        {
-			Vector2 l_offset = Vector2.zero;
-
-			for (int i = 0; i < _collider2DArrary.Length; i++)
+		/// <summary>
+		///     Enables one Collider2D and disables the other gameObject Collider2Ds
+		/// </summary>
+		/// <param name="col"><see cref="Collider2D"/> to enable</param>
+		//private void ManageCollider2Ds(Collider2D col)
+        //{
+        //    for (int i = 0; i < _collider2DArrary.Length; i++)
+        //    {
+		//		_collider2DArrary[i].enabled = col.Equals(_collider2DArrary[i]) ? true : false;
+        //    }
+        //}
+		public static void ManageCollider2Ds(Collider2D[] collider2DArrary, Collider2D col)
+		{
+			for (int i = 0; i < collider2DArrary.Length; i++)
 			{
-				l_offset = _collider2DArrary[i].offset;
-
-				_collider2DArrary[i].offset = new Vector2(-l_offset.x, l_offset.y);
+				collider2DArrary[i].enabled = col.Equals(collider2DArrary[i]) ? true : false;
 			}
 		}
 
-        /// <summary>
-        ///     Gets called when attack animation reaches a keyframe when the attack should damage enemies
-        /// </summary>
-        public void OnAttackAnimationEvent()
+		/// <summary>
+		///     ReOffsets gameObject Collider2Ds when changing facing direction
+		/// </summary>
+		//private void ReOffsetCollider2Ds()
+		//{
+		//	Vector2 l_offset = Vector2.zero;
+
+		//	for (int i = 0; i < _collider2DArrary.Length; i++)
+		//	{
+		//		l_offset = _collider2DArrary[i].offset;
+
+		//		_collider2DArrary[i].offset = new Vector2(-l_offset.x, l_offset.y);
+		//	}
+		//}
+		public static void ReOffsetCollider2Ds(Collider2D[] collider2DArrary)
+		{
+			Vector2 l_offset = Vector2.zero;
+
+			for (int i = 0; i < collider2DArrary.Length; i++)
+			{
+				l_offset = collider2DArrary[i].offset;
+
+				collider2DArrary[i].offset = new Vector2(-l_offset.x, l_offset.y);
+			}
+		}
+
+		/// <summary>
+		///     Gets called when attack animation reaches a keyframe when the attack should damage enemies
+		/// </summary>
+		public void OnAttackAnimationEvent()
         {
 			throw new NotImplementedException("Implement enemy check and damage");
         }
