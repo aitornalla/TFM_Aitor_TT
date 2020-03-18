@@ -10,6 +10,8 @@ namespace Assets.Scripts.Player
 		[SerializeField]
 		private CharacterController2D _characterController2D;       // CharacterController2D component to control character physics
 		[SerializeField]
+		private CharacterFlags _characterFlags;                     // CharacterFlags component to control character states
+		[SerializeField]
 		private Animator _animator;                                 // Animator component for setting player animation transitions
 
 		private IGameController _gameController;                    // IGameController component for player input
@@ -74,9 +76,9 @@ namespace Assets.Scripts.Player
 
             // Player attack
             if (_gameController.PlayerAttack() &&
-                _characterController2D.IsGrounded &&
-                !_characterController2D.IsAttacking &&
-                !_characterController2D.WasSliding)
+				_characterFlags.IsGrounded &&
+                !_characterFlags.IsAttacking &&
+                !_characterFlags.WasSliding)
             {
 				_attack = true;
 				// Animator player attack parameter setting

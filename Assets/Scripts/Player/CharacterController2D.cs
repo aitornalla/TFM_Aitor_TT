@@ -1,28 +1,19 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace Assets.Scripts.Player
 {
+    [RequireComponent(typeof(CharacterComponents))]
+	[RequireComponent(typeof(CharacterEvents))]
+	[RequireComponent(typeof(CharacterFlags))]
+	[RequireComponent(typeof(CharacterHealth))]
+	[RequireComponent(typeof(CharacterInputController2D))]
+	[RequireComponent(typeof(CharacterParams))]
 	[RequireComponent(typeof(Rigidbody2D))]
-    [RequireComponent(typeof(CharacterInputController2D))]
 	public sealed class CharacterController2D : MonoBehaviour
 	{
-		[SerializeField]
-		private float _jumpForce = 525.0f;              // Amount of force added when the player jumps
-		[SerializeField]
-		private float _slideForce = 125.0f;             // Amount of force added when the player slides
-		[SerializeField]
-		private float _glideSpeed = -0.5f;              // Target gliding speed
-        [SerializeField]
-		private float _runSpeed = 40.0f;				// Player run speed
-		[SerializeField] [Range(0, .3f)]
-		private float _movementSmoothing = 0.05f;		// How much to smooth out the movement
-		[SerializeField]
-		private bool _airControl = false;				// Whether or not a player can steer while jumping
-		[SerializeField]
-		private LayerMask _groundLayer;					// A mask determining what is ground to the character
-
-        [Header("Checkers")]
+		[Header("Checkers")]
         #region Checkers
         [SerializeField]
 		private Transform _groundCheck;					// A position marking where to check if the player is grounded
@@ -34,23 +25,12 @@ namespace Assets.Scripts.Player
 
         #region Constants
         private const float k_GroundedRadius = 0.2f; 	// Radius of the overlap circle to determine if grounded
-		private const float k_CeilingRadius = 0.2f;		// Radius of the overlap circle to determine if the player can stand up
-		#endregion
+		private const float k_CeilingRadius = 0.2f;     // Radius of the overlap circle to determine if the player can stand up
+        #endregion
 
-		[Header("Components")]
-		#region Components
-		[SerializeField]
-		private Rigidbody2D _rigidbody2D;               // Rigidbody2D component of the gameObject
-		[SerializeField]
-		private CapsuleCollider2D _capsuleCollider2D;   // Not-sliding CapsuleCollider2D component of the gameObject
-		[SerializeField]
-		private CapsuleCollider2D _slideCapCollider2D;  // Sliding CapsuleCollider2D component of the gameObject
-		[SerializeField]
-		private CapsuleCollider2D _glideCapCollider2D;  // Gliding CapsuleCollider2D component of the gameObject
-		[SerializeField]
-		private CapsuleCollider2D _attackCapCollider2D; // Attack CapsuleCollider2D component of the gameObject
-		[SerializeField]
-		private SpriteRenderer _spriteRenderer;         // SpriteRenderer component of the gameObject
+        #region Character Components
+        [SerializeField]
+		private CharacterComponents _characterComponents;
         #endregion
 
         #region Variables
@@ -58,51 +38,10 @@ namespace Assets.Scripts.Player
 		private Collider2D[] _collider2DArrary;         // GameObject Collider2D array
         #endregion
 
-        #region Flags
-        private bool _grounded;							// Whether or not the player is grounded
-        private bool _facingRight = true;               // For determining which way the player is currently facing
-		private bool _wasSliding = false;               // Was the player sliding in the previous frame?
-		private bool _hasDoubleJumped = false;          // Flag for double jumping
-		private bool _wasGliding = false;               // Is the player gliding?
-		private bool _isAttacking = false;
-        #endregion
-
-        [Header("Events")]
-		#region Events
-		public BoolEvent OnGroundedEvent;
-		public BoolEvent OnSlideEvent;
-		public UnityEvent OnDoubleJumpEvent;
-		public BoolEvent OnGlideEvent;
-		public UnityEvent OnAttackEndEvent;
-        #endregion
-
-        #region Properties
-        public bool IsGrounded { get { return _grounded; } }
-        public bool IsFacingRight { get { return _facingRight; } }
-        public bool WasSliding { get { return _wasSliding; } }
-        public bool HasDoubleJumped { get { return _hasDoubleJumped; } }
-		public bool WasGliding { get { return _wasGliding; } }
-		public bool IsAttacking { get { return _isAttacking; } }
-        #endregion
-
         #region Awake
         private void Awake()
 		{
-            // Initialize events
-			if (OnGroundedEvent == null)
-				OnGroundedEvent = new BoolEvent();
-
-			if (OnSlideEvent == null)
-				OnSlideEvent = new BoolEvent();
-
-			if (OnDoubleJumpEvent == null)
-				OnDoubleJumpEvent = new UnityEvent();
-
-			if (OnGlideEvent == null)
-				OnGlideEvent = new BoolEvent();
-
-			if (OnAttackEndEvent == null)
-				OnAttackEndEvent = new UnityEvent();
+            // Events initialized in CharacterEvents component
 
 			// Get gameObject Collider2D references
 			_collider2DArrary = gameObject.GetComponents<Collider2D>();
@@ -118,23 +57,25 @@ namespace Assets.Scripts.Player
 		private void FixedUpdate()
 		{
             // First set grounded flag to false
-            _grounded = false;
+            _characterComponents.CharacterFlags.IsGrounded = false;
 
 			// The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
 			// This can be done using layers instead but Sample Assets will not overwrite your project settings.
-			Collider2D[] colliders = Physics2D.OverlapCircleAll(_groundCheck.position, k_GroundedRadius, _groundLayer);
+			Collider2D[] colliders =
+                Physics2D.
+                OverlapCircleAll(_groundCheck.position, k_GroundedRadius, _characterComponents.CharacterParams.GroundLayer);
 
 			for (int i = 0; i < colliders.Length; i++)
 			{
 				if (colliders[i].gameObject != gameObject)
 				{
-					_grounded = true;
-					_hasDoubleJumped = false;
-					_wasGliding = false;
+					_characterComponents.CharacterFlags.IsGrounded = true;
+					_characterComponents.CharacterFlags.HasDoubleJumped = false;
+					_characterComponents.CharacterFlags.WasGliding = false;
 				}
 			}
-            // Trigger grounded event for animator state changes (includes double jump and glide setting)
-			OnGroundedEvent.Invoke(_grounded);
+			// Trigger grounded event for animator state changes (includes double jump and glide setting)
+			_characterComponents.CharacterEvents.OnGroundedEvent.Invoke(_characterComponents.CharacterFlags.IsGrounded);
 		}
         #endregion
 
@@ -142,26 +83,26 @@ namespace Assets.Scripts.Player
         public void Move(float move, bool jump, bool slide, bool glide, bool attack)
 		{
             #region Grounded
-            if (_grounded)
+            if (_characterComponents.CharacterFlags.IsGrounded)
 			{
                 // If player is attacking control of the player is disabled
-				if (_isAttacking)
+				if (_characterComponents.CharacterFlags.IsAttacking)
 					return;
 
-                if (attack && !_isAttacking)
+                if (attack && !_characterComponents.CharacterFlags.IsAttacking)
                 {
 					// Check if player was sliding to put back main settings
-					if (_wasSliding)
+					if (_characterComponents.CharacterFlags.WasSliding)
 					{
 						// Set sliding flag to false
-						_wasSliding = false;
+						_characterComponents.CharacterFlags.WasSliding = false;
 						// Trigger slide event for animator state changes
-						OnSlideEvent.Invoke(false);
+						_characterComponents.CharacterEvents.OnSlideEvent.Invoke(false);
 					}
 					// Manage gameObject Collider2Ds
-					ManageCollider2Ds(_attackCapCollider2D);
-                    // Set "is attacking" flag to true
-					_isAttacking = true;
+					ManageCollider2Ds(_characterComponents.AttackCapsuleCollider2D);
+					// Set "is attacking" flag to true
+					_characterComponents.CharacterFlags.IsAttacking = true;
 
 					return;
 				}
@@ -169,21 +110,23 @@ namespace Assets.Scripts.Player
                 #region Slide
                 if (slide)
 				{
-					if (!_wasSliding)
+					if (!_characterComponents.CharacterFlags.WasSliding)
 					{
 						// Set sliding flag to true
-						_wasSliding = true;
+						_characterComponents.CharacterFlags.WasSliding = true;
 						// Trigger slide event for animator state changes
-						OnSlideEvent.Invoke(true);
+						_characterComponents.CharacterEvents.OnSlideEvent.Invoke(true);
                         // Manage gameObject Collider2Ds
-						ManageCollider2Ds(_slideCapCollider2D);
+						ManageCollider2Ds(_characterComponents.SlideCapsuleCollider2D);
 
-                        if (Mathf.Abs(_rigidbody2D.velocity.x) > 0.01f)
+                        if (Mathf.Abs(_characterComponents.Rigidbody2D.velocity.x) > 0.01f)
                         {
 							// Set slide force direction
-							float l_slideForceDirection = _facingRight ? 1.0f : -1.0f;
+							float l_slideForceDirection = _characterComponents.CharacterFlags.IsFacingRight ? 1.0f : -1.0f;
 							// Apply slide force to rigid body
-							_rigidbody2D.AddForce(new Vector2(l_slideForceDirection * _slideForce, 0.0f));
+							_characterComponents
+                                .Rigidbody2D
+                                .AddForce(new Vector2(l_slideForceDirection * _characterComponents.CharacterParams.SlideForce, 0.0f));
 						}
 					}
 				}
@@ -191,29 +134,34 @@ namespace Assets.Scripts.Player
                 #region Not slide
                 else
                 {
-					if (_wasSliding)
+					if (_characterComponents.CharacterFlags.WasSliding)
 					{
 						// Set sliding flag to false
-						_wasSliding = false;
+						_characterComponents.CharacterFlags.WasSliding = false;
 						// Trigger slide event for animator state changes
-						OnSlideEvent.Invoke(false);
+						_characterComponents.CharacterEvents.OnSlideEvent.Invoke(false);
 					}
 					// Manage gameObject Collider2Ds
-					ManageCollider2Ds(_capsuleCollider2D);
+					ManageCollider2Ds(_characterComponents.MainCapsuleCollider2D);
 					// Apply run speed and fixed delta time to move parameter
-					move *= _runSpeed * Time.fixedDeltaTime;
+					move *= _characterComponents.CharacterParams.RunSpeed * Time.fixedDeltaTime;
 					// Move the character by finding the target velocity
-					Vector3 l_targetVelocity = new Vector2(move * 10.0f, _rigidbody2D.velocity.y);
+					Vector3 l_targetVelocity = new Vector2(move * 10.0f, _characterComponents.Rigidbody2D.velocity.y);
 					// And then smoothing it out and applying it to the character
-					_rigidbody2D.velocity = Vector3.SmoothDamp(_rigidbody2D.velocity, l_targetVelocity, ref _velocity, _movementSmoothing);
+					_characterComponents.Rigidbody2D.velocity =
+                        Vector3
+                        .SmoothDamp(_characterComponents.Rigidbody2D.velocity,
+                            l_targetVelocity,
+                            ref _velocity,
+                            _characterComponents.CharacterParams.MovementSmoothing);
 					// If the input is moving the player right and the player is facing left...
-					if (move > 0.0f && !_facingRight)
+					if (move > 0.0f && !_characterComponents.CharacterFlags.IsFacingRight)
 					{
 						// ... flip the player.
 						FlipFacingDirection();
 					}
 					// Otherwise if the input is moving the player left and the player is facing right...
-					else if (move < 0.0f && _facingRight)
+					else if (move < 0.0f && _characterComponents.CharacterFlags.IsFacingRight)
 					{
 						// ... flip the player.
 						FlipFacingDirection();
@@ -224,17 +172,17 @@ namespace Assets.Scripts.Player
                 if (jump)
 				{
 					// Check if player was sliding to put back main settings
-					if (_wasSliding)
+					if (_characterComponents.CharacterFlags.WasSliding)
 					{
 						// Set sliding flag to false
-						_wasSliding = false;
+						_characterComponents.CharacterFlags.WasSliding = false;
 						// Trigger slide event for animator state changes
-						OnSlideEvent.Invoke(false);
+						_characterComponents.CharacterEvents.OnSlideEvent.Invoke(false);
 						// Manage gameObject Collider2Ds
-						ManageCollider2Ds(_capsuleCollider2D);
+						ManageCollider2Ds(_characterComponents.MainCapsuleCollider2D);
 					}
 					// Add a vertical force to the player
-					_rigidbody2D.AddForce(new Vector2(0.0f, _jumpForce));
+					_characterComponents.Rigidbody2D.AddForce(new Vector2(0.0f, _characterComponents.CharacterParams.JumpForce));
 				}
 				#endregion
 			}
@@ -242,50 +190,55 @@ namespace Assets.Scripts.Player
             #region Not grounded
             else
             {
-				if (_airControl)
+				if (_characterComponents.CharacterParams.AirControl)
                 {
 
                 }
 
                 #region Double jump
-                if (jump && !_hasDoubleJumped && !_wasGliding)
+                if (jump && !_characterComponents.CharacterFlags.HasDoubleJumped && !_characterComponents.CharacterFlags.WasGliding)
                 {
-                    // Put double jump flag to true
-					_hasDoubleJumped = true;
+					// Put double jump flag to true
+					_characterComponents.CharacterFlags.HasDoubleJumped = true;
 					// Trigger double jump event for animator state changes
-					OnDoubleJumpEvent.Invoke();
-                    // Zero out y velocity before applying jump force
-					_rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, 0.0f);
+					_characterComponents.CharacterEvents.OnDoubleJumpEvent.Invoke();
+					// Zero out y velocity before applying jump force
+					_characterComponents.Rigidbody2D.velocity = new Vector2(_characterComponents.Rigidbody2D.velocity.x, 0.0f);
 					// Add a vertical force to the player
-					_rigidbody2D.AddForce(new Vector2(0.0f, _jumpForce));
+					_characterComponents.Rigidbody2D.AddForce(new Vector2(0.0f, _characterComponents.CharacterParams.JumpForce));
 				}
                 #endregion
 
                 #region Glide
                 if (glide)
                 {
-                    if (!_wasGliding)
+                    if (!_characterComponents.CharacterFlags.WasGliding)
                     {
 						// Zero out y velocity before applying glide
-						_rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, 0.0f);
+						_characterComponents.Rigidbody2D.velocity = new Vector2(_characterComponents.Rigidbody2D.velocity.x, 0.0f);
 						// Manage gameObject Collider2Ds
-						ManageCollider2Ds(_glideCapCollider2D);
+						ManageCollider2Ds(_characterComponents.GlideCapsuleCollider2D);
 					}
 					// Put glide flag to true
-					_wasGliding = true;
+					_characterComponents.CharacterFlags.WasGliding = true;
 					// Trigger glide event for animator state changes
-					OnGlideEvent.Invoke(true);
-                    // Apply smooth transition to player glide velocity
-					_rigidbody2D.velocity = Vector3.SmoothDamp(_rigidbody2D.velocity, new Vector3(_rigidbody2D.velocity.x, _glideSpeed, 0.0f), ref _velocity, _movementSmoothing);
+					_characterComponents.CharacterEvents.OnGlideEvent.Invoke(true);
+					// Apply smooth transition to player glide velocity
+					_characterComponents.Rigidbody2D.velocity =
+                        Vector3
+                        .SmoothDamp(_characterComponents.Rigidbody2D.velocity,
+                            new Vector3(_characterComponents.Rigidbody2D.velocity.x, _characterComponents.CharacterParams.GlideSpeed, 0.0f),
+                            ref _velocity,
+                            _characterComponents.CharacterParams.MovementSmoothing);
 				}
                 else
                 {
 					// Put glide flag to false
-					_wasGliding = false;
+					_characterComponents.CharacterFlags.WasGliding = false;
 					// Manage gameObject Collider2Ds
-					ManageCollider2Ds(_capsuleCollider2D);
+					ManageCollider2Ds(_characterComponents.MainCapsuleCollider2D);
 					// Trigger glide event for animator state changes
-					OnGlideEvent.Invoke(false);
+					_characterComponents.CharacterEvents.OnGlideEvent.Invoke(false);
 				}
                 #endregion
             }
@@ -299,9 +252,9 @@ namespace Assets.Scripts.Player
         private void FlipFacingDirection()
 		{
 			// Switch the way the player is labelled as facing.
-			_facingRight = !_facingRight;
+			_characterComponents.CharacterFlags.IsFacingRight = !_characterComponents.CharacterFlags.IsFacingRight;
 			// Flip player sprite in X axis
-			_spriteRenderer.flipX = !_spriteRenderer.flipX;
+			_characterComponents.SpriteRenderer.flipX = !_characterComponents.SpriteRenderer.flipX;
             // ReOffsets gameObject Collider2Ds
 			ReOffsetCollider2Ds();
 		}
@@ -338,7 +291,7 @@ namespace Assets.Scripts.Player
         /// </summary>
         public void OnAttackAnimationEvent()
         {
-			
+			throw new NotImplementedException("Implement enemy check and damage");
         }
 
         /// <summary>
@@ -347,15 +300,9 @@ namespace Assets.Scripts.Player
         public void OnAttackEndAnimationEvent()
         {
 			// Set "is attacking" flag to false
-			_isAttacking = false;
-            // Triggers attack end event for character input control states
-			OnAttackEndEvent.Invoke();
+			_characterComponents.CharacterFlags.IsAttacking = false;
+			// Triggers attack end event for character input control states
+			_characterComponents.CharacterEvents.OnAttackEndEvent.Invoke();
 		}
 	}
-
-	[System.Serializable]
-	public class BoolEvent : UnityEvent<bool>
-    {
-
-    }
 }
