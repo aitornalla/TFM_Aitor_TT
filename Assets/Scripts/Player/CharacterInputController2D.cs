@@ -18,6 +18,7 @@ namespace Assets.Scripts.Player
 		private bool _jump = false;                                 // Flag to store jump value
 		private bool _slide = false;                                // Flag to store slide value
 		private bool _glide = false;                                // Flag to store glide value
+		private bool _attack = false;                               // Flag to store attack value
 
 		#region Start
 		// Use this for initialization
@@ -70,6 +71,17 @@ namespace Assets.Scripts.Player
 			{
 				_glide = false;
 			}
+
+            // Player attack
+            if (_gameController.PlayerAttack() &&
+                _characterController2D.IsGrounded &&
+                !_characterController2D.IsAttacking &&
+                !_characterController2D.WasSliding)
+            {
+				_attack = true;
+				// Animator player attack parameter setting
+				_animator.SetBool("PlayerAttack", true);
+            }
 		}
 		#endregion
 
@@ -77,10 +89,10 @@ namespace Assets.Scripts.Player
 		// Update is called once per frame
 		private void FixedUpdate ()
 		{
-			_characterController2D.Move (_horizontalMove, _jump, _slide, _glide);
+			_characterController2D.Move (_horizontalMove, _jump, _slide, _glide, _attack);
             // Put movement variable back to 0.0f
 			_horizontalMove = 0.0f;
-            // Put jump variable back to false
+            // Put jump flag back to false
 			_jump = false;
 		}
 		#endregion
@@ -131,5 +143,16 @@ namespace Assets.Scripts.Player
 			// Animator player slide parameter setting
 			_animator.SetBool("PlayerGlide", playerGliding);
 		}
+
+        /// <summary>
+        ///     Added to OnAttackEndEvent from CharacterController2D script
+        /// </summary>
+        public void OnAttackEnd()
+		{
+            // When attack animation ends, put attack flag back to false
+			_attack = false;
+			// Animator player attack parameter setting
+			_animator.SetBool("PlayerAttack", false);
+        }
 	}
 }

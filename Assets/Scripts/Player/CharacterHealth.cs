@@ -15,15 +15,15 @@ namespace Assets.Scripts.Player
         [SerializeField]
         private float _smoothTime = 0.275f;
 
-        [Space]
         [Header("Components")]
-
+        #region Components
         [SerializeField]
         private HealthBar _healthBar;
         [SerializeField]
         private Animator _animator;
         [SerializeField]
         private SpriteRenderer _renderer;
+        #endregion
 
         private Coroutine _damageBlinkCoroutine;
         private Color _defaultSpriteColor;

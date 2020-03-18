@@ -21,13 +21,19 @@ namespace Assets.Scripts.Player
 		private bool _airControl = false;				// Whether or not a player can steer while jumping
 		[SerializeField]
 		private LayerMask _groundLayer;					// A mask determining what is ground to the character
-		[SerializeField]
+
+        [Header("Checkers")]
+        #region Checkers
+        [SerializeField]
 		private Transform _groundCheck;					// A position marking where to check if the player is grounded
 		[SerializeField]
-		private Transform _ceilingCheck;				// A position marking where to check for ceilings
+		private Transform _ceilingCheck;                // A position marking where to check for ceilings
+		[SerializeField]
+		private Transform _attackCheck;                 // A position marking where to check for attack
+        #endregion
 
-		#region Constants
-		private const float k_GroundedRadius = 0.2f; 	// Radius of the overlap circle to determine if grounded
+        #region Constants
+        private const float k_GroundedRadius = 0.2f; 	// Radius of the overlap circle to determine if grounded
 		private const float k_CeilingRadius = 0.2f;		// Radius of the overlap circle to determine if the player can stand up
 		#endregion
 
@@ -41,6 +47,8 @@ namespace Assets.Scripts.Player
 		private CapsuleCollider2D _slideCapCollider2D;  // Sliding CapsuleCollider2D component of the gameObject
 		[SerializeField]
 		private CapsuleCollider2D _glideCapCollider2D;  // Gliding CapsuleCollider2D component of the gameObject
+		[SerializeField]
+		private CapsuleCollider2D _attackCapCollider2D; // Attack CapsuleCollider2D component of the gameObject
 		[SerializeField]
 		private SpriteRenderer _spriteRenderer;         // SpriteRenderer component of the gameObject
         #endregion
@@ -56,6 +64,7 @@ namespace Assets.Scripts.Player
 		private bool _wasSliding = false;               // Was the player sliding in the previous frame?
 		private bool _hasDoubleJumped = false;          // Flag for double jumping
 		private bool _wasGliding = false;               // Is the player gliding?
+		private bool _isAttacking = false;
         #endregion
 
         [Header("Events")]
@@ -64,10 +73,20 @@ namespace Assets.Scripts.Player
 		public BoolEvent OnSlideEvent;
 		public UnityEvent OnDoubleJumpEvent;
 		public BoolEvent OnGlideEvent;
-		#endregion
+		public UnityEvent OnAttackEndEvent;
+        #endregion
 
-		#region Awake
-		private void Awake()
+        #region Properties
+        public bool IsGrounded { get { return _grounded; } }
+        public bool IsFacingRight { get { return _facingRight; } }
+        public bool WasSliding { get { return _wasSliding; } }
+        public bool HasDoubleJumped { get { return _hasDoubleJumped; } }
+		public bool WasGliding { get { return _wasGliding; } }
+		public bool IsAttacking { get { return _isAttacking; } }
+        #endregion
+
+        #region Awake
+        private void Awake()
 		{
             // Initialize events
 			if (OnGroundedEvent == null)
@@ -82,6 +101,9 @@ namespace Assets.Scripts.Player
 			if (OnGlideEvent == null)
 				OnGlideEvent = new BoolEvent();
 
+			if (OnAttackEndEvent == null)
+				OnAttackEndEvent = new UnityEvent();
+
 			// Get gameObject Collider2D references
 			_collider2DArrary = gameObject.GetComponents<Collider2D>();
 		}
@@ -89,7 +111,7 @@ namespace Assets.Scripts.Player
 
 		private void Update()
 		{
-
+            
 		}
 
 		#region FixedUpdate
@@ -117,11 +139,33 @@ namespace Assets.Scripts.Player
         #endregion
 
         #region Move
-        public void Move(float move, bool jump, bool slide, bool glide)
+        public void Move(float move, bool jump, bool slide, bool glide, bool attack)
 		{
             #region Grounded
             if (_grounded)
 			{
+                // If player is attacking control of the player is disabled
+				if (_isAttacking)
+					return;
+
+                if (attack && !_isAttacking)
+                {
+					// Check if player was sliding to put back main settings
+					if (_wasSliding)
+					{
+						// Set sliding flag to false
+						_wasSliding = false;
+						// Trigger slide event for animator state changes
+						OnSlideEvent.Invoke(false);
+					}
+					// Manage gameObject Collider2Ds
+					ManageCollider2Ds(_attackCapCollider2D);
+                    // Set "is attacking" flag to true
+					_isAttacking = true;
+
+					return;
+				}
+
                 #region Slide
                 if (slide)
 				{
@@ -287,6 +331,25 @@ namespace Assets.Scripts.Player
 
 				_collider2DArrary[i].offset = new Vector2(-l_offset.x, l_offset.y);
 			}
+		}
+
+        /// <summary>
+        ///     Gets called when attack animation reaches a keyframe when the attack should damage enemies
+        /// </summary>
+        public void OnAttackAnimationEvent()
+        {
+			
+        }
+
+        /// <summary>
+        ///     Gets called when attack animation ends, sets "is attacking" flag to false
+        /// </summary>
+        public void OnAttackEndAnimationEvent()
+        {
+			// Set "is attacking" flag to false
+			_isAttacking = false;
+            // Triggers attack end event for character input control states
+			OnAttackEndEvent.Invoke();
 		}
 	}
 
