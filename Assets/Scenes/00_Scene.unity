@@ -280,6 +280,7 @@ GameObject:
   m_Component:
   - component: {fileID: 294590563}
   - component: {fileID: 294590562}
+  - component: {fileID: 294590564}
   m_Layer: 0
   m_Name: CM vcam1
   m_TagString: Untagged
@@ -326,6 +327,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &294590564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 294590561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40f62c61b5507491481bce3661fa00e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cinemachineVirtualCamera: {fileID: 294590562}
+  _shakeAmplitude: 0.15
+  _shakeFrequency: 3
+  _shakeDuration: 0.5
 --- !u!1 &301462132
 GameObject:
   m_ObjectHideFlags: 0
@@ -592,6 +608,7 @@ MonoBehaviour:
   _healthBar: {fileID: 1376983116}
   _animator: {fileID: 823096774}
   _renderer: {fileID: 823096768}
+  _cameraShake: {fileID: 294590564}
 --- !u!114 &823096773
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -885,6 +902,7 @@ GameObject:
   - component: {fileID: 1018438725}
   - component: {fileID: 1018438727}
   - component: {fileID: 1018438726}
+  - component: {fileID: 1018438728}
   m_Layer: 0
   m_Name: cm
   m_TagString: Untagged
@@ -954,6 +972,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1018438728
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1018438724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_NoiseProfile: {fileID: 11400000, guid: 68b0627ea3d796448b29ab0938f2c240, type: 2}
+  m_AmplitudeGain: 0
+  m_FrequencyGain: 0
 --- !u!1 &1264282593
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Assets.Scripts.HealthBarController;
+using Assets.Scripts.Camera;
 
 namespace Assets.Scripts.Player
 {
@@ -23,6 +24,8 @@ namespace Assets.Scripts.Player
         private Animator _animator;
         [SerializeField]
         private SpriteRenderer _renderer;
+        [SerializeField]
+        private CameraShake _cameraShake;
         #endregion
 
         private Coroutine _damageBlinkCoroutine;
@@ -63,6 +66,9 @@ namespace Assets.Scripts.Player
             // Make damage visible to user by blinking the character in red
             DamageCharacterBlink();
 
+            // Trigger camera shake effect
+            _cameraShake.CameraShakeEffect();
+
             // Trigger dead animation if player health drops down to 0
             if (_playerHealth == 0)
             {
@@ -96,7 +102,7 @@ namespace Assets.Scripts.Player
         /// <summary>
         ///     Coroutine to make character blink when damage is taken
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Damage blink coroutine</returns>
         private IEnumerator DamageBlinkCoroutine()
         {
             float l_startTime = Time.realtimeSinceStartup;
