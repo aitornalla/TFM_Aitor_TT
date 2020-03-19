@@ -4,10 +4,10 @@ namespace Assets.Scripts.Player
 {
     public interface ICharacterStateMachine
     {
-        void StateUpdate();
+        //void StateUpdate();
 
-        void StateFixedUpdate();
+        //void StateFixedUpdate();
 
-        void StateMove(float move, bool jump, bool slide, bool glide, bool attack);
+        void StateControl(float move, bool jump, bool slide, bool glide, bool attack);
     }
 }

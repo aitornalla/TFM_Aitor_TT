@@ -91,7 +91,7 @@ namespace Assets.Scripts.Player
 		// Update is called once per frame
 		private void FixedUpdate ()
 		{
-			_characterController2D.Move (_horizontalMove, _jump, _slide, _glide, _attack);
+			_characterController2D.Control(_horizontalMove, _jump, _slide, _glide, _attack);
             // Put movement variable back to 0.0f
 			_horizontalMove = 0.0f;
             // Put jump flag back to false
