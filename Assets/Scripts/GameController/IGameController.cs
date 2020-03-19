@@ -18,6 +18,7 @@ namespace Assets.Scripts.GameController
 
 		#region Player
 		bool PlayerAttack();
+		bool PlayerThrow();
 		bool PlayerJump();
 		bool PlayerLeft();
 		bool PlayerRight();

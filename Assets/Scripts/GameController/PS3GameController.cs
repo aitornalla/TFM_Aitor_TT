@@ -35,6 +35,11 @@ namespace Assets.Scripts.GameController
 			return _controller.PS3SquareButtonDown ();
 		}
 
+        public bool PlayerThrow ()
+        {
+			return _controller.PS3R1ButtonDown();
+        }
+
 		public bool PlayerJump ()
 		{
 			return _controller.PS3CrossButtonDown ();

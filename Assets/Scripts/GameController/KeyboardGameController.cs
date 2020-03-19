@@ -32,6 +32,11 @@ namespace Assets.Scripts.GameController
 			return _controller.GetKeyAttackDown ();
 		}
 
+        public bool PlayerThrow ()
+        {
+			return _controller.GetKeyThrowDown ();
+        }
+
 		public bool PlayerJump ()
 		{
 			return _controller.GetKeyJumpDown ();

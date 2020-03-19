@@ -21,6 +21,7 @@ namespace Assets.Scripts.Player
 		private bool _slide = false;                                // Flag to store slide value
 		private bool _glide = false;                                // Flag to store glide value
 		private bool _attack = false;                               // Flag to store attack value
+		private bool _throw = false;                                // Flag to store throw value
 
 		#region Start
 		// Use this for initialization
@@ -78,12 +79,25 @@ namespace Assets.Scripts.Player
             if (_gameController.PlayerAttack() &&
 				_characterFlags.IsGrounded &&
                 !_characterFlags.IsAttacking &&
-                !_characterFlags.WasSliding)
+				!_characterFlags.IsThrowing &&
+				!_characterFlags.WasSliding)
             {
 				_attack = true;
 				// Animator player attack parameter setting
 				_animator.SetBool("PlayerAttack", true);
             }
+
+			// Player throw
+			if (_gameController.PlayerThrow() &&
+				_characterFlags.IsGrounded &&
+				!_characterFlags.IsAttacking &&
+                !_characterFlags.IsThrowing &&
+				!_characterFlags.WasSliding)
+			{
+				_throw = true;
+				// Animator player throw parameter setting
+				_animator.SetBool("PlayerThrow", true);
+			}
 		}
 		#endregion
 
@@ -91,19 +105,20 @@ namespace Assets.Scripts.Player
 		// Update is called once per frame
 		private void FixedUpdate ()
 		{
-			_characterController2D.Control(_horizontalMove, _jump, _slide, _glide, _attack);
+			_characterController2D.Control(_horizontalMove, _jump, _slide, _glide, _attack, _throw);
             // Put movement variable back to 0.0f
 			_horizontalMove = 0.0f;
             // Put jump flag back to false
 			_jump = false;
 		}
-		#endregion
+        #endregion
 
-		/// <summary>
-		///     Added to OnGroundedEvent from CharacterController2D script
-		/// </summary>
-		/// <param name="playerIsGrounded"><code>true</code> if player is grounded, otherwise <code>false</code></param>
-		public void OnGrounded(bool playerIsGrounded)
+        #region Event Handlers
+        /// <summary>
+        ///     Added to OnGroundedEvent from CharacterController2D script
+        /// </summary>
+        /// <param name="playerIsGrounded"><code>true</code> if player is grounded, otherwise <code>false</code></param>
+        public void OnGrounded(bool playerIsGrounded)
         {
 			// Animator player grounded parameter setting
 			_animator.SetBool("PlayerIsGrounded", playerIsGrounded);
@@ -156,5 +171,17 @@ namespace Assets.Scripts.Player
 			// Animator player attack parameter setting
 			_animator.SetBool("PlayerAttack", false);
         }
+
+		/// <summary>
+		///     Added to OnThrowEndEvent from CharacterController2D script
+		/// </summary>
+		public void OnThrowEnd()
+		{
+			// When throw animation ends, put throw flag back to false
+			_throw = false;
+			// Animator player attack parameter setting
+			_animator.SetBool("PlayerThrow", false);
+		}
+		#endregion
 	}
 }

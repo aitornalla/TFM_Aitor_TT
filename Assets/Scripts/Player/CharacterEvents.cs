@@ -13,6 +13,7 @@ namespace Assets.Scripts.Player
         public UnityEvent OnDoubleJumpEvent;
         public BoolEvent OnGlideEvent;
         public UnityEvent OnAttackEndEvent;
+        public UnityEvent OnThrowEndEvent;
         #endregion
 
         private void Awake()
@@ -32,6 +33,9 @@ namespace Assets.Scripts.Player
 
             if (OnAttackEndEvent == null)
                 OnAttackEndEvent = new UnityEvent();
+
+            if (OnThrowEndEvent == null)
+                OnThrowEndEvent = new UnityEvent();
         }
     }
 

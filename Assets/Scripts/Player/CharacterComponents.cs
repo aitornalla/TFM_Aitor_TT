@@ -23,7 +23,9 @@ namespace Assets.Scripts.Player
 	    private CapsuleCollider2D _glideCapCollider2D;  // Gliding CapsuleCollider2D component of the gameObject
 	    [SerializeField]
 	    private CapsuleCollider2D _attackCapCollider2D; // Attack CapsuleCollider2D component of the gameObject
-	    [SerializeField]
+        [SerializeField]
+        private CapsuleCollider2D _throwCapCollider2D;  // Throw CapsuleCollider2D component of the gameObject
+        [SerializeField]
 	    private SpriteRenderer _spriteRenderer;         // SpriteRenderer component of the gameObject
         #endregion
 
@@ -35,6 +37,8 @@ namespace Assets.Scripts.Player
         private Transform _ceilingCheck;                // A position marking where to check for ceilings
         [SerializeField]
         private Transform _attackCheck;                 // A position marking where to check for attack
+        [SerializeField]
+        private Transform _throwCheck;                  // A position marking where to check for throw
         #endregion
 
         #region Properties
@@ -102,6 +106,14 @@ namespace Assets.Scripts.Player
             }
         }
 
+        public CapsuleCollider2D ThrowCapsuleCollider2D
+        {
+            get
+            {
+                return _throwCapCollider2D;
+            }
+        }
+
         public SpriteRenderer SpriteRenderer
         {
             get
@@ -131,6 +143,14 @@ namespace Assets.Scripts.Player
             get
             {
                 return _attackCheck;
+            }
+        }
+
+        public Transform ThrowCheck
+        {
+            get
+            {
+                return _throwCheck;
             }
         }
         #endregion

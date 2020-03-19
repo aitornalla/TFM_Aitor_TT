@@ -12,6 +12,7 @@ namespace Assets.Scripts.Player
         private bool _hasDoubleJumped = false;          // Flag for double jumping
         private bool _wasGliding = false;               // Is the player gliding?
         private bool _isAttacking = false;              // Is the player attacking?
+        private bool _isThrowing = false;               // Is the player throwing a kunai?
         #endregion
 
         #region Properties
@@ -90,6 +91,19 @@ namespace Assets.Scripts.Player
             set
             {
                 _isAttacking = value;
+            }
+        }
+
+        public bool IsThrowing
+        {
+            get
+            {
+                return _isThrowing;
+            }
+
+            set
+            {
+                _isThrowing = value;
             }
         }
         #endregion

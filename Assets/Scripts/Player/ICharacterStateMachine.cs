@@ -8,6 +8,6 @@ namespace Assets.Scripts.Player
 
         //void StateFixedUpdate();
 
-        void StateControl(float move, bool jump, bool slide, bool glide, bool attack);
+        void StateControl(float move, bool jump, bool slide, bool glide, bool attack, bool throwkunai);
     }
 }

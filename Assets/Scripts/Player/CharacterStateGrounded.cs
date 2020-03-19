@@ -16,13 +16,17 @@ namespace Assets.Scripts.Player
 			_velocity = velocity;
 		}
 
-		public void StateControl(float move, bool jump, bool slide, bool glide, bool attack)
+		public void StateControl(float move, bool jump, bool slide, bool glide, bool attack, bool throwkunai)
 		{
-            // If player is attacking control of the player is disabled
-            if (_characterComponents.CharacterFlags.IsAttacking)
+            // If player is attacking or throwing, control of the player is disabled
+            if (_characterComponents.CharacterFlags.IsAttacking ||
+                _characterComponents.CharacterFlags.IsThrowing)
                 return;
 
-            if (attack && !_characterComponents.CharacterFlags.IsAttacking)
+            #region Attack
+            if (attack &&
+                !_characterComponents.CharacterFlags.IsAttacking &&
+                !_characterComponents.CharacterFlags.IsThrowing)
             {
                 // Check if player was sliding to put back main settings
                 if (_characterComponents.CharacterFlags.WasSliding)
@@ -39,7 +43,28 @@ namespace Assets.Scripts.Player
 
                 return;
             }
+            #endregion
+            #region Throw
+            if (throwkunai &&
+                !_characterComponents.CharacterFlags.IsAttacking &&
+                !_characterComponents.CharacterFlags.IsThrowing)
+            {
+                // Check if player was sliding to put back main settings
+                if (_characterComponents.CharacterFlags.WasSliding)
+                {
+                    // Set sliding flag to false
+                    _characterComponents.CharacterFlags.WasSliding = false;
+                    // Trigger slide event for animator state changes
+                    _characterComponents.CharacterEvents.OnSlideEvent.Invoke(false);
+                }
+                // Manage gameObject Collider2Ds
+                CharacterController2D.ManageCollider2Ds(_collider2DArrary, _characterComponents.ThrowCapsuleCollider2D);
+                // Set "is throwing" flag to true
+                _characterComponents.CharacterFlags.IsThrowing = true;
 
+                return;
+            }
+            #endregion
             #region Slide
             if (slide)
             {

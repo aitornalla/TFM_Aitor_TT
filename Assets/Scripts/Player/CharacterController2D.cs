@@ -90,9 +90,9 @@ namespace Assets.Scripts.Player
         #endregion
 
         #region Move
-        public void Control(float move, bool jump, bool slide, bool glide, bool attack)
+        public void Control(float move, bool jump, bool slide, bool glide, bool attack, bool throwkunai)
 		{
-			_characterStateMachine.StateControl(move, jump, slide, glide, attack);
+			_characterStateMachine.StateControl(move, jump, slide, glide, attack, throwkunai);
 
         }
         #endregion
@@ -144,7 +144,7 @@ namespace Assets.Scripts.Player
 		}
         #endregion
 
-        #region Event Handlers
+        #region Animation Event Handlers
         /// <summary>
         ///     Gets called when attack animation reaches a keyframe when the attack should damage enemies
         /// </summary>
@@ -163,6 +163,25 @@ namespace Assets.Scripts.Player
 			// Triggers attack end event for character input control states
 			_characterComponents.CharacterEvents.OnAttackEndEvent.Invoke();
 		}
+
+        /// <summary>
+        ///     Gets called when throw animation reaches a keyframe when the kunai should be spawned and thrown
+        /// </summary>
+        public void OnThrowAnimationEvent()
+        {
+            throw new NotImplementedException("Implement character kunai throw");
+        }
+
+        /// <summary>
+        ///     Gets called when throw animation ends, sets "is throwing" flag to false
+        /// </summary>
+        public void OnThrowEndAnimationEvent()
+        {
+            // Set "is throwing" flag to false
+            _characterComponents.CharacterFlags.IsThrowing = false;
+            // Triggers throw end event for character input control states
+            _characterComponents.CharacterEvents.OnThrowEndEvent.Invoke();
+        }
         #endregion
     }
 }

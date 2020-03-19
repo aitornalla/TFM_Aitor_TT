@@ -16,7 +16,7 @@ namespace Assets.Scripts.Player
 			_velocity = velocity;
 		}
 
-		public void StateControl(float move, bool jump, bool slide, bool glide, bool attack)
+		public void StateControl(float move, bool jump, bool slide, bool glide, bool attack, bool throwkunai)
 		{
 			#region Not grounded
 			if (_characterComponents.CharacterParams.AirControl)

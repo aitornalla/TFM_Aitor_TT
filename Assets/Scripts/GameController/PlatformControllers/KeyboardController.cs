@@ -22,6 +22,20 @@ namespace Assets.Scripts.GameController.PlatformControllers
 		}
 		#endregion
 
+		#region Keyboard Throw key
+		public bool GetKeyThrowDown()
+		{
+			if (Input.GetButtonDown("KB_Throw_Key"))
+			{
+				if (IsDebugEnabled) Debug.Log("Keyboard throw key down");
+
+				return true;
+			}
+
+			return false;
+		}
+		#endregion
+
 		#region Keyboard Jump key
 		public bool GetKeyJumpDown ()
 		{
