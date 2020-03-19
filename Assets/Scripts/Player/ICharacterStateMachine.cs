@@ -2,12 +2,15 @@
 
 namespace Assets.Scripts.Player
 {
+    /// <summary>
+    ///     Interface for creating character states
+    /// </summary>
     public interface ICharacterStateMachine
     {
         //void StateUpdate();
 
         //void StateFixedUpdate();
 
-        void StateControl(float move, bool jump, bool slide, bool glide, bool attack, bool throwkunai);
+        void StateControl(ControlFlags controlFlags);
     }
 }

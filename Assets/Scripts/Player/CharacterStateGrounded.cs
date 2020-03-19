@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Player
 {
-	public class CharacterStateGrounded : ICharacterStateMachine
+	public sealed class CharacterStateGrounded : ICharacterStateMachine
 	{
 		private CharacterComponents _characterComponents = null;
 		private Collider2D[] _collider2DArrary = null;
@@ -16,7 +16,7 @@ namespace Assets.Scripts.Player
 			_velocity = velocity;
 		}
 
-		public void StateControl(float move, bool jump, bool slide, bool glide, bool attack, bool throwkunai)
+		public void StateControl(ControlFlags controlFlags)
 		{
             // If player is attacking or throwing, control of the player is disabled
             if (_characterComponents.CharacterFlags.IsAttacking ||
@@ -24,7 +24,7 @@ namespace Assets.Scripts.Player
                 return;
 
             #region Attack
-            if (attack &&
+            if (controlFlags.Attack &&
                 !_characterComponents.CharacterFlags.IsAttacking &&
                 !_characterComponents.CharacterFlags.IsThrowing)
             {
@@ -45,7 +45,7 @@ namespace Assets.Scripts.Player
             }
             #endregion
             #region Throw
-            if (throwkunai &&
+            if (controlFlags.Throw &&
                 !_characterComponents.CharacterFlags.IsAttacking &&
                 !_characterComponents.CharacterFlags.IsThrowing)
             {
@@ -66,7 +66,7 @@ namespace Assets.Scripts.Player
             }
             #endregion
             #region Slide
-            if (slide)
+            if (controlFlags.Slide)
             {
                 if (!_characterComponents.CharacterFlags.WasSliding)
                 {
@@ -102,7 +102,7 @@ namespace Assets.Scripts.Player
                 // Manage gameObject Collider2Ds
                 CharacterController2D.ManageCollider2Ds(_collider2DArrary, _characterComponents.MainCapsuleCollider2D);
                 // Apply run speed and fixed delta time to move parameter
-                move *= _characterComponents.CharacterParams.RunSpeed * Time.fixedDeltaTime;
+                float move = controlFlags.HorizontalMove * _characterComponents.CharacterParams.RunSpeed * Time.fixedDeltaTime;
                 // Move the character by finding the target velocity
                 Vector3 l_targetVelocity = new Vector2(move * 10.0f, _characterComponents.Rigidbody2D.velocity.y);
                 // And then smoothing it out and applying it to the character
@@ -133,7 +133,7 @@ namespace Assets.Scripts.Player
             }
             #endregion
             #region Player jump
-            if (jump)
+            if (controlFlags.Jump)
             {
                 // Check if player was sliding to put back main settings
                 if (_characterComponents.CharacterFlags.WasSliding)

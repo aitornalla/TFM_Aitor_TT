@@ -90,9 +90,9 @@ namespace Assets.Scripts.Player
         #endregion
 
         #region Move
-        public void Control(float move, bool jump, bool slide, bool glide, bool attack, bool throwkunai)
+        public void Control(ControlFlags controlFlags)
 		{
-			_characterStateMachine.StateControl(move, jump, slide, glide, attack, throwkunai);
+			_characterStateMachine.StateControl(controlFlags);
 
         }
         #endregion

@@ -10,8 +10,8 @@ using UnityEngine;
 
 namespace Assets.Scripts.GameManager
 {
-	public sealed class GameManager : MonoBehaviour {
-
+	public sealed class GameManager : MonoBehaviour
+    {
 		private static GameManager _instance = null;
 		private static IGameController _gameControllerInstance = null;
 

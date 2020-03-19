@@ -5,8 +5,8 @@ using UnityEngine;
 
 namespace Assets.Scripts.Player
 {
-	public sealed class CharacterInputController2D : MonoBehaviour {
-
+	public sealed class CharacterInputController2D : MonoBehaviour
+    {
 		[SerializeField]
 		private CharacterController2D _characterController2D;       // CharacterController2D component to control character physics
 		[SerializeField]
@@ -15,20 +15,16 @@ namespace Assets.Scripts.Player
 		private Animator _animator;                                 // Animator component for setting player animation transitions
 
 		private IGameController _gameController;                    // IGameController component for player input
+		private ControlFlags _controlFlags;                         // Control flags grouped in a class
 
-		private float _horizontalMove = 0.0f;                       // Variable to store horizontal move value, range (-1.0f, 1.0f)
-		private bool _jump = false;                                 // Flag to store jump value
-		private bool _slide = false;                                // Flag to store slide value
-		private bool _glide = false;                                // Flag to store glide value
-		private bool _attack = false;                               // Flag to store attack value
-		private bool _throw = false;                                // Flag to store throw value
-
-		#region Start
+        #region Start
 		// Use this for initialization
 		private void Start ()
 		{
             // Get IGameController component from GameManager
 			_gameController = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<IGameController> ();
+            // Instantiate new object to hold control flags
+			_controlFlags = new ControlFlags();
 		}
 		#endregion
 
@@ -39,40 +35,40 @@ namespace Assets.Scripts.Player
 			// Player horizontal move
             if (_gameController.PlayerLeft())
 			{
-				_horizontalMove = -1.0f;
+				_controlFlags.HorizontalMove = -1.0f;
 			}
 			else if (_gameController.PlayerRight())
 			{
-				_horizontalMove = 1.0f;
+				_controlFlags.HorizontalMove = 1.0f;
 			}
 
 			// Animator player speed parameter setting
-			_animator.SetFloat("PlayerSpeed", Mathf.Abs(_horizontalMove));
+			_animator.SetFloat("PlayerSpeed", Mathf.Abs(_controlFlags.HorizontalMove));
 
 			// Player jump
 			if (_gameController.PlayerJump())
 			{
-				_jump = true;
+				_controlFlags.Jump = true;
 			}
 
 			// Player slide
 			if (_gameController.PlayerSliding())
 			{
-				_slide = true;
+				_controlFlags.Slide = true;
 			}
 			else if (_gameController.PlayerQuitSliding())
 			{
-				_slide = false;
+				_controlFlags.Slide = false;
 			}
 
 			// Player glide
 			if (_gameController.PlayerGliding())
 			{
-				_glide = true;
+				_controlFlags.Glide = true;
 			}
 			else if (_gameController.PlayerQuitGliding())
 			{
-				_glide = false;
+				_controlFlags.Glide = false;
 			}
 
             // Player attack
@@ -82,7 +78,7 @@ namespace Assets.Scripts.Player
 				!_characterFlags.IsThrowing &&
 				!_characterFlags.WasSliding)
             {
-				_attack = true;
+				_controlFlags.Attack = true;
 				// Animator player attack parameter setting
 				_animator.SetBool("PlayerAttack", true);
             }
@@ -94,7 +90,7 @@ namespace Assets.Scripts.Player
                 !_characterFlags.IsThrowing &&
 				!_characterFlags.WasSliding)
 			{
-				_throw = true;
+				_controlFlags.Throw = true;
 				// Animator player throw parameter setting
 				_animator.SetBool("PlayerThrow", true);
 			}
@@ -105,11 +101,11 @@ namespace Assets.Scripts.Player
 		// Update is called once per frame
 		private void FixedUpdate ()
 		{
-			_characterController2D.Control(_horizontalMove, _jump, _slide, _glide, _attack, _throw);
-            // Put movement variable back to 0.0f
-			_horizontalMove = 0.0f;
-            // Put jump flag back to false
-			_jump = false;
+			_characterController2D.Control(_controlFlags);
+			// Put movement variable back to 0.0f
+			_controlFlags.HorizontalMove = 0.0f;
+			// Put jump flag back to false
+			_controlFlags.Jump = false;
 		}
         #endregion
 
@@ -166,8 +162,8 @@ namespace Assets.Scripts.Player
         /// </summary>
         public void OnAttackEnd()
 		{
-            // When attack animation ends, put attack flag back to false
-			_attack = false;
+			// When attack animation ends, put attack flag back to false
+			_controlFlags.Attack = false;
 			// Animator player attack parameter setting
 			_animator.SetBool("PlayerAttack", false);
         }
@@ -178,7 +174,7 @@ namespace Assets.Scripts.Player
 		public void OnThrowEnd()
 		{
 			// When throw animation ends, put throw flag back to false
-			_throw = false;
+			_controlFlags.Throw = false;
 			// Animator player attack parameter setting
 			_animator.SetBool("PlayerThrow", false);
 		}

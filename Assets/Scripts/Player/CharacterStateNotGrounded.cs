@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Player
 {
-	public class CharacterStateNotGrounded : ICharacterStateMachine
+	public sealed class CharacterStateNotGrounded : ICharacterStateMachine
 	{
 		private CharacterComponents _characterComponents = null;
 		private Collider2D[] _collider2DArrary = null;
@@ -16,7 +16,7 @@ namespace Assets.Scripts.Player
 			_velocity = velocity;
 		}
 
-		public void StateControl(float move, bool jump, bool slide, bool glide, bool attack, bool throwkunai)
+		public void StateControl(ControlFlags controlFlags)
 		{
 			#region Not grounded
 			if (_characterComponents.CharacterParams.AirControl)
@@ -25,7 +25,7 @@ namespace Assets.Scripts.Player
 			}
 
 			#region Double jump
-			if (jump && !_characterComponents.CharacterFlags.HasDoubleJumped && !_characterComponents.CharacterFlags.WasGliding)
+			if (controlFlags.Jump && !_characterComponents.CharacterFlags.HasDoubleJumped && !_characterComponents.CharacterFlags.WasGliding)
 			{
 				// Put double jump flag to true
 				_characterComponents.CharacterFlags.HasDoubleJumped = true;
@@ -39,7 +39,7 @@ namespace Assets.Scripts.Player
 			#endregion
 
 			#region Glide
-			if (glide)
+			if (controlFlags.Glide)
 			{
 				if (!_characterComponents.CharacterFlags.WasGliding)
 				{
