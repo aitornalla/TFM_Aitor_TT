@@ -209,52 +209,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 104476630}
---- !u!1001 &206525858
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4985748161357322, guid: 810950d093c3447829fa0f3c554fad0f, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 5.82
-      objectReference: {fileID: 0}
-    - target: {fileID: 4985748161357322, guid: 810950d093c3447829fa0f3c554fad0f, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: -0.09
-      objectReference: {fileID: 0}
-    - target: {fileID: 4985748161357322, guid: 810950d093c3447829fa0f3c554fad0f, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 2.1324255
-      objectReference: {fileID: 0}
-    - target: {fileID: 4985748161357322, guid: 810950d093c3447829fa0f3c554fad0f, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4985748161357322, guid: 810950d093c3447829fa0f3c554fad0f, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4985748161357322, guid: 810950d093c3447829fa0f3c554fad0f, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4985748161357322, guid: 810950d093c3447829fa0f3c554fad0f, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4985748161357322, guid: 810950d093c3447829fa0f3c554fad0f, type: 2}
-      propertyPath: m_RootOrder
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 1549208421877430, guid: 810950d093c3447829fa0f3c554fad0f, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 810950d093c3447829fa0f3c554fad0f, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &232815252
 GameObject:
   m_ObjectHideFlags: 0
@@ -1515,7 +1469,7 @@ Camera:
   far clip plane: 5000
   field of view: 40
   orthographic: 1
-  orthographic size: 10
+  orthographic size: 7
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1537,7 +1491,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2019571386}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
