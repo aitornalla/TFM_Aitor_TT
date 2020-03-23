@@ -99,6 +99,34 @@ namespace Assets.Scripts.Player
 
         #region Static Methods
         /// <summary>
+        ///     Manages player facing direction and relevant components 
+        /// </summary>
+        /// <param name="characterComponents"><see cref="CharacterComponents"/> component</param>
+        /// <param name="collider2DArrary"><see cref="Collider2D"/> array component of the gameObject</param>
+        /// <param name="move">Moving magnitud with sign</param>
+        public static void ManagePlayerFacing(CharacterComponents characterComponents, Collider2D[] collider2DArrary, float move)
+        {
+            // If the input is moving the player right and the player is facing left...
+            if (move > 0.0f && !characterComponents.CharacterFlags.IsFacingRight)
+            {
+                // ... flip the player.
+                characterComponents.CharacterFlags.IsFacingRight =
+                CharacterController2D.FlipFacingDirection(characterComponents.CharacterFlags.IsFacingRight, characterComponents.SpriteRenderer);
+                // ReOffsets gameObject Collider2Ds
+                CharacterController2D.ReOffsetCollider2Ds(collider2DArrary);
+            }
+            // Otherwise if the input is moving the player left and the player is facing right...
+            else if (move < 0.0f && characterComponents.CharacterFlags.IsFacingRight)
+            {
+                // ... flip the player.
+                characterComponents.CharacterFlags.IsFacingRight =
+                CharacterController2D.FlipFacingDirection(characterComponents.CharacterFlags.IsFacingRight, characterComponents.SpriteRenderer);
+                // ReOffsets gameObject Collider2Ds
+                CharacterController2D.ReOffsetCollider2Ds(collider2DArrary);
+            }
+        }
+
+        /// <summary>
         ///     Changes facing right flag and reoffsets gameObject colliders
         /// </summary>
         /// <param name="isFacingRight">Facing right flag</param>

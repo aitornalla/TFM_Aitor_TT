@@ -10,21 +10,34 @@ namespace Assets.Scripts.Player
         public const float CeilingRadius = 0.2f;        // Radius of the overlap circle to determine if the player can stand up
         #endregion
 
-        [Header("Parameters")]
+
         #region Parameters
+        [Header("Forces")]
         [SerializeField]
 		private float _jumpForce = 525.0f;              // Amount of force added when the player jumps
 		[SerializeField]
 		private float _slideForce = 125.0f;             // Amount of force added when the player slides
-		[SerializeField]
-		private float _glideSpeed = -0.5f;              // Target gliding speed
-		[SerializeField]
-		private float _runSpeed = 40.0f;                // Player run speed
-		[SerializeField] [Range(0, 0.3f)]
+
+        [Header("Speeds")]
+        [SerializeField]
+        private float _runSpeed = 40.0f;                // Player run speed
+        [SerializeField]
+        private float _glideHorizontalSpeed = 5.0f;     // Target gliding horizontal speed
+        [SerializeField]
+		private float _glideVerticalSpeed = -0.5f;      // Target gliding vertical speed
+
+        [Header("Movement Smoothing")]
+        [SerializeField] [Range(0, 0.3f)]
 		private float _movementSmoothing = 0.05f;       // How much to smooth out the movement
-		[SerializeField]
+        [SerializeField] [Range(0, 0.3f)]
+        private float _glideMovementSmoothing = 0.1f;   // How much to smooth out the movement
+
+        [Space]
+        [SerializeField]
 		private bool _airControl = false;               // Whether or not a player can steer while jumping
-		[SerializeField]
+
+        [Space]
+        [SerializeField]
 		private LayerMask _groundLayer;                 // A mask determining what is ground to the character
         #endregion
 
@@ -45,19 +58,27 @@ namespace Assets.Scripts.Player
             }
         }
 
-		public float GlideSpeed
-        {
-            get
-            {
-                return _glideSpeed;
-            }
-        }
-
-		public float RunSpeed
+        public float RunSpeed
         {
             get
             {
                 return _runSpeed;
+            }
+        }
+
+        public float GlideHorizontalSpeed
+        {
+            get
+            {
+                return _glideHorizontalSpeed;
+            }
+        }
+
+        public float GlideVerticalSpeed
+        {
+            get
+            {
+                return _glideVerticalSpeed;
             }
         }
 
@@ -69,7 +90,15 @@ namespace Assets.Scripts.Player
             }
         }
 
-		public bool AirControl
+        public float GlideMovementSmoothing
+        {
+            get
+            {
+                return _glideMovementSmoothing;
+            }
+        }
+
+        public bool AirControl
         {
             get
             {

@@ -53,14 +53,27 @@ namespace Assets.Scripts.Player
 				// Trigger glide event for animator state changes
 				_characterComponents.CharacterEvents.OnGlideEvent.Invoke(true);
 
+                // Gliding horizontal movement control
+				float l_move = controlFlags.HorizontalMove * _characterComponents.CharacterParams.GlideHorizontalSpeed;
+				// Apply smooth transition to player glide horizontal velocity
+				_characterComponents.Rigidbody2D.velocity =
+					Vector3.SmoothDamp(
+						_characterComponents.Rigidbody2D.velocity,
+						new Vector3(l_move, _characterComponents.Rigidbody2D.velocity.y, 0.0f),
+						ref _velocity,
+						_characterComponents.CharacterParams.GlideMovementSmoothing);
+				// Manage player facing direction and relevant components
+				CharacterController2D.ManagePlayerFacing(_characterComponents, _collider2DArrary, l_move);
+
+				// If player is in a glide impulse zone let the area effector apply any forces
 				if (_characterComponents.CharacterFlags.IsInGlideImpulseZone)
 					return;
 
-				// Apply smooth transition to player glide velocity
+				// Apply smooth transition to player glide vertical velocity
 				_characterComponents.Rigidbody2D.velocity =
 					Vector3
 					.SmoothDamp(_characterComponents.Rigidbody2D.velocity,
-						new Vector3(_characterComponents.Rigidbody2D.velocity.x, _characterComponents.CharacterParams.GlideSpeed, 0.0f),
+						new Vector3(_characterComponents.Rigidbody2D.velocity.x, _characterComponents.CharacterParams.GlideVerticalSpeed, 0.0f),
 						ref _velocity,
 						_characterComponents.CharacterParams.MovementSmoothing);
 			}

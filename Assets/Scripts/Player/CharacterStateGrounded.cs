@@ -112,24 +112,8 @@ namespace Assets.Scripts.Player
                                  l_targetVelocity,
                                  ref _velocity,
                                  _characterComponents.CharacterParams.MovementSmoothing);
-                // If the input is moving the player right and the player is facing left...
-                if (move > 0.0f && !_characterComponents.CharacterFlags.IsFacingRight)
-                {
-                    // ... flip the player.
-                    _characterComponents.CharacterFlags.IsFacingRight =
-                    CharacterController2D.FlipFacingDirection(_characterComponents.CharacterFlags.IsFacingRight, _characterComponents.SpriteRenderer);
-                    // ReOffsets gameObject Collider2Ds
-                    CharacterController2D.ReOffsetCollider2Ds(_collider2DArrary);
-                }
-                // Otherwise if the input is moving the player left and the player is facing right...
-                else if (move < 0.0f && _characterComponents.CharacterFlags.IsFacingRight)
-                {
-                    // ... flip the player.
-                    _characterComponents.CharacterFlags.IsFacingRight =
-                    CharacterController2D.FlipFacingDirection(_characterComponents.CharacterFlags.IsFacingRight, _characterComponents.SpriteRenderer);
-                    // ReOffsets gameObject Collider2Ds
-                    CharacterController2D.ReOffsetCollider2Ds(_collider2DArrary);
-                }
+                // Manage player facing direction and relevant components
+                CharacterController2D.ManagePlayerFacing(_characterComponents, _collider2DArrary, move);
             }
             #endregion
             #region Player jump
