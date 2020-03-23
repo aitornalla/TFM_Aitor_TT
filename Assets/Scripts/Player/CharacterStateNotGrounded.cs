@@ -52,6 +52,10 @@ namespace Assets.Scripts.Player
 				_characterComponents.CharacterFlags.WasGliding = true;
 				// Trigger glide event for animator state changes
 				_characterComponents.CharacterEvents.OnGlideEvent.Invoke(true);
+
+				if (_characterComponents.CharacterFlags.IsInGlideImpulseZone)
+					return;
+
 				// Apply smooth transition to player glide velocity
 				_characterComponents.Rigidbody2D.velocity =
 					Vector3

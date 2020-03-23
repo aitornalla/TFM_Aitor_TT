@@ -209,6 +209,48 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 104476630}
+--- !u!1001 &206525858
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4985748161357322, guid: 810950d093c3447829fa0f3c554fad0f, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 5.82
+      objectReference: {fileID: 0}
+    - target: {fileID: 4985748161357322, guid: 810950d093c3447829fa0f3c554fad0f, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -0.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 4985748161357322, guid: 810950d093c3447829fa0f3c554fad0f, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 2.1324255
+      objectReference: {fileID: 0}
+    - target: {fileID: 4985748161357322, guid: 810950d093c3447829fa0f3c554fad0f, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4985748161357322, guid: 810950d093c3447829fa0f3c554fad0f, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4985748161357322, guid: 810950d093c3447829fa0f3c554fad0f, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4985748161357322, guid: 810950d093c3447829fa0f3c554fad0f, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4985748161357322, guid: 810950d093c3447829fa0f3c554fad0f, type: 2}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 810950d093c3447829fa0f3c554fad0f, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &232815252
 GameObject:
   m_ObjectHideFlags: 0
@@ -339,9 +381,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cinemachineVirtualCamera: {fileID: 294590562}
-  _shakeAmplitude: 0.15
-  _shakeFrequency: 3
-  _shakeDuration: 0.5
+  _defaultShakeAmplitude: 0.15
+  _defaultShakeFrequency: 3
+  _defaultShakeDuration: 0.5
 --- !u!1 &301462132
 GameObject:
   m_ObjectHideFlags: 0

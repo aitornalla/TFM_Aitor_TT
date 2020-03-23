@@ -11,6 +11,7 @@ namespace Assets.Scripts.Player
         private bool _wasSliding = false;               // Was the player sliding in the previous frame?
         private bool _hasDoubleJumped = false;          // Flag for double jumping
         private bool _wasGliding = false;               // Is the player gliding?
+        private bool _isInGlideImpulseZone = false;     // Is the player in a glide impulse zone?
         private bool _isAttacking = false;              // Is the player attacking?
         private bool _isThrowing = false;               // Is the player throwing a kunai?
         #endregion
@@ -52,6 +53,19 @@ namespace Assets.Scripts.Player
             set
             {
                 _wasSliding = value;
+            }
+        }
+
+        public bool IsInGlideImpulseZone
+        {
+            get
+            {
+                return _isInGlideImpulseZone;
+            }
+
+            set
+            {
+                _isInGlideImpulseZone = value;
             }
         }
 
