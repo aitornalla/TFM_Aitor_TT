@@ -24,7 +24,9 @@ namespace Assets.Scripts.Player
         [SerializeField]
         private float _glideHorizontalSpeed = 5.0f;     // Target gliding horizontal speed
         [SerializeField]
-		private float _glideVerticalSpeed = -0.5f;      // Target gliding vertical speed
+		private float _glideVerticalSpeedUp = 7.0f;     // Target gliding vertical speed up
+        [SerializeField]
+        private float _glideVerticalSpeedDown = -0.5f;  // Target gliding vertical speed down
 
         [Header("Movement Smoothing")]
         [SerializeField] [Range(0, 0.3f)]
@@ -74,11 +76,19 @@ namespace Assets.Scripts.Player
             }
         }
 
-        public float GlideVerticalSpeed
+        public float GlideVerticalSpeedUp
         {
             get
             {
-                return _glideVerticalSpeed;
+                return _glideVerticalSpeedUp;
+            }
+        }
+
+        public float GlideVerticalSpeedDown
+        {
+            get
+            {
+                return _glideVerticalSpeedDown;
             }
         }
 

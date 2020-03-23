@@ -65,15 +65,26 @@ namespace Assets.Scripts.Player
 				// Manage player facing direction and relevant components
 				CharacterController2D.ManagePlayerFacing(_characterComponents, _collider2DArrary, l_move);
 
-				// If player is in a glide impulse zone let the area effector apply any forces
-				if (_characterComponents.CharacterFlags.IsInGlideImpulseZone)
-					return;
+                #region GIZ
+                // If player is in a glide impulse zone let the area effector apply any forces
+                if (_characterComponents.CharacterFlags.IsInGlideImpulseZone)
+                {
+					// Limit player glide vertical velocity up
+					if (_characterComponents.Rigidbody2D.velocity.y >= _characterComponents.CharacterParams.GlideVerticalSpeedUp)
+						_characterComponents.Rigidbody2D.velocity =
+							new Vector2(
+								_characterComponents.Rigidbody2D.velocity.x,
+								_characterComponents.CharacterParams.GlideVerticalSpeedUp);
 
-				// Apply smooth transition to player glide vertical velocity
-				_characterComponents.Rigidbody2D.velocity =
+					return;
+                }
+                #endregion
+
+                // Apply smooth transition to player glide vertical velocity down
+                _characterComponents.Rigidbody2D.velocity =
 					Vector3
 					.SmoothDamp(_characterComponents.Rigidbody2D.velocity,
-						new Vector3(_characterComponents.Rigidbody2D.velocity.x, _characterComponents.CharacterParams.GlideVerticalSpeed, 0.0f),
+						new Vector3(_characterComponents.Rigidbody2D.velocity.x, _characterComponents.CharacterParams.GlideVerticalSpeedDown, 0.0f),
 						ref _velocity,
 						_characterComponents.CharacterParams.MovementSmoothing);
 			}
