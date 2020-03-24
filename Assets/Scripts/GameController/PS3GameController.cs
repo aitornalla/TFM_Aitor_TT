@@ -37,7 +37,7 @@ namespace Assets.Scripts.GameController
 
         public bool PlayerThrow ()
         {
-			return _controller.PS3R1ButtonDown();
+			return _controller.PS3TriangleButtonDown();
         }
 
 		public bool PlayerJump ()
@@ -67,12 +67,12 @@ namespace Assets.Scripts.GameController
 
 		public bool PlayerSliding()
 		{
-			return _controller.PS3R3ButtonDown ();
+			return _controller.PS3R1ButtonDown ();
 		}
 
 		public bool PlayerQuitSliding()
 		{
-			return _controller.PS3R3ButtonUp ();
+			return _controller.PS3R1ButtonUp ();
 		}
 
 		public bool PlayerGliding()
