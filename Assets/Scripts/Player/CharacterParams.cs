@@ -22,6 +22,10 @@ namespace Assets.Scripts.Player
         [SerializeField]
         private float _runSpeed = 40.0f;                // Player run speed
         [SerializeField]
+        private float _jumpControlTargetHS = 2.0f;      // Target jump horizontal speed when controlling character on air and wanting to decrease speed
+        [SerializeField]
+        private float _jumpControlTargetHS_0 = 5.0f;    // Target jump horizontal speed when controlling character on air and character was not moving
+        [SerializeField]
         private float _glideHorizontalSpeed = 5.0f;     // Target gliding horizontal speed
         [SerializeField]
 		private float _glideVerticalSpeedUp = 7.0f;     // Target gliding vertical speed up
@@ -30,9 +34,11 @@ namespace Assets.Scripts.Player
 
         [Header("Movement Smoothing")]
         [SerializeField] [Range(0, 0.3f)]
-		private float _movementSmoothing = 0.05f;       // How much to smooth out the movement
+		private float _movementSmoothing = 0.05f;       // How much to smooth out the movement on ground
         [SerializeField] [Range(0, 0.3f)]
-        private float _glideMovementSmoothing = 0.1f;   // How much to smooth out the movement
+        private float _jumpControlMovSmoothing = 0.1f;  // How much to smooth out the movement on air when controlling the character
+        [SerializeField] [Range(0, 0.3f)]
+        private float _glideMovementSmoothing = 0.1f;   // How much to smooth out the movement when gliding horizontally
 
         [Space]
         [SerializeField]
@@ -68,6 +74,22 @@ namespace Assets.Scripts.Player
             }
         }
 
+        public float JumpControlTargetHorizontalSpeed
+        {
+            get
+            {
+                return _jumpControlTargetHS;
+            }
+        }
+
+        public float JumpControlTargetHorizontalSpeed_0
+        {
+            get
+            {
+                return _jumpControlTargetHS_0;
+            }
+        }
+
         public float GlideHorizontalSpeed
         {
             get
@@ -97,6 +119,14 @@ namespace Assets.Scripts.Player
             get
             {
                 return _movementSmoothing;
+            }
+        }
+
+        public float JumpControlMovementSmoothing
+        {
+            get
+            {
+                return _jumpControlMovSmoothing;
             }
         }
 

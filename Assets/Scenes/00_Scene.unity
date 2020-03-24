@@ -935,7 +935,7 @@ CapsuleCollider2D:
   m_GameObject: {fileID: 823096766}
   m_Enabled: 0
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 0518e3805446b491c86feac558d7a0eb, type: 2}
+  m_Material: {fileID: 6200000, guid: f2ffcb11978c7461e866e7604b454195, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -956,12 +956,15 @@ MonoBehaviour:
   _jumpForce: 525
   _slideForce: 125
   _runSpeed: 40
+  _jumpControlTargetHS: 2
+  _jumpControlTargetHS_0: 5
   _glideHorizontalSpeed: 5
   _glideVerticalSpeedUp: 7
   _glideVerticalSpeedDown: -0.5
   _movementSmoothing: 0.05
+  _jumpControlMovSmoothing: 0.1
   _glideMovementSmoothing: 0.1
-  _airControl: 0
+  _airControl: 1
   _groundLayer:
     serializedVersion: 2
     m_Bits: 512
@@ -1116,7 +1119,7 @@ CapsuleCollider2D:
   m_GameObject: {fileID: 823096766}
   m_Enabled: 0
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: f2ffcb11978c7461e866e7604b454195, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -8550,26 +8553,6 @@ CompositeCollider2D:
         Y: -30039062
       - X: 430039072
         Y: -30039062
-    - - X: 180039056
-        Y: -30000000
-      - X: 220000000
-        Y: -30000000
-      - X: 220000000
-        Y: -156250
-      - X: 219765632
-        Y: 0
-      - X: 170312496
-        Y: 0
-      - X: 170000000
-        Y: -312500
-      - X: 170000000
-        Y: -9960938
-      - X: 169960944
-        Y: -9960938
-      - X: 169960944
-        Y: -30039062
-      - X: 180039056
-        Y: -30039062
     - - X: 290039072
         Y: -30000000
       - X: 380000000
@@ -8589,6 +8572,26 @@ CompositeCollider2D:
       - X: 279960928
         Y: -30039062
       - X: 290039072
+        Y: -30039062
+    - - X: 180039056
+        Y: -30000000
+      - X: 220000000
+        Y: -30000000
+      - X: 220000000
+        Y: -156250
+      - X: 219765632
+        Y: 0
+      - X: 170312496
+        Y: 0
+      - X: 170000000
+        Y: -312500
+      - X: 170000000
+        Y: -9960938
+      - X: 169960944
+        Y: -9960938
+      - X: 169960944
+        Y: -30039062
+      - X: 180039056
         Y: -30039062
   m_CompositePaths:
     m_Paths:
@@ -8773,16 +8776,6 @@ CompositeCollider2D:
       - {x: 41.996094, y: -0.9960938}
       - {x: 41.996094, y: -3.0039062}
       - {x: 43.003906, y: -3.0039062}
-    - - {x: 18.003906, y: -3}
-      - {x: 22, y: -3}
-      - {x: 22, y: -0.015625}
-      - {x: 21.976564, y: 0}
-      - {x: 17.03125, y: 0}
-      - {x: 17, y: -0.03125}
-      - {x: 17, y: -0.9960938}
-      - {x: 16.996094, y: -0.9960938}
-      - {x: 16.996094, y: -3.0039062}
-      - {x: 18.003906, y: -3.0039062}
     - - {x: 29.003908, y: -3}
       - {x: 38, y: -3}
       - {x: 38, y: -0.015625}
@@ -8793,6 +8786,16 @@ CompositeCollider2D:
       - {x: 27.996094, y: -0.9960938}
       - {x: 27.996094, y: -3.0039062}
       - {x: 29.003908, y: -3.0039062}
+    - - {x: 18.003906, y: -3}
+      - {x: 22, y: -3}
+      - {x: 22, y: -0.015625}
+      - {x: 21.976564, y: 0}
+      - {x: 17.03125, y: 0}
+      - {x: 17, y: -0.03125}
+      - {x: 17, y: -0.9960938}
+      - {x: 16.996094, y: -0.9960938}
+      - {x: 16.996094, y: -3.0039062}
+      - {x: 18.003906, y: -3.0039062}
   m_VertexDistance: 0.0005
 --- !u!50 &1638333898
 Rigidbody2D:

@@ -44,7 +44,7 @@ namespace Assets.Scripts.Player
         private void Update()
 		{
             
-		}
+        }
         #endregion
 
         #region FixedUpdate
