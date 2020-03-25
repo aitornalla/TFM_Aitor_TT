@@ -1,53 +1,82 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Assets.Scripts.CustomClasses;
 
 namespace Assets.Scripts.AnimatedSpringboardController
 {
-	public sealed class AnimatedSpringboard : MonoBehaviour
+	public sealed class SwingingAnimSpringboard : MonoBehaviour
 	{
-		[SerializeField]
-		private LayerMask _playerLayer;                 // Player layer to check conditions
-		[SerializeField]
-		private float _springForce = 1000.0f;           // Spring force
-		[SerializeField]
-		private float _angleForce = 90.0f;              // Angle used to apply the force (in degrees)
         [SerializeField]
-        private bool _totalVelocityCancelation = false; // Flag for total velocity cancellation before applying spring force
+        private LayerMask _playerLayer;                     // Player layer to check conditions
+        [SerializeField]
+        private float _springForce = 1000.0f;               // Spring force
+        [SerializeField] [Range(90.0f, 180.0f)]
+        private float _angleLimit1 = 180.0f;                // Limit angle used to apply the force (in degrees)
+        [SerializeField] [Range(0.0f, 90.0f)]
+        private float _angleLimit2 = 0.0f;                  // Limit angle used to apply the force (in degrees)
+        [SerializeField]
+        private float _frequency = 10.0f;                   // Swinging frequency
+        [SerializeField]
+        private bool _totalVelocityCancelation = false;     // Flag for total velocity cancellation before applying spring force
 
-		private Animator _animator;                     // Animator component
-        private Transform _arrowChild;                  // Child gameObject arrow
-        private const float ArrowRotation_0 = 45.0f;    // Initial sprite angle
+        private Animator _animator;                         // Animator component
+        private Transform _arrowChild;                      // Child gameObject arrow
+        private const float ArrowRotation_0 = 45.0f;        // Initial sprite angle
+
+        private float _oscillatorAngle_0 = 180.0f;          // Initial oscillator angle
+        private float _angleForce;                          // Spring force angle
+        private float _angle_0;                             // Angle previous value
+
+        private Oscillator _oscillator;
 
         private void Awake()
         {
             // Get animator component
-			_animator = gameObject.GetComponent<Animator>();
+            _animator = gameObject.GetComponent<Animator>();
             // Get arrow child
             _arrowChild = gameObject.transform.GetChild(0);
         }
 
         // Use this for initialization
         private void Start()
-		{
-            // Rotates arrow sprite to match spring force direction
+        {
+            // Rotates arrow sprite to match angle limit 1
             // Counters the rotation of parent gameObject
-            _arrowChild.Rotate(0.0f, 0.0f, _angleForce + ArrowRotation_0 - transform.rotation.eulerAngles.z);
-		}
+            _arrowChild.Rotate(0.0f, 0.0f, _angleLimit1 + ArrowRotation_0 - transform.rotation.eulerAngles.z);
+            // Assing first limit to initial angle
+            _angle_0 = _angleLimit1;
+            // Instantiate new Oscillator object
+            _oscillator = new Oscillator(_oscillatorAngle_0, _frequency, EOscillatorFunction.CosFunction);
+        }
 
-		// Update is called once per frame
-		private void Update()
-		{
+        // Update is called once per frame
+        private void FixedUpdate()
+        {
+            // Calculate oscillator position
+            float l_pos = _oscillator.Oscillate(Time.fixedDeltaTime);
+            // Calculate percentage within angle limits
+            float l_percent = Mathf.Abs(l_pos - (-1.0f)) / 2.0f;
+            // Calculate new angle
+            _angleForce = _angleLimit1 - (_angleLimit1 - _angleLimit2) * l_percent;
+            // Calculate increment to rotate
+            float l_increment = _angleForce - _angle_0;
+            // Rotate arrow
+            _arrowChild.Rotate(0.0f, 0.0f, l_increment);
 
-		}
+            //Debug.Log("Delta: " + Time.fixedDeltaTime + " | Angle: " + l_angle + " | Angle_0: " + _angle_0 + " | Increment: " + l_increment);
+
+            // Assign current angle to angle 0 for next update
+            _angle_0 = _angleForce;
+        }
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-			// If player jumps on the springboard ...
-			if (_playerLayer == (_playerLayer | (1 << collision.gameObject.layer)))
-			{
-				// Get RigidBody2D component
-				Rigidbody2D l_rigidbody2D = collision.GetComponent<Rigidbody2D>();
+            // If player jumps on the springboard ...
+            if (_playerLayer == (_playerLayer | (1 << collision.gameObject.layer)))
+            {
+                // Get RigidBody2D component
+                Rigidbody2D l_rigidbody2D = collision.GetComponent<Rigidbody2D>();
 
                 if (l_rigidbody2D != null)
                 {
@@ -62,18 +91,18 @@ namespace Assets.Scripts.AnimatedSpringboardController
                         l_rigidbody2D.velocity = CancelVelocityOnForceDirection(l_rigidbody2D.velocity);
                     }
 
-					// Add force
-					float l_anlgeRad = Mathf.Deg2Rad * _angleForce;
-					Vector2 l_force = new Vector2(_springForce * Mathf.Cos(l_anlgeRad), _springForce * Mathf.Sin(l_anlgeRad));
-					l_rigidbody2D.AddForce(l_force);
+                    // Add force
+                    float l_anlgeRad = Mathf.Deg2Rad * _angleForce;
+                    Vector2 l_force = new Vector2(_springForce * Mathf.Cos(l_anlgeRad), _springForce * Mathf.Sin(l_anlgeRad));
+                    l_rigidbody2D.AddForce(l_force);
 
                     // Trigger animated springboard animation
                     if (_animator != null)
                     {
-						_animator.SetTrigger("Activate");
+                        _animator.SetTrigger("Activate");
                     }
-				}
-			}
+                }
+            }
         }
 
         /// <summary>
