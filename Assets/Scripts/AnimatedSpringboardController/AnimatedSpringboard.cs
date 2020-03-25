@@ -29,7 +29,9 @@ namespace Assets.Scripts.AnimatedSpringboardController
         // Use this for initialization
         private void Start()
 		{
-            _arrowChild.localRotation = Quaternion.Euler(0.0f, 0.0f, _angleForce + ArrowRotation_0);
+            // Rotates arrow sprite to match spring force direction
+            // Counters the rotation of parent gameObject
+            _arrowChild.localRotation = Quaternion.Euler(0.0f, 0.0f, _angleForce + ArrowRotation_0 - transform.rotation.eulerAngles.z);
 		}
 
 		// Update is called once per frame
