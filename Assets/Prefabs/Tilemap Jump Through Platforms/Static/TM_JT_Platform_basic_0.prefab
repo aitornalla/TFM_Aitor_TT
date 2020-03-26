@@ -55,7 +55,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 1
   m_UsedByComposite: 0
-  m_Offset: {x: 8.999826, y: 2.7301226}
+  m_Offset: {x: 0, y: -0.27607954}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -66,7 +66,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.9280005, y: 0.145545}
+  m_Size: {x: 1.9280005, y: 0.15151477}
   m_EdgeRadius: 0
 --- !u!251 &251027229736579492
 PlatformEffector2D:
@@ -133,7 +133,7 @@ Tilemap:
   m_GameObject: {fileID: 1748914953285048}
   m_Enabled: 1
   m_Tiles:
-  - first: {x: 8, y: 2, z: 0}
+  - first: {x: -1, y: -1, z: 0}
     second:
       m_TileIndex: 2
       m_TileSpriteIndex: 2
@@ -142,10 +142,10 @@ Tilemap:
       m_ObjectToInstantiate: {fileID: 0}
       m_TileFlags: 1
       m_ColliderType: 1
-  - first: {x: 9, y: 2, z: 0}
+  - first: {x: 0, y: -1, z: 0}
     second:
-      m_TileIndex: 0
-      m_TileSpriteIndex: 0
+      m_TileIndex: 1
+      m_TileSpriteIndex: 1
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_ObjectToInstantiate: {fileID: 0}
@@ -153,17 +153,17 @@ Tilemap:
       m_ColliderType: 1
   m_AnimatedTiles: {}
   m_TileAssetArray:
-  - m_RefCount: 1
-    m_Data: {fileID: 11400000, guid: f9e3e57f8184f450dac5a2af45a822ef, type: 2}
   - m_RefCount: 0
     m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: 11400000, guid: f9e3e57f8184f450dac5a2af45a822ef, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: d2b20590a03994a9f8a4af006042c2d0, type: 2}
   m_TileSpriteArray:
-  - m_RefCount: 1
-    m_Data: {fileID: 21300000, guid: 118e0803e462a49708465530e42931b6, type: 3}
   - m_RefCount: 0
     m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: 21300000, guid: 118e0803e462a49708465530e42931b6, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 21300000, guid: 8cd146f5ffcba43bb94738ac44098d63, type: 3}
   m_TileMatrixArray:
@@ -190,8 +190,8 @@ Tilemap:
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Origin: {x: 0, y: 0, z: 0}
-  m_Size: {x: 35, y: 4, z: 1}
+  m_Origin: {x: -1, y: -1, z: 0}
+  m_Size: {x: 36, y: 5, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:

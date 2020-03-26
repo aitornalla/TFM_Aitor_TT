@@ -56,6 +56,8 @@ namespace Assets.Scripts.MovingPlatformController
 				default:
 					break;
             }
+            // Assing initial platform position 0
+			_platformPosition_0 = _initialPosition;
 		}
 
 		private void FixedUpdate()
