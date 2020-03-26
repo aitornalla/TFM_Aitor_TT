@@ -31,6 +31,16 @@ namespace Assets.Scripts.Player
         private Coroutine _damageBlinkCoroutine;
         private Color _defaultSpriteColor;
 
+        #region Properties
+        public int PlayerMAxHealth
+        {
+            get
+            {
+                return _playerMaxHealth;
+            }
+        }
+        #endregion
+
         // Use this for initialization
         private void Start()
         {

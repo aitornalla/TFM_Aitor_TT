@@ -29,21 +29,20 @@ namespace Assets.Scripts.MovingPlatformController
 		private bool _reverseInitialDirection = false;              // Flag for intial platform direction
 
 		private Oscillator _oscillator;                             // Oscillator object
-		private float _oscillatorAngle_0;                           // Initial oscillator angle
 		private float _platformPosition_0;                          // Platform previous position
 
 		// Use this for initialization
 		private void Start()
 		{
             // Calculate initial oscillator angle
-			_oscillatorAngle_0 = Mathf.Acos(_initialPosition / _movementSemiLength) * Mathf.Rad2Deg;
+			float l_oscillatorAngle_0 = Mathf.Acos(_initialPosition / _movementSemiLength) * Mathf.Rad2Deg;
             // If initial platform movement is to the right, recalculate initial oscillator angle
             if (_reverseInitialDirection)
             {
-				_oscillatorAngle_0 = 360.0f - _oscillatorAngle_0;
+				l_oscillatorAngle_0 = 360.0f - l_oscillatorAngle_0;
             }
 			// Instantiate new Oscillator object
-			_oscillator = new Oscillator(_oscillatorAngle_0, _frequency, _oscillatorFunction);
+			_oscillator = new Oscillator(l_oscillatorAngle_0, _frequency, _oscillatorFunction);
             // Translate platform to the initial position
             switch(_platformLinearMovement)
             {

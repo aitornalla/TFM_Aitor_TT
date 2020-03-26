@@ -5,9 +5,9 @@ namespace Assets.Scripts.CustomClasses
 {
     public enum EOscillatorFunction
     {
-        SinFunction,
         CosFunction,
         CosSinFunction,
+        CosSinSinSinSinFunction,
         Cos2SinFunction,
         Cos3SinFunction,
         Cos4SinFunction,
@@ -15,7 +15,8 @@ namespace Assets.Scripts.CustomClasses
         Cos1_25ClampFunction,
         Cos1_50ClampFunction,
         Cos1_75ClampFunction,
-        Cos2_00ClampFunction
+        Cos2_00ClampFunction,
+        SinFunction
     }
 
     /// <summary>
@@ -64,6 +65,15 @@ namespace Assets.Scripts.CustomClasses
                     break;
                 case EOscillatorFunction.CosSinFunction:
                     l_oscillation = Mathf.Cos(2.0f * Mathf.PI * Mathf.Sin((l_frequency * deltaTime + _oscillatorAngle0) * Mathf.Deg2Rad));
+                    break;
+                case EOscillatorFunction.CosSinSinSinSinFunction:
+                    {
+                        float l_sin = Mathf.Sin((l_frequency * deltaTime + _oscillatorAngle0) * Mathf.Deg2Rad);
+
+                        l_sin = Mathf.Sin(2.0f * Mathf.PI * l_sin);
+
+                        l_oscillation = Mathf.Cos(2.0f * Mathf.PI * l_sin * l_sin);
+                    }
                     break;
                 case EOscillatorFunction.Cos2SinFunction:
                 case EOscillatorFunction.Cos3SinFunction:

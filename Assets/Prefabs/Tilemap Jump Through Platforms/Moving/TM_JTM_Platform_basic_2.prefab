@@ -84,7 +84,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   _platformLinearMovement: 0
-  _oscillatorFunction: 1
+  _oscillatorFunction: 0
   _frequency: 10
   _movementSemiLength: 10
   _initialPosition: 0
@@ -140,7 +140,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -1
+  m_SortingOrder: -3
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
