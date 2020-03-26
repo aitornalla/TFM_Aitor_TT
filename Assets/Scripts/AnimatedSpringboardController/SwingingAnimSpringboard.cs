@@ -28,7 +28,7 @@ namespace Assets.Scripts.AnimatedSpringboardController
         private float _angleForce;                          // Spring force angle
         private float _angle_0;                             // Angle previous value
 
-        private Oscillator _oscillator;
+        private Oscillator _oscillator;                     // Oscillator object
 
         private void Awake()
         {
@@ -50,7 +50,6 @@ namespace Assets.Scripts.AnimatedSpringboardController
             _oscillator = new Oscillator(_oscillatorAngle_0, _frequency, EOscillatorFunction.CosFunction);
         }
 
-        // Update is called once per frame
         private void FixedUpdate()
         {
             // Calculate oscillator position

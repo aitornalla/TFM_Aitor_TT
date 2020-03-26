@@ -44,22 +44,26 @@ namespace Assets.Scripts.CustomClasses
         ///     Make the oscillator generate a new oscillation
         /// </summary>
         /// <param name="deltaTime">Delta time</param>
+        /// <param name="freqOverride">Frequency override</param>
         /// <returns>Increment of the oscillation</returns>
-        public float Oscillate(float deltaTime)
+        public float Oscillate(float deltaTime, float? freqOverride = null)
         {
+            // Check overriding frequency
+            float l_frequency = freqOverride == null ? _frequency : freqOverride.Value;
+
             float l_oscillation = 0.0f;
 
             // Switch oscillator function
             switch(_oscillatorFunction)
             {
                 case EOscillatorFunction.CosFunction:
-                    l_oscillation = Mathf.Cos((_frequency * deltaTime + _oscillatorAngle0) * Mathf.Deg2Rad);
+                    l_oscillation = Mathf.Cos((l_frequency * deltaTime + _oscillatorAngle0) * Mathf.Deg2Rad);
                     break;
                 case EOscillatorFunction.SinFunction:
-                    l_oscillation = Mathf.Sin((_frequency * deltaTime + _oscillatorAngle0) * Mathf.Deg2Rad);
+                    l_oscillation = Mathf.Sin((l_frequency * deltaTime + _oscillatorAngle0) * Mathf.Deg2Rad);
                     break;
                 case EOscillatorFunction.CosSinFunction:
-                    l_oscillation = Mathf.Cos(2.0f * Mathf.PI * Mathf.Sin((_frequency * deltaTime + _oscillatorAngle0) * Mathf.Deg2Rad));
+                    l_oscillation = Mathf.Cos(2.0f * Mathf.PI * Mathf.Sin((l_frequency * deltaTime + _oscillatorAngle0) * Mathf.Deg2Rad));
                     break;
                 case EOscillatorFunction.Cos2SinFunction:
                 case EOscillatorFunction.Cos3SinFunction:
@@ -74,7 +78,7 @@ namespace Assets.Scripts.CustomClasses
 
                         Int32.TryParse(l_enumName.Substring(l_enumName.IndexOf("Sin") - 1, 1), out l_times);
 
-                        float l_sin = Mathf.Sin((_frequency * deltaTime + _oscillatorAngle0) * Mathf.Deg2Rad);
+                        float l_sin = Mathf.Sin((l_frequency * deltaTime + _oscillatorAngle0) * Mathf.Deg2Rad);
 
                         for (int i = 1; i < l_times; i++)
                         {
@@ -101,7 +105,7 @@ namespace Assets.Scripts.CustomClasses
 
                         float l_times = (float)(l_intPart) + ((float)(l_decimalPart) / 100.0f);
 
-                        l_oscillation = Mathf.Clamp(l_times * Mathf.Cos((_frequency * deltaTime + _oscillatorAngle0) * Mathf.Deg2Rad), -1.0f, 1.0f);
+                        l_oscillation = Mathf.Clamp(l_times * Mathf.Cos((l_frequency * deltaTime + _oscillatorAngle0) * Mathf.Deg2Rad), -1.0f, 1.0f);
                     }
                     break;
                 default:
@@ -109,7 +113,7 @@ namespace Assets.Scripts.CustomClasses
             }
 
             // Get new angle 0
-            _oscillatorAngle0 += _frequency * deltaTime;
+            _oscillatorAngle0 += l_frequency * deltaTime;
 
             // If angle 0 is greater than 360, reset it substracting 360 to its value
             _oscillatorAngle0 = _oscillatorAngle0 >= 360.0f ? _oscillatorAngle0 - 360.0f : _oscillatorAngle0;
