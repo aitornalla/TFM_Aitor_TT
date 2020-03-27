@@ -83,11 +83,11 @@ MonoBehaviour:
   _playerLayer:
     serializedVersion: 2
     m_Bits: 256
-  _platformLinearMovement: 0
-  _oscillatorFunction: 0
+  _oscillatorFunction: 1
   _frequency: 10
   _movementSemiLength: 10
   _initialPosition: 0
+  _platformDirection: 0
   _reverseInitialDirection: 0
 --- !u!251 &251424135285645336
 PlatformEffector2D:

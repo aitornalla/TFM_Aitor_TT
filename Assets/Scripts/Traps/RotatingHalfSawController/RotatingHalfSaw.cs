@@ -49,17 +49,6 @@ namespace Assets.Scripts.Traps.RotatingHalfSawController
 			_oscillator = new Oscillator(l_oscillatorAngle_0, _frequency, _oscillatorFunction);
 			// Translate saw to the initial position
 			transform.Translate(_initialPosition.localPosition.x, 0.0f, 0.0f, Space.Self);
-			//switch (_platformLinearMovement)
-			//{
-			//	case EPlatformLinearMovement.PlatformHorizontal:
-			//		transform.Translate(_initialPosition, 0.0f, 0.0f);
-			//		break;
-			//	case EPlatformLinearMovement.PlatformVertical:
-			//		transform.Translate(0.0f, _initialPosition, 0.0f);
-			//		break;
-			//	default:
-			//		break;
-			//}
 			// Assing initial saw position 0
 			_sawPosition_0 = _initialPosition.localPosition.x;
 		}
@@ -72,17 +61,6 @@ namespace Assets.Scripts.Traps.RotatingHalfSawController
 			float l_increment = l_pos * _movementSemiLength - _sawPosition_0;
             // Translate
 			transform.Translate(l_increment, 0.0f, 0.0f, Space.Self);
-			//switch (_platformLinearMovement)
-			//{
-			//	case EPlatformLinearMovement.PlatformHorizontal:
-			//		transform.Translate(l_increment, 0.0f, 0.0f);
-			//		break;
-			//	case EPlatformLinearMovement.PlatformVertical:
-			//		transform.Translate(0.0f, l_increment, 0.0f);
-			//		break;
-			//	default:
-			//		break;
-			//}
 			// Assign increment to the platform position 0 for next frame
 			_sawPosition_0 += l_increment;
 		}

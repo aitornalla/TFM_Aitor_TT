@@ -5,18 +5,10 @@ using Assets.Scripts.CustomClasses;
 
 namespace Assets.Scripts.MovingPlatformController
 {
-    public enum EPlatformLinearMovement
-    {
-        PlatformHorizontal,
-        PlatformVertical
-    }
-
-	public class MovingPlatform : MonoBehaviour
+    public class MovingPlatform : MonoBehaviour
 	{
 		[SerializeField]
 		private LayerMask _playerLayer;                             // Player layer to check conditions
-		[SerializeField]
-		private EPlatformLinearMovement _platformLinearMovement;    // Platform linear movement type
         [SerializeField]
 		private EOscillatorFunction _oscillatorFunction;            // Oscillator function to move the platform
         [SerializeField]
@@ -25,7 +17,9 @@ namespace Assets.Scripts.MovingPlatformController
 		private float _movementSemiLength = 10.0f;                  // Half the total movement of the platform
         [SerializeField]
 		private float _initialPosition = 0.0f;                      // Initial platform position (must be between -semilength and +semilength)
-		[SerializeField]
+		[SerializeField] [Range(0.0f, 180.0f)]
+		private float _platformDirection = 0.0f;                    // Platform direction in degrees
+        [SerializeField]
 		private bool _reverseInitialDirection = false;              // Flag for intial platform direction
 
 		private Oscillator _oscillator;                             // Oscillator object
@@ -44,17 +38,11 @@ namespace Assets.Scripts.MovingPlatformController
 			// Instantiate new Oscillator object
 			_oscillator = new Oscillator(l_oscillatorAngle_0, _frequency, _oscillatorFunction);
             // Translate platform to the initial position
-            switch(_platformLinearMovement)
-            {
-				case EPlatformLinearMovement.PlatformHorizontal:
-					transform.Translate(_initialPosition, 0.0f, 0.0f);
-					break;
-				case EPlatformLinearMovement.PlatformVertical:
-					transform.Translate(0.0f, _initialPosition, 0.0f);
-					break;
-				default:
-					break;
-            }
+            transform.Translate(
+                _initialPosition * Mathf.Cos(_platformDirection * Mathf.Deg2Rad),
+                _initialPosition * Mathf.Sin(_platformDirection * Mathf.Deg2Rad),
+                0.0f);
+
             // Assing initial platform position 0
 			_platformPosition_0 = _initialPosition;
 		}
@@ -66,17 +54,11 @@ namespace Assets.Scripts.MovingPlatformController
             // Calculate increment to translate
 			float l_increment = l_pos * _movementSemiLength - _platformPosition_0;
             // Translate
-			switch (_platformLinearMovement)
-			{
-				case EPlatformLinearMovement.PlatformHorizontal:
-					transform.Translate(l_increment, 0.0f, 0.0f);
-					break;
-				case EPlatformLinearMovement.PlatformVertical:
-					transform.Translate(0.0f, l_increment, 0.0f);
-					break;
-				default:
-					break;
-			}
+			transform.Translate(
+				l_increment * Mathf.Cos(_platformDirection * Mathf.Deg2Rad),
+				l_increment * Mathf.Sin(_platformDirection * Mathf.Deg2Rad),
+				0.0f);
+
 			// Assign increment to the platform position 0 for next frame
 			_platformPosition_0 += l_increment; 
 		}
