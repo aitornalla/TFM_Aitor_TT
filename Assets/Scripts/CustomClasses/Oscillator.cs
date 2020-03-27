@@ -5,18 +5,46 @@ namespace Assets.Scripts.CustomClasses
 {
     public enum EOscillatorFunction
     {
+        SinFunction,
         CosFunction,
-        CosSinFunction,
-        CosSinSinSinSinFunction,
-        Cos2SinFunction,
-        Cos3SinFunction,
-        Cos4SinFunction,
-        Cos5SinFunction,
+        //CosSinFunction,
+        //CosSinPIFunction,
+        Cos5Sin1StrikeFunction,
+        Cos5Sin2StrikeFunction,
+        Cos5Sin3StrikeFunction,
+        Cos5Sin4StrikeFunction,
+        Cos6Sin1StrikeFunction,
+        Cos6Sin2StrikeFunction,
+        Cos6Sin3StrikeFunction,
+        Cos6Sin4StrikeFunction,
+        Cos7Sin1StrikeFunction,
+        Cos7Sin2StrikeFunction,
+        Cos7Sin3StrikeFunction,
+        Cos7Sin4StrikeFunction,
+        Cos8Sin1StrikeFunction,
+        Cos8Sin2StrikeFunction,
+        Cos8Sin3StrikeFunction,
+        Cos8Sin4StrikeFunction,
+        Cos5SinPI1StrikeFunction,
+        Cos5SinPI2StrikeFunction,
+        Cos5SinPI3StrikeFunction,
+        Cos5SinPI4StrikeFunction,
+        Cos6SinPI1StrikeFunction,
+        Cos6SinPI2StrikeFunction,
+        Cos6SinPI3StrikeFunction,
+        Cos6SinPI4StrikeFunction,
+        Cos7SinPI1StrikeFunction,
+        Cos7SinPI2StrikeFunction,
+        Cos7SinPI3StrikeFunction,
+        Cos7SinPI4StrikeFunction,
+        Cos8SinPI1StrikeFunction,
+        Cos8SinPI2StrikeFunction,
+        Cos8SinPI3StrikeFunction,
+        Cos8SinPI4StrikeFunction,
         Cos1_25ClampFunction,
         Cos1_50ClampFunction,
         Cos1_75ClampFunction,
-        Cos2_00ClampFunction,
-        SinFunction
+        Cos2_00ClampFunction
     }
 
     /// <summary>
@@ -63,27 +91,51 @@ namespace Assets.Scripts.CustomClasses
                 case EOscillatorFunction.SinFunction:
                     l_oscillation = Mathf.Sin((l_frequency * deltaTime + _oscillatorAngle0) * Mathf.Deg2Rad);
                     break;
-                case EOscillatorFunction.CosSinFunction:
-                    l_oscillation = Mathf.Cos(2.0f * Mathf.PI * Mathf.Sin((l_frequency * deltaTime + _oscillatorAngle0) * Mathf.Deg2Rad));
-                    break;
-                case EOscillatorFunction.CosSinSinSinSinFunction:
+                //case EOscillatorFunction.CosSinFunction:
+                //case EOscillatorFunction.CosSinPIFunction:
+                //    {
+                //        float l_pi = Enum.GetName(typeof(EOscillatorFunction), _oscillatorFunction).IndexOf("PI") >= 0 ? Mathf.PI : 0.0f;
+
+                //        l_oscillation = Mathf.Cos(2.0f * Mathf.PI * Mathf.Sin((l_frequency * deltaTime + _oscillatorAngle0) * Mathf.Deg2Rad) + l_pi);
+                //    }
+                //    break;
+                case EOscillatorFunction.Cos5Sin1StrikeFunction:
+                case EOscillatorFunction.Cos5Sin2StrikeFunction:
+                case EOscillatorFunction.Cos5Sin3StrikeFunction:
+                case EOscillatorFunction.Cos5Sin4StrikeFunction:
+                case EOscillatorFunction.Cos6Sin1StrikeFunction:
+                case EOscillatorFunction.Cos6Sin2StrikeFunction:
+                case EOscillatorFunction.Cos6Sin3StrikeFunction:
+                case EOscillatorFunction.Cos6Sin4StrikeFunction:
+                case EOscillatorFunction.Cos7Sin1StrikeFunction:
+                case EOscillatorFunction.Cos7Sin2StrikeFunction:
+                case EOscillatorFunction.Cos7Sin3StrikeFunction:
+                case EOscillatorFunction.Cos7Sin4StrikeFunction:
+                case EOscillatorFunction.Cos8Sin1StrikeFunction:
+                case EOscillatorFunction.Cos8Sin2StrikeFunction:
+                case EOscillatorFunction.Cos8Sin3StrikeFunction:
+                case EOscillatorFunction.Cos8Sin4StrikeFunction:
+                case EOscillatorFunction.Cos5SinPI1StrikeFunction:
+                case EOscillatorFunction.Cos5SinPI2StrikeFunction:
+                case EOscillatorFunction.Cos5SinPI3StrikeFunction:
+                case EOscillatorFunction.Cos5SinPI4StrikeFunction:
+                case EOscillatorFunction.Cos6SinPI1StrikeFunction:
+                case EOscillatorFunction.Cos6SinPI2StrikeFunction:
+                case EOscillatorFunction.Cos6SinPI3StrikeFunction:
+                case EOscillatorFunction.Cos6SinPI4StrikeFunction:
+                case EOscillatorFunction.Cos7SinPI1StrikeFunction:
+                case EOscillatorFunction.Cos7SinPI2StrikeFunction:
+                case EOscillatorFunction.Cos7SinPI3StrikeFunction:
+                case EOscillatorFunction.Cos7SinPI4StrikeFunction:
+                case EOscillatorFunction.Cos8SinPI1StrikeFunction:
+                case EOscillatorFunction.Cos8SinPI2StrikeFunction:
+                case EOscillatorFunction.Cos8SinPI3StrikeFunction:
+                case EOscillatorFunction.Cos8SinPI4StrikeFunction:
                     {
-                        float l_sin = Mathf.Sin((l_frequency * deltaTime + _oscillatorAngle0) * Mathf.Deg2Rad);
-
-                        l_sin = Mathf.Sin(2.0f * Mathf.PI * l_sin);
-
-                        l_oscillation = Mathf.Cos(2.0f * Mathf.PI * l_sin * l_sin);
-                    }
-                    break;
-                case EOscillatorFunction.Cos2SinFunction:
-                case EOscillatorFunction.Cos3SinFunction:
-                case EOscillatorFunction.Cos4SinFunction:
-                case EOscillatorFunction.Cos5SinFunction:
-                    {
-                        // Group same functions
-
+                        // Get enum value name
                         string l_enumName = Enum.GetName(typeof(EOscillatorFunction), _oscillatorFunction);
 
+                        // Calculate sinus times
                         int l_times = 0;
 
                         Int32.TryParse(l_enumName.Substring(l_enumName.IndexOf("Sin") - 1, 1), out l_times);
@@ -95,7 +147,27 @@ namespace Assets.Scripts.CustomClasses
                             l_sin *= l_sin;
                         }
 
-                        l_oscillation = Mathf.Cos(2.0f * Mathf.PI * l_sin);
+                        // If function has PI ...
+                        float l_pi = l_enumName.IndexOf("PI") >= 0 ? Mathf.PI : 0.0f;
+
+                        // Calculate number of strikes
+                        float l_strikes = 0.0f;
+
+                        if (l_enumName.IndexOf("PI") >= 0)
+                        {
+                            float.TryParse(
+                                l_enumName.Substring(l_enumName.IndexOf("PI") + 2, l_enumName.IndexOf("Strike") - (l_enumName.IndexOf("PI") + 2)),
+                                out l_strikes);
+                        }
+                        else
+                        {
+                            float.TryParse(
+                                l_enumName.Substring(l_enumName.IndexOf("Sin") + 3, l_enumName.IndexOf("Strike") - (l_enumName.IndexOf("Sin") + 3)),
+                                out l_strikes);
+                        }
+
+                        // Calculate oscillation
+                        l_oscillation = Mathf.Cos(l_strikes * Mathf.PI * l_sin + l_pi);
                     }
                     break;
                 case EOscillatorFunction.Cos1_25ClampFunction:
