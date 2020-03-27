@@ -25,9 +25,9 @@ namespace Assets.Scripts.Traps.RotatingHalfSawController
 		[SerializeField]
 		private bool _reverseInitialDirection = false;              // Flag for intial saw direction
 		[SerializeField]
-		private float _bumpForce = 250.0f;
+		private float _bumpForce = 400.0f;                          // Force to push the player back when hit
 		[SerializeField] [Range(0.0f, 90.0f)]
-		private float _bumpForceAngle = 45.0f;
+		private float _bumpForceAngle = 45.0f;                      // Angle of bump force
 
 		private Oscillator _oscillator;                             // Oscillator object
 		private float _sawPosition_0;                               // Saw previous position

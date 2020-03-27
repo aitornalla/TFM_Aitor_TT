@@ -130,7 +130,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4437445383656466}
   m_Layer: 0
-  m_Name: Rotating Half Saw
+  m_Name: RotatingHalfSaw
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
