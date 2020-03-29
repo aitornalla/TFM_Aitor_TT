@@ -58,5 +58,29 @@ namespace Assets.Scripts.CheckPointController
                 GameManager.Instance.CurrentCheckPointSpawnPosition = _respawnPoint.position;
             }
         }
+
+        private void OnBecameVisible()
+        {
+            // Play particle system when visible to the camera
+            if (_isChecked)
+            {
+                for (int i = 0; i < _particleSystems.Length; i++)
+                {
+                    _particleSystems[i].Play();
+                }
+            }
+        }
+
+        private void OnBecameInvisible()
+        {
+            // Pause particle system when not visible to the camera
+            if (_isChecked)
+            {
+                for (int i = 0; i < _particleSystems.Length; i++)
+                {
+                    _particleSystems[i].Pause();
+                }
+            }
+        }
     }
 }
