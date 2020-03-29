@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Traps.RotatingHalfSawController
 {
-	public class RotatingHalfSaw : MonoBehaviour
+	public sealed class RotatingHalfSaw : MonoBehaviour
 	{
 		[SerializeField]
 		private LayerMask _playerLayer;                             // Player layer to check conditions

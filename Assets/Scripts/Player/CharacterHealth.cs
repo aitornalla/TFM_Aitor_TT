@@ -2,6 +2,7 @@
 using System.Collections;
 using Assets.Scripts.HealthBarController;
 using Assets.Scripts.Camera;
+using Assets.Scripts.GameManagerController;
 
 namespace Assets.Scripts.Player
 {
@@ -32,7 +33,7 @@ namespace Assets.Scripts.Player
         private Color _defaultSpriteColor;
 
         #region Properties
-        public int PlayerMAxHealth
+        public int PlayerMaxHealth
         {
             get
             {
@@ -69,6 +70,10 @@ namespace Assets.Scripts.Player
             if (_playerHealth == 0)
                 return;
 
+            // Damage cannot be negative
+            if (damage < 0)
+                return;
+
             // Set health
             _playerHealth = _playerHealth - damage < 0 ? 0 : _playerHealth - damage;
             _healthBar.SetHealth(_playerHealth);
@@ -85,6 +90,17 @@ namespace Assets.Scripts.Player
                 if (_animator != null)
                     _animator.SetBool("PlayerDead", true);
             }
+        }
+
+        public void RestoreHealth(int health)
+        {
+            // Health cannot be negative
+            if (health < 0)
+                return;
+
+            // Set health
+            _playerHealth = _playerHealth + health > _playerMaxHealth ? _playerMaxHealth : _playerHealth + health;
+            _healthBar.SetHealth(_playerHealth);
         }
 
         /// <summary>
@@ -143,6 +159,15 @@ namespace Assets.Scripts.Player
             _renderer.color = _defaultSpriteColor;
 
             _damageBlinkCoroutine = null;
+        }
+
+        /// <summary>
+        ///     Called from player death animation event
+        /// </summary>
+        public void OnPlayerDeathEndAnimationEvent()
+        {
+            // Calls GameManager to manage player death/respawn after death animation ends
+            GameManager.Instance.ManagePlayerDeathAndRespawn();
         }
     }
 }

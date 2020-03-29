@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.GameController;
+using Assets.Scripts.GameManagerController;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,9 +22,10 @@ namespace Assets.Scripts.Player
 		// Use this for initialization
 		private void Start ()
 		{
-            // Get IGameController component from GameManager
-			_gameController = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<IGameController> ();
-            // Instantiate new object to hold control flags
+			// Get IGameController component from GameManager
+			// _gameController = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<IGameController> ();
+			_gameController = GameManager.Instance.GameController;
+			// Instantiate new object to hold control flags
 			_controlFlags = new ControlFlags();
 		}
 		#endregion

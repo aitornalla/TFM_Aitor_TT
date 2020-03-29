@@ -5,7 +5,7 @@ using Assets.Scripts.CustomClasses;
 
 namespace Assets.Scripts.MovingPlatformController
 {
-    public class MovingPlatform : MonoBehaviour
+    public sealed class MovingPlatform : MonoBehaviour
 	{
 		[SerializeField]
 		private LayerMask _playerLayer;                             // Player layer to check conditions

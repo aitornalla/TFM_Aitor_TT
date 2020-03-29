@@ -72,7 +72,7 @@ namespace Assets.Scripts.Traps.FireballController
         private void Start()
 		{
             // Start coroutine to destroy fireball
-			_coroutine = StartCoroutine(LifetimeBeforeDestroy());
+			_coroutine = StartCoroutine(LifetimeBeforeDestroyCoroutine());
 		}
 
 		private void FixedUpdate()
@@ -136,7 +136,7 @@ namespace Assets.Scripts.Traps.FireballController
 			}
 		}
 
-        private IEnumerator LifetimeBeforeDestroy()
+        private IEnumerator LifetimeBeforeDestroyCoroutine()
         {
             // Wait lifetime seconds before destroying de fireball
 			yield return new WaitForSeconds(_lifetime);
@@ -147,7 +147,7 @@ namespace Assets.Scripts.Traps.FireballController
         }
 
         // Called by animation event
-        public void DestroyFireball()
+        public void OnDestroyFireballEndAnimationEvent()
         {
 			// Destroy fireball after lifetime
 			Destroy(gameObject);

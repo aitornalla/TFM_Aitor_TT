@@ -33,7 +33,7 @@ namespace Assets.Scripts.Traps.FireballHoleController
             // Get initial fireball hole rotation for fireball instantiation
 			_rotationZ = transform.eulerAngles.z;
             // Start initial coroutine for delay and shooting
-			StartCoroutine(InitialShoot());
+			StartCoroutine(InitialShootCoroutine());
 		}
 
 		// Update is called once per frame
@@ -46,7 +46,7 @@ namespace Assets.Scripts.Traps.FireballHoleController
         ///     Waits for initial delay and starts shooting fireballs
         /// </summary>
         /// <returns>Initial shoot coroutine</returns>
-        private IEnumerator InitialShoot()
+        private IEnumerator InitialShootCoroutine()
         {
             if (_initialDelay > 0.0f)
             {
@@ -55,14 +55,14 @@ namespace Assets.Scripts.Traps.FireballHoleController
             }
 
             // Start shooting fireballs
-			StartCoroutine(ShootFireball());
+			StartCoroutine(ShootFireballCoroutine());
         }
 
         /// <summary>
         ///     Coroutine for shooting fireballs
         /// </summary>
         /// <returns>Shoot fireball coroutine</returns>
-        private IEnumerator ShootFireball()
+        private IEnumerator ShootFireballCoroutine()
         {
             // Instantiate fireball prefab
 			GameObject l_prefab = Instantiate(_fireballPrefab);
@@ -79,7 +79,7 @@ namespace Assets.Scripts.Traps.FireballHoleController
             // Wait between shots
 			yield return new WaitForSeconds(_delayBetweenShots);
             // Start new coroutine
-			StartCoroutine(ShootFireball());
+			StartCoroutine(ShootFireballCoroutine());
 		}
 	}
 }

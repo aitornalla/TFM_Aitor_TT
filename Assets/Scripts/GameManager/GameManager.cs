@@ -1,5 +1,5 @@
 ﻿using Assets.Scripts.GameController;
-using Assets.Scripts.GameController.PlatformControllers;
+using Assets.Scripts.Player;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,18 +8,38 @@ using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
 
-namespace Assets.Scripts.GameManager
+namespace Assets.Scripts.GameManagerController
 {
 	public sealed class GameManager : MonoBehaviour
-    {
+	{
+		// GameManager static instance
 		private static GameManager _instance = null;
-		private static IGameController _gameControllerInstance = null;
+		// IGameController instance
+		private IGameController _gameControllerInstance = null;
+		// Vector2 instance to hold current checkpoint spawn position
+		private Vector2 _currentCheckPointSpawnPosition = Vector2.zero;
+		// Player instance
+		private GameObject _player = null;
+		// Main camera instance
+		private Transform _mainCamera = null;
 
-		private readonly string ControllersXMLPath = string.Join (Path.DirectorySeparatorChar.ToString (), new string[] { "Assets", "ConfigFiles", "controllers.xml" });
+		// Initial player spawn position in levels
+		private readonly Vector2 _initialPlayerSpawnPosition = new Vector2(0.0f, 5.0f);
+
+		// Path to xml file for controllers configuration
+		private readonly string ControllersXMLPath = string.Join(Path.DirectorySeparatorChar.ToString(), new string[] { "Assets", "ConfigFiles", "controllers.xml" });
 
 		#region Properties
-		//public static GameManager Instance { get { return _instance; } }
-		//public IGameController GameController { get { return _gameControllerInstance; } }
+		public static GameManager Instance { get { return _instance; } }
+		public IGameController GameController { get { return _instance._gameControllerInstance; } }
+		public Vector2 CurrentCheckPointSpawnPosition
+		{
+			get
+			{ return _instance._currentCheckPointSpawnPosition; }
+
+            set
+			{ _instance._currentCheckPointSpawnPosition = value; }
+		}
 		#endregion
 
 		#region Awake
@@ -39,6 +59,15 @@ namespace Assets.Scripts.GameManager
 				DestroyImmediate (gameObject);
 
 			}
+
+			// Get player gameObject
+			_instance._player = GameObject.FindGameObjectWithTag("Player");
+
+			// get main camera transform
+			_instance._mainCamera = GameObject.FindGameObjectWithTag("MainCamera").transform;
+
+			// Assign initial player spawn position
+			_instance._currentCheckPointSpawnPosition = _instance._initialPlayerSpawnPosition;
 		}
 		#endregion
 
@@ -70,7 +99,7 @@ namespace Assets.Scripts.GameManager
 				// Get controller name
 				string l_controllerName = Input.GetJoystickNames()[0];
 				// Load controllers xml file
-				XDocument l_xDoc = XDocument.Load(ControllersXMLPath);
+				XDocument l_xDoc = XDocument.Load(_instance.ControllersXMLPath);
 				// Find controller by attribute ("name")
 				XElement l_xElem = l_xDoc.Descendants().Where(atr => (string)atr.Attribute("name") == l_controllerName).FirstOrDefault();
 				// If null, controller not in the list
@@ -81,7 +110,7 @@ namespace Assets.Scripts.GameManager
 				// Combine namespace and name to get full name
 				string l_fullName = string.Join(".", new string[] { l_xElem.Element("namespace").Value, l_xElem.Element("name").Value });
 				// Add IGameController component
-				_gameControllerInstance = (IGameController)gameObject.AddComponent (Type.GetType (l_fullName));
+				_instance._gameControllerInstance = (IGameController)gameObject.AddComponent (Type.GetType (l_fullName));
 
 				Debug.Log ("Controller: " + l_controllerName);
 			}
@@ -100,18 +129,46 @@ namespace Assets.Scripts.GameManager
 			}
 			finally
 			{
-				if (_gameControllerInstance == null)
+				if (_instance._gameControllerInstance == null)
 				{
-					_gameControllerInstance = (IGameController)gameObject.AddComponent<KeyboardGameController>();
+					_instance._gameControllerInstance = (IGameController)gameObject.AddComponent<KeyboardGameController>();
 
 					Debug.Log("Default controller: keyboard");
 				}
 
 				// Enables controller debug in development mode
-				_gameControllerInstance.ControllerDebug (true);
+				_instance._gameControllerInstance.ControllerDebug (true);
 			}
 		}
-		#endregion
-	}	
+        #endregion
+
+        #region Public methods
+        /// <summary>
+        ///     Manages player death and respawn
+        /// </summary>
+        public void ManagePlayerDeathAndRespawn()
+        {
+            // Get CharacterHealth component from player instance
+			CharacterHealth l_characterHealth = _instance._player.GetComponent<CharacterHealth>();
+            // Restore maximum health
+			l_characterHealth.RestoreHealth(l_characterHealth.PlayerMaxHealth);
+
+            // Set player gameObject to inactive
+			_instance._player.SetActive(false);
+            // Translate player gameObject to respawn position
+			_instance._player.transform.Translate(
+				_currentCheckPointSpawnPosition.x - _instance._player.transform.position.x,
+				_currentCheckPointSpawnPosition.y - _instance._player.transform.position.y,
+				0.0f);
+			// Translate main camera gameObject to respawn position
+			_instance._mainCamera.Translate(
+				_currentCheckPointSpawnPosition.x - _instance._player.transform.position.x,
+				_currentCheckPointSpawnPosition.y - _instance._player.transform.position.y,
+				0.0f);
+            // Set player gameObject to active
+			_instance._player.SetActive(true);
+		}
+        #endregion
+    }
 }
 

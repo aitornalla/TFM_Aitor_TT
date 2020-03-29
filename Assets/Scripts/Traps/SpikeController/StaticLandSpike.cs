@@ -5,7 +5,7 @@ using Assets.Scripts.Player;
 
 namespace Assets.Scripts.Traps.SpikeController
 {
-	public class StaticLandSpike : MonoBehaviour
+	public sealed class StaticLandSpike : MonoBehaviour
 	{
 		[SerializeField]
 		private LayerMask _playerLayer;                 // Player layer to check conditions
@@ -30,7 +30,7 @@ namespace Assets.Scripts.Traps.SpikeController
                 // Get CharacterHealth component
 				CharacterHealth l_characterHealth = collision.gameObject.GetComponent<CharacterHealth>();
                 // Take damage equal to player max health
-				l_characterHealth.TakeDamage(l_characterHealth.PlayerMAxHealth);
+				l_characterHealth.TakeDamage(l_characterHealth.PlayerMaxHealth);
 			}
 		}
 	}

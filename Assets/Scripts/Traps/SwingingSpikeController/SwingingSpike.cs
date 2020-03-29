@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Traps.SwingingSpikeController
 {
-	public class SwingingSpike : MonoBehaviour
+	public sealed class SwingingSpike : MonoBehaviour
 	{
 		[SerializeField]
 		private LayerMask _playerLayer;                     // Player layer to check conditions
