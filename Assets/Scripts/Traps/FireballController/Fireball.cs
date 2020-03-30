@@ -75,11 +75,11 @@ namespace Assets.Scripts.Traps.FireballController
 			_coroutine = StartCoroutine(LifetimeBeforeDestroyCoroutine());
 		}
 
-		private void FixedUpdate()
+		private void Update()
 		{
             if (!_isDestroying)
                 // Move fireball
-			    transform.Translate(-_velocity * Time.fixedDeltaTime, 0.0f, 0.0f, Space.Self);
+			    transform.Translate(-_velocity * Time.deltaTime, 0.0f, 0.0f, Space.Self);
 		}
 
         private void OnTriggerEnter2D(Collider2D collision)

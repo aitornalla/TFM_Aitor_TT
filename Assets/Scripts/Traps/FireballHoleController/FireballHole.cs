@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts.GameManagerController;
 using Assets.Scripts.Traps.FireballController;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ namespace Assets.Scripts.Traps.FireballHoleController
 		private GameObject _fireballPrefab;                         // Fireball prefab
 		[SerializeField]
 		private Transform _fireballSpawnPosition;                   // Fireball spawn position
-		[SerializeField]
+        [SerializeField]
 		private float _initialDelay = 0.0f;                         // Initial delay before start shooting
 		[SerializeField]
 		private float _delayBetweenShots = 1.0f;                    // Delay between shots
@@ -23,7 +24,6 @@ namespace Assets.Scripts.Traps.FireballHoleController
 		private float _fireballVelocity = 5.0f;
 		[SerializeField]
 		private float _fireballLifetime = 5.0f;
-
 
 		private float _rotationZ = 0.0f;                            // Fireball hole rotation in world space
 
@@ -64,8 +64,8 @@ namespace Assets.Scripts.Traps.FireballHoleController
         /// <returns>Shoot fireball coroutine</returns>
         private IEnumerator ShootFireballCoroutine()
         {
-            // Instantiate fireball prefab
-			GameObject l_prefab = Instantiate(_fireballPrefab);
+			// Instantiate fireball prefab
+			GameObject l_prefab = Instantiate(_fireballPrefab, GameManager.Instance.PrefabContainer);
             // Set fireball to spawn position
 			l_prefab.transform.position = _fireballSpawnPosition.position;
             // Set fireball rotation to match hole's rotation

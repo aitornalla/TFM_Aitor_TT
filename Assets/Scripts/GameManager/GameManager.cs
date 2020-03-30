@@ -22,6 +22,8 @@ namespace Assets.Scripts.GameManagerController
 		private GameObject _player = null;
 		// Main camera instance
 		private Transform _mainCamera = null;
+		// PrefabContainer instance
+		private Transform _prefabContainer = null;
 
 		// Initial player spawn position in levels
 		private readonly Vector2 _initialPlayerSpawnPosition = new Vector2(0.0f, 5.0f);
@@ -40,6 +42,7 @@ namespace Assets.Scripts.GameManagerController
             set
 			{ _instance._currentCheckPointSpawnPosition = value; }
 		}
+        public Transform PrefabContainer { get { return _instance._prefabContainer; } }
 		#endregion
 
 		#region Awake
@@ -63,8 +66,11 @@ namespace Assets.Scripts.GameManagerController
 			// Get player gameObject
 			_instance._player = GameObject.FindGameObjectWithTag("Player");
 
-			// get main camera transform
+			// Get main camera transform
 			_instance._mainCamera = GameObject.FindGameObjectWithTag("MainCamera").transform;
+
+			// Get empty gameObject to place instantiations prefabs
+			_instance._prefabContainer = GameObject.FindGameObjectWithTag("PrefabContainer").transform;
 
 			// Assign initial player spawn position
 			_instance._currentCheckPointSpawnPosition = _instance._initialPlayerSpawnPosition;

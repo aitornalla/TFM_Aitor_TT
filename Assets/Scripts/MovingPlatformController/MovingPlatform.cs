@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Assets.Scripts.CustomClasses;
+using Assets.Scripts.CustomClasses.OscillatorFunctions;
 
 namespace Assets.Scripts.MovingPlatformController
 {
@@ -9,8 +10,6 @@ namespace Assets.Scripts.MovingPlatformController
 	{
 		[SerializeField]
 		private LayerMask _playerLayer;                             // Player layer to check conditions
-        [SerializeField]
-		private EOscillatorFunction _oscillatorFunction;            // Oscillator function to move the platform
         [SerializeField]
 		private float _frequency = 10.0f;                           // Moving frequency
 		[SerializeField]
@@ -36,7 +35,7 @@ namespace Assets.Scripts.MovingPlatformController
 				l_oscillatorAngle_0 = 360.0f - l_oscillatorAngle_0;
             }
 			// Instantiate new Oscillator object
-			_oscillator = new Oscillator(l_oscillatorAngle_0, _frequency, _oscillatorFunction);
+			_oscillator = new Oscillator(l_oscillatorAngle_0, _frequency, new CosOscillatorFunction(l_oscillatorAngle_0, _frequency));
             // Translate platform to the initial position
             transform.Translate(
                 _initialPosition * Mathf.Cos(_platformDirection * Mathf.Deg2Rad),

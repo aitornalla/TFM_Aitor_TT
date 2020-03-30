@@ -568,8 +568,9 @@ MonoBehaviour:
   _leftLimit: {fileID: 4870164267843856}
   _rightLimit: {fileID: 4163203511381180}
   _initialPosition: {fileID: 4163203511381180}
-  _oscillatorFunction: 3
   _frequency: 50
+  _intensity: 5
+  _strikes: 2
   _reverseInitialDirection: 0
   _bumpForce: 400
   _bumpForceAngle: 45

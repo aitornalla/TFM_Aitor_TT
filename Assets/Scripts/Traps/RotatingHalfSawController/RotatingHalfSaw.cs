@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.CustomClasses;
+using Assets.Scripts.CustomClasses.OscillatorFunctions;
 using Assets.Scripts.Player;
 using UnityEngine;
 
@@ -19,10 +20,12 @@ namespace Assets.Scripts.Traps.RotatingHalfSawController
 		[SerializeField]
 		private Transform _initialPosition;                         // Initial saw position (one of the two limits)
 		[SerializeField]
-		private EOscillatorFunction _oscillatorFunction;            // Oscillator function to move the platform
-		[SerializeField]
 		private float _frequency = 10.0f;                           // Moving frequency
 		[SerializeField]
+		private int _intensity = 1;                                 // Intensity of the oscillations
+		[SerializeField]
+		private float _strikes = 1.0f;                              // Number of strikes per oscillation
+        [SerializeField]
 		private bool _reverseInitialDirection = false;              // Flag for intial saw direction
 		[SerializeField]
 		private float _bumpForce = 400.0f;                          // Force to push the player back when hit
@@ -46,7 +49,7 @@ namespace Assets.Scripts.Traps.RotatingHalfSawController
 				l_oscillatorAngle_0 = 360.0f - l_oscillatorAngle_0;
 			}
 			// Instantiate new Oscillator object
-			_oscillator = new Oscillator(l_oscillatorAngle_0, _frequency, _oscillatorFunction);
+			_oscillator = new Oscillator(l_oscillatorAngle_0, _frequency, new CosStrikeOscillatorFunction(l_oscillatorAngle_0, _frequency, _intensity, _strikes, _initialPosition.Equals(_rightLimit) ? 0.0f : Mathf.PI));
 			// Translate saw to the initial position
 			transform.Translate(_initialPosition.localPosition.x, 0.0f, 0.0f, Space.Self);
 			// Assing initial saw position 0

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.CustomClasses;
+using Assets.Scripts.CustomClasses.OscillatorFunctions;
 using Assets.Scripts.Player;
 using UnityEngine;
 
@@ -43,7 +44,7 @@ namespace Assets.Scripts.Traps.SwingingSpikeController
 			// Assing first limit to initial angle
 			_angle_0 = _angleLimit1;
 			// Instantiate new Oscillator object
-			_oscillator = new Oscillator(_oscillatorAngle_0, _frequency, EOscillatorFunction.CosFunction);
+			_oscillator = new Oscillator(_oscillatorAngle_0, _frequency, new CosOscillatorFunction(_oscillatorAngle_0, _frequency));
 		}
 
 		private void FixedUpdate()
