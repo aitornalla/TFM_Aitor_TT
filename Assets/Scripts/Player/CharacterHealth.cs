@@ -55,14 +55,14 @@ namespace Assets.Scripts.Player
         }
 
         // Update is called once per frame
-        private void Update()
-        {
+        //private void Update()
+        //{
             // Debug
-            if (_healthBar != null && Input.GetKeyDown(KeyCode.Return))
-            {
-                TakeDamage(10);
-            }
-        }
+            //if (_healthBar != null && Input.GetKeyDown(KeyCode.Return))
+            //{
+            //    TakeDamage(10);
+            //}
+        //}
 
         public void TakeDamage(int damage)
         {

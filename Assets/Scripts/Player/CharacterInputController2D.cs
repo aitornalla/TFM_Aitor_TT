@@ -17,6 +17,7 @@ namespace Assets.Scripts.Player
 
 		private IGameController _gameController;                    // IGameController component for player input
 		private ControlFlags _controlFlags;                         // Control flags grouped in a class
+		private bool _wasPaused = false;                            // Flag for game paused in previous frame
 
         #region Start
 		// Use this for initialization
@@ -27,6 +28,8 @@ namespace Assets.Scripts.Player
 			_gameController = GameManager.Instance.GameController;
 			// Instantiate new object to hold control flags
 			_controlFlags = new ControlFlags();
+			// Add listener to GameManager pause event
+			GameManager.Instance.OnPauseEvent.AddListener(OnPause);
 		}
 		#endregion
 
@@ -34,7 +37,21 @@ namespace Assets.Scripts.Player
 		// Update is called once per frame
 		private void Update ()
 		{
-			// Player horizontal move
+            // If game is paused, return
+			if (GameManager.Instance.IsPaused)
+            {
+				return;
+            }
+
+            // Do nothing after unpause first frame to avoid unwanted behaviour
+            if (_wasPaused)
+            {
+                _wasPaused = false;
+
+                return;
+            }
+
+            // Player horizontal move
             if (_gameController.PlayerLeft())
 			{
 				_controlFlags.HorizontalMove = -1.0f;
@@ -109,14 +126,30 @@ namespace Assets.Scripts.Player
 			// Put jump flag back to false
 			_controlFlags.Jump = false;
 		}
-        #endregion
+		#endregion
 
-        #region Event Handlers
+		#region Event Handlers
         /// <summary>
-        ///     Added to OnGroundedEvent from CharacterController2D script
+        ///     Added to OnPuaseEvent from GameManager
         /// </summary>
-        /// <param name="playerIsGrounded"><code>true</code> if player is grounded, otherwise <code>false</code></param>
-        public void OnGrounded(bool playerIsGrounded)
+        /// <param name="isPaused">Flag for paused state</param>
+        public void OnPause(bool isPaused)
+		{
+			if (isPaused)
+			{
+				_wasPaused = true;
+			}
+			else
+			{
+				_controlFlags.ResetFlags();
+			}
+		}
+
+		/// <summary>
+		///     Added to OnGroundedEvent from CharacterController2D script
+		/// </summary>
+		/// <param name="playerIsGrounded"><code>true</code> if player is grounded, otherwise <code>false</code></param>
+		public void OnGrounded(bool playerIsGrounded)
         {
 			// Animator player grounded parameter setting
 			_animator.SetBool("PlayerIsGrounded", playerIsGrounded);

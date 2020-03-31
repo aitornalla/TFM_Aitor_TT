@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Assets.Scripts.GameManagerController
 {
@@ -19,20 +20,30 @@ namespace Assets.Scripts.GameManagerController
 		// Vector2 instance to hold current checkpoint spawn position
 		private Vector2 _currentCheckPointSpawnPosition = Vector2.zero;
 		// Player instance
-		private GameObject _player = null;
+		private GameObject _playerInstance = null;
 		// Main camera instance
 		private Transform _mainCamera = null;
 		// PrefabContainer instance
 		private Transform _prefabContainer = null;
 
+        #region Pause variables
+        // Pause flag
+        private bool _isPaused = false;
+		// Pause menu gameObject
+		private GameObject _pauseMenuInstance = null;
+		// Pause event for gameObjects that need it
+		private BoolEvent _onPauseEvent = null;
+        #endregion
+
+        #region readonly variables
+        // Path to xml file for controllers configuration
+        private readonly string ControllersXMLPath = string.Join(Path.DirectorySeparatorChar.ToString(), new string[] { "Assets", "ConfigFiles", "controllers.xml" });
 		// Initial player spawn position in levels
 		private readonly Vector2 _initialPlayerSpawnPosition = new Vector2(0.0f, 5.0f);
+        #endregion
 
-		// Path to xml file for controllers configuration
-		private readonly string ControllersXMLPath = string.Join(Path.DirectorySeparatorChar.ToString(), new string[] { "Assets", "ConfigFiles", "controllers.xml" });
-
-		#region Properties
-		public static GameManager Instance { get { return _instance; } }
+        #region Properties
+        public static GameManager Instance { get { return _instance; } }
 		public IGameController GameController { get { return _instance._gameControllerInstance; } }
 		public Vector2 CurrentCheckPointSpawnPosition
 		{
@@ -43,6 +54,8 @@ namespace Assets.Scripts.GameManagerController
 			{ _instance._currentCheckPointSpawnPosition = value; }
 		}
         public Transform PrefabContainer { get { return _instance._prefabContainer; } }
+        public bool IsPaused { get { return _instance._isPaused; } }
+        public BoolEvent OnPauseEvent { get { return _instance._onPauseEvent; } }
 		#endregion
 
 		#region Awake
@@ -64,7 +77,7 @@ namespace Assets.Scripts.GameManagerController
 			}
 
 			// Get player gameObject
-			_instance._player = GameObject.FindGameObjectWithTag("Player");
+			_instance._playerInstance = GameObject.FindGameObjectWithTag("Player");
 
 			// Get main camera transform
 			_instance._mainCamera = GameObject.FindGameObjectWithTag("MainCamera").transform;
@@ -74,6 +87,12 @@ namespace Assets.Scripts.GameManagerController
 
 			// Assign initial player spawn position
 			_instance._currentCheckPointSpawnPosition = _instance._initialPlayerSpawnPosition;
+
+            // Get pause menu gameObject instance
+			_instance._pauseMenuInstance = GameObject.FindGameObjectWithTag("PauseMenu");
+
+			// Initialize OnPauseEvent
+			_instance._onPauseEvent = new BoolEvent();
 		}
 		#endregion
 
@@ -89,7 +108,11 @@ namespace Assets.Scripts.GameManagerController
 		// Update is called once per frame
 		private void Update ()
         {
-
+            // When player press pause
+            if (_gameControllerInstance.Pause())
+            {
+				ManagePause();
+            }
 		}
 		#endregion
 
@@ -155,26 +178,54 @@ namespace Assets.Scripts.GameManagerController
         public void ManagePlayerDeathAndRespawn()
         {
             // Get CharacterHealth component from player instance
-			CharacterHealth l_characterHealth = _instance._player.GetComponent<CharacterHealth>();
+			CharacterHealth l_characterHealth = _instance._playerInstance.GetComponent<CharacterHealth>();
             // Restore maximum health
 			l_characterHealth.RestoreHealth(l_characterHealth.PlayerMaxHealth);
 
             // Set player gameObject to inactive
-			_instance._player.SetActive(false);
+			_instance._playerInstance.SetActive(false);
             // Translate player gameObject to respawn position
-			_instance._player.transform.Translate(
-				_currentCheckPointSpawnPosition.x - _instance._player.transform.position.x,
-				_currentCheckPointSpawnPosition.y - _instance._player.transform.position.y,
+			_instance._playerInstance.transform.Translate(
+				_currentCheckPointSpawnPosition.x - _instance._playerInstance.transform.position.x,
+				_currentCheckPointSpawnPosition.y - _instance._playerInstance.transform.position.y,
 				0.0f);
 			// Translate main camera gameObject to respawn position
 			_instance._mainCamera.Translate(
-				_currentCheckPointSpawnPosition.x - _instance._player.transform.position.x,
-				_currentCheckPointSpawnPosition.y - _instance._player.transform.position.y,
+				_currentCheckPointSpawnPosition.x - _instance._playerInstance.transform.position.x,
+				_currentCheckPointSpawnPosition.y - _instance._playerInstance.transform.position.y,
 				0.0f);
             // Set player gameObject to active
-			_instance._player.SetActive(true);
+			_instance._playerInstance.SetActive(true);
 		}
-        #endregion
-    }
+
+		public void ManagePause()
+		{
+			// Change is paused flag
+			_instance._isPaused = !_instance._isPaused;
+            // Enable/Disable pause menu
+			_instance._pauseMenuInstance.SetActive(_instance._isPaused);
+			// Change time scale
+			if (_instance._isPaused)
+			{
+				Time.timeScale = 0.0f;
+			}
+			else
+			{
+				Time.timeScale = 1.0f;
+			}
+
+			// Call event
+			_instance._onPauseEvent.Invoke(_instance._isPaused);
+		}
+		#endregion
+	}
+
+    #region Events
+    [Serializable]
+	public class BoolEvent : UnityEvent<bool>
+	{
+
+	}
+    #endregion
 }
 

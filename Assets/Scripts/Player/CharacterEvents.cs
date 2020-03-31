@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
+using Assets.Scripts.GameManagerController;
 
 namespace Assets.Scripts.Player
 {
@@ -39,9 +40,9 @@ namespace Assets.Scripts.Player
         }
     }
 
-    [System.Serializable]
-    public class BoolEvent : UnityEvent<bool>
-    {
+    //[System.Serializable]
+    //public class BoolEvent : UnityEvent<bool>
+    //{
 
-    }
+    //}
 }
