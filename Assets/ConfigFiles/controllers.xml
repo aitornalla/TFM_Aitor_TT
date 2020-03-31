@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <controllers>
-	<controller name="Sony PLAYSTATION(R)3 Controller" platform="PS3">
+	<controller name="Sony PLAYSTATION(R)3 Controller" platform="PS3" debug="false">
 		<namespace>Assets.Scripts.GameController</namespace>
 		<name>PS3GameController</name>
 	</controller>
-	<controller name="SHENGHIC 2009/0708ZXW-V1Inc. PLAYSTATION(R)3Conteroller" platform="PS3">
+	<controller name="SHENGHIC 2009/0708ZXW-V1Inc. PLAYSTATION(R)3Conteroller" platform="PS3" debug="false">
 		<namespace>Assets.Scripts.GameController</namespace>
 		<name>PS3GameController</name>
 	</controller>
-	<controller name="PLAYSTATION(R)3Conteroller" platform="PS3">
+	<controller name="PLAYSTATION(R)3Conteroller" platform="PS3" debug="false">
 		<namespace>Assets.Scripts.GameController</namespace>
 		<name>PS3GameController</name>
 	</controller>
-	<controller name="MotioninJoy Virtual Game Controller" platform="PS3">
+	<controller name="MotioninJoy Virtual Game Controller" platform="PS3" debug="false">
 		<namespace>Assets.Scripts.GameController</namespace>
 		<name>PS3GameController</name>
 	</controller>
-	<controller name="Unknown Wireless Controller" platform="PS4">
+	<controller name="Unknown Wireless Controller" platform="PS4" debug="false">
 		<namespace>Assets.Scripts.GameController</namespace>
 		<name>PS4GameController</name>
 	</controller>
-	<controller name="Sony Interactive Entertainment Wireless Controller" platform="PS4">
+	<controller name="Sony Interactive Entertainment Wireless Controller" platform="PS4" debug="false">
 		<namespace>Assets.Scripts.GameController</namespace>
 		<name>PS4GameController</name>
 	</controller>
-	<controller name="Wireless Controller" platform="PS4">
+	<controller name="Wireless Controller" platform="PS4" debug="false">
 		<namespace>Assets.Scripts.GameController</namespace>
 		<name>PS4GameController</name>
 	</controller>
-	<controller name="Sony Computer Entertainment Wireless Controller" platform="PS4">
+	<controller name="Sony Computer Entertainment Wireless Controller" platform="PS4" debug="false">
 		<namespace>Assets.Scripts.GameController</namespace>
 		<name>PS4GameController</name>
 	</controller>
-	<controller name="FuSa FuSa GameP" platform="PSP">
+	<controller name="FuSa FuSa GameP" platform="PSP" debug="false">
 		<namespace>Assets.Scripts.GameController</namespace>
 		<name>PSPGameController</name>
 	</controller>

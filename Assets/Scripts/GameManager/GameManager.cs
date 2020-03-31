@@ -140,8 +140,16 @@ namespace Assets.Scripts.GameManagerController
 				string l_fullName = string.Join(".", new string[] { l_xElem.Element("namespace").Value, l_xElem.Element("name").Value });
 				// Add IGameController component
 				_instance._gameControllerInstance = (IGameController)gameObject.AddComponent (Type.GetType (l_fullName));
+                // Read debug attribute
+                bool l_debugController = false;
+				bool.TryParse(l_xElem.Attribute("debug").Value, out l_debugController);
+                // If debug enabled ...
+                if (l_debugController)
+                {
+					_instance._gameControllerInstance.ControllerDebug(true);
 
-				Debug.Log ("Controller: " + l_controllerName);
+					Debug.Log("Controller: " + l_controllerName);
+				}
 			}
 			catch (IndexOutOfRangeException e)
 			{
@@ -166,7 +174,7 @@ namespace Assets.Scripts.GameManagerController
 				}
 
 				// Enables controller debug in development mode
-				_instance._gameControllerInstance.ControllerDebug (true);
+				//_instance._gameControllerInstance.ControllerDebug (true);
 			}
 		}
         #endregion
