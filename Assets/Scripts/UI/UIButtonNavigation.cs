@@ -13,11 +13,24 @@ namespace Assets.Scripts.UI
 		[SerializeField]
 		private int _currentButtonID = 0;                       // Flag of current selected button
 
-		public Button[] Buttons { get { return _buttons; } }
+		private UIButton[] _uiButtons = null;                   // Array of UIButtons within the navigation
+
+		public UIButton[] UIButtons { get { return _uiButtons; } }
         public int CurrentButtonID { get { return _currentButtonID; } }
 
-		// Use this for initialization
-		private void Start()
+        private void Awake()
+        {
+            // Get array of UIButtons
+			_uiButtons = new UIButton[_buttons.Length];
+
+            for (int i = 0; i < _buttons.Length; i++)
+            {
+				_uiButtons[i] = _buttons[i].GetComponent<UIButton>();
+            }
+        }
+
+        // Use this for initialization
+        private void Start()
 		{
             // Default selected button (first in the array)
 			_buttons[0].Select();
@@ -34,13 +47,13 @@ namespace Assets.Scripts.UI
 		private void OnEnable()
 		{
 			// Set first button as selected by default 
-			_buttons[0].GetComponent<UIButton>().SelectButtonOnEnable();
+			_uiButtons[0].SelectButtonOnEnable();
 			// Set current button id
 			_currentButtonID = 0;
 			// Deselect all other buttons
 			for (int i = 1; i < _buttons.Length; i++)
 			{
-				_buttons[i].GetComponent<UIButton>().OnDeselect(null);
+				_uiButtons[i].OnDeselect(null);
 			}
 		}
 

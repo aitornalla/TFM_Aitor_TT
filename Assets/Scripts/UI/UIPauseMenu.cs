@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using Assets.Scripts.GameManagerController;
+using Assets.Scripts.Scenes;
 
 namespace Assets.Scripts.UI
 {
@@ -9,21 +10,25 @@ namespace Assets.Scripts.UI
     public sealed class UIPauseMenu : MonoBehaviour
     {
         private UIButtonNavigation _uiButtonNavigation = null;          // Reference to the UIButtonNavigation component
-        private bool _isActive = false;
 
         private void Awake()
         {
             // Get UIButtonNavigation component
             _uiButtonNavigation = GetComponent<UIButtonNavigation>();
             // Add on click listeners to buttons
-            _uiButtonNavigation.Buttons[0].onClick.AddListener(() => OnButtonResumeClicked(_uiButtonNavigation.Buttons[0]));
-            _uiButtonNavigation.Buttons[1].onClick.AddListener(() => OnButtonMenuClicked(_uiButtonNavigation.Buttons[1]));
-            _uiButtonNavigation.Buttons[2].onClick.AddListener(() => OnButtonQuitClicked(_uiButtonNavigation.Buttons[2]));
+            //_uiButtonNavigation.Buttons[0].onClick.AddListener(() => OnButtonResumeClicked(_uiButtonNavigation.Buttons[0]));
+            //_uiButtonNavigation.Buttons[1].onClick.AddListener(() => OnButtonMenuClicked(_uiButtonNavigation.Buttons[1]));
+            //_uiButtonNavigation.Buttons[2].onClick.AddListener(() => OnButtonQuitClicked(_uiButtonNavigation.Buttons[2]));
         }
 
         // Use this for initialization
         private void Start()
         {
+            // Link methods to UIButtons
+            _uiButtonNavigation.UIButtons[0].onClick = OnButtonResumeClicked;
+            _uiButtonNavigation.UIButtons[1].onClick = OnButtonMenuClicked;
+            _uiButtonNavigation.UIButtons[2].onClick = OnButtonQuitClicked;
+
             // Set pause menu inactive
             gameObject.SetActive(false);
         }
@@ -33,7 +38,26 @@ namespace Assets.Scripts.UI
         {
             if (GameManager.Instance.GameController.Accept())
             {
-                _uiButtonNavigation.Buttons[_uiButtonNavigation.CurrentButtonID].onClick.Invoke();
+                // Invoke method linked to the UIButton
+                _uiButtonNavigation.UIButtons[_uiButtonNavigation.CurrentButtonID]
+                    .onClick.Invoke(_uiButtonNavigation.UIButtons[_uiButtonNavigation.CurrentButtonID]);
+
+                //_uiButtonNavigation.Buttons[_uiButtonNavigation.CurrentButtonID].onClick.Invoke();
+
+                //switch (_uiButtonNavigation.CurrentButtonID)
+                //{
+                //    case 0:
+                //        //OnButtonResumeClicked(_uiButtonNavigation.Buttons[_uiButtonNavigation.CurrentButtonID]);
+                //        break;
+                //    case 1:
+                //        //OnButtonMenuClicked(_uiButtonNavigation.Buttons[_uiButtonNavigation.CurrentButtonID]);
+                //        break;
+                //    case 2:
+                //        //OnButtonQuitClicked(_uiButtonNavigation.Buttons[_uiButtonNavigation.CurrentButtonID]);
+                //        break;
+                //    default:
+                //        break;
+                //}
             }
 
             if (GameManager.Instance.GameController.Cancel())
@@ -43,23 +67,26 @@ namespace Assets.Scripts.UI
             }
         }
 
-        public void OnButtonResumeClicked(Button button)
+        public void OnButtonResumeClicked(UIButton uiButton)
         {
-            button.gameObject.GetComponent<UIButton>().OnClick();
+            uiButton.OnClick();
 
             GameManager.Instance.ManagePause();
         }
 
-        public void OnButtonMenuClicked(Button button)
+        public void OnButtonMenuClicked(UIButton uiButton)
         {
-            button.gameObject.GetComponent<UIButton>().OnClick();
+            uiButton.OnClick();
 
-            Debug.Log("MENU");
+            GameManager.Instance.ManagePause();
+
+            // Back to main menu
+            GameManager.Instance.GameManagerState.StateChange(EGameScenes.MainMenu);
         }
 
-        public void OnButtonQuitClicked(Button button)
+        public void OnButtonQuitClicked(UIButton uiButton)
         {
-            button.gameObject.GetComponent<UIButton>().OnClick();
+            uiButton.OnClick();
 
             Debug.Log("QUIT");
 

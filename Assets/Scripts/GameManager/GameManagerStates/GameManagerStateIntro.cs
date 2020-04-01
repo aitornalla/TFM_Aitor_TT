@@ -19,7 +19,7 @@ namespace Assets.Scripts.GameManagerController.States
         #region IGameManagerState implementation
         public void StateAwake()
         {
-            //throw new NotImplementedException();
+            _gameManagerInstance.SetUpController();
         }
 
         public void StateStart()
@@ -32,15 +32,15 @@ namespace Assets.Scripts.GameManagerController.States
             //throw new NotImplementedException();
         }
 
-        public void StateChange()
+        public void StateChange(EGameScenes gameScenes)
         {
             // Assign new game state
-            _gameManagerInstance.GameManagerState = new GameManagerStateTestLevel(_gameManagerInstance);
+            _gameManagerInstance.GameManagerState = new GameManagerStateMainMenu(_gameManagerInstance);
 
-            // Load next scene
+            // Load next scene -> main menu
             string l_scene = string.Empty;
 
-            if (_gameManagerInstance.GameScenesDictionary.TryGetValue(EGameScenes.TestLevel, out l_scene))
+            if (_gameManagerInstance.GameScenesDictionary.TryGetValue(gameScenes, out l_scene))
                 SceneManager.LoadScene(l_scene);
         }
         #endregion

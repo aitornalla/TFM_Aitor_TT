@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.Scenes;
+using System;
 
 namespace Assets.Scripts.GameManagerController.States
 {
@@ -10,6 +11,6 @@ namespace Assets.Scripts.GameManagerController.States
 
         void StateUpdate();
 
-        void StateChange();
+        void StateChange(EGameScenes gameScenes);
     }
 }

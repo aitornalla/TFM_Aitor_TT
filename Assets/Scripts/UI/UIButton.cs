@@ -9,16 +9,20 @@ namespace Assets.Scripts.UI
 	public sealed class UIButton : MonoBehaviour, ISelectHandler, IDeselectHandler
 	{
 		[SerializeField]
-		private Sprite _normalSprite = null;                    // Normal sprite when button is not selected
+		private Sprite _normalSprite = null;                        // Normal sprite when button is not selected
 		[SerializeField]
-		private Sprite _selectedSprite = null;                  // Selected sprite when button is selected
+		private Sprite _selectedSprite = null;                      // Selected sprite when button is selected
 		[SerializeField]
-		private Sprite _clickSprite = null;                     // Click sprite when button is clicked
+		private Sprite _clickSprite = null;                         // Click sprite when button is clicked
 		[SerializeField]
-		private Sprite _lockedSprite = null;                    // Lock sprite when button is locked
+		private Sprite _lockedSprite = null;                        // Lock sprite when button is locked
 
-		private Button _button = null;                          // Reference to Button component
-		private Image _image = null;                            // Reference to Image component
+		private Button _button = null;                              // Reference to Button component
+		private Image _image = null;                                // Reference to Image component
+
+		public delegate void UIButtonOnClick(UIButton uiButton);    // Delegate to assign methods to UIButton
+
+		public UIButtonOnClick onClick;                             // To hold UIButton action method
 
 		private void Awake()
 		{
@@ -43,19 +47,22 @@ namespace Assets.Scripts.UI
 		public void OnSelect(BaseEventData eventData)
 		{
             // Change sprite to select sprite
-            _image.sprite = _selectedSprite;
+            if (_image != null)
+                _image.sprite = _selectedSprite;
 		}
 
 		public void OnDeselect(BaseEventData eventData)
 		{
             // Change sprite to normal sprite
-			_image.sprite = _normalSprite;
+            if (_image != null)
+                _image.sprite = _normalSprite;
 		}
 
 		public void OnClick()
 		{
             // Change sprite to click sprite
-			_image.sprite = _clickSprite;
+            if (_image != null)
+                _image.sprite = _clickSprite;
 		}
 
         public void SelectButtonOnEnable()

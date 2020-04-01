@@ -1,14 +1,17 @@
 ﻿using Assets.Scripts.Scenes;
+using System.Collections;
+using System.Collections.Generic;
 using System;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.GameManagerController.States
 {
-    public sealed class GameManagerStateTestLevel : IGameManagerState
+    public sealed class GameManagerStateMainMenu : IGameManagerState
     {
         private static GameManager _gameManagerInstance = null;
 
-        public GameManagerStateTestLevel(GameManager gameManager)
+        public GameManagerStateMainMenu(GameManager gameManager)
         {
             _gameManagerInstance = gameManager;
         }
@@ -16,7 +19,7 @@ namespace Assets.Scripts.GameManagerController.States
         #region IGameManagerState implementation
         public void StateAwake()
         {
-            _gameManagerInstance.AssignLevelReferences();
+            //throw new NotImplementedException();
         }
 
         public void StateStart()
@@ -26,26 +29,13 @@ namespace Assets.Scripts.GameManagerController.States
 
         public void StateUpdate()
         {
-            // When player press pause
-            if (_gameManagerInstance.GameController.Pause())
-            {
-                _gameManagerInstance.ManagePause();
-            }
+            //throw new NotImplementedException();
         }
 
         public void StateChange(EGameScenes gameScenes)
         {
             // Assign new game state
-            switch (gameScenes)
-            {
-                case EGameScenes.MainMenu:
-                    _gameManagerInstance.GameManagerState = new GameManagerStateMainMenu(_gameManagerInstance);
-                    break;
-
-                default:
-                    _gameManagerInstance.GameManagerState = new GameManagerStateMainMenu(_gameManagerInstance);
-                    break;
-            }
+            _gameManagerInstance.GameManagerState = new GameManagerStateTestLevel(_gameManagerInstance);
 
             // Load next scene
             string l_scene = string.Empty;

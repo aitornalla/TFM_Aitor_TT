@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.GameManagerController;
+using Assets.Scripts.Scenes;
 using UnityEngine;
 
 namespace Assets.Scripts.Scenes
@@ -12,7 +13,7 @@ namespace Assets.Scripts.Scenes
         /// </summary>
 		public void OnIntroSceneAnimationEnd()
         {
-			GameManager.Instance.GameManagerState.StateChange();
+			GameManager.Instance.GameManagerState.StateChange(EGameScenes.MainMenu);
 		}
 	}
 }
