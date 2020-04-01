@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 namespace Assets.Scripts.UI
 {
+    [RequireComponent(typeof(Button))]
+    [RequireComponent(typeof(AudioSource))]
 	public sealed class UIButton : MonoBehaviour, ISelectHandler, IDeselectHandler
 	{
 		[SerializeField]
@@ -16,9 +18,16 @@ namespace Assets.Scripts.UI
 		private Sprite _clickSprite = null;                         // Click sprite when button is clicked
 		[SerializeField]
 		private Sprite _lockedSprite = null;                        // Lock sprite when button is locked
+		[SerializeField]
+		private AudioClip _selectSound = null;                      // Button select sound
+		[SerializeField]
+		private AudioClip _clickSound = null;                       // Button click sound
 
 		private Button _button = null;                              // Reference to Button component
 		private Image _image = null;                                // Reference to Image component
+		private AudioSource _audioSource = null;                    // Reference to AudioSource component
+
+		public bool _firstEnable = true;
 
 		public delegate void UIButtonOnClick(UIButton uiButton);    // Delegate to assign methods to UIButton
 
@@ -30,6 +39,8 @@ namespace Assets.Scripts.UI
 			_button = GetComponent<Button>();
 			// Get Image component
 			_image = GetComponent<Image>();
+			// Get AudioSource component
+			_audioSource = GetComponent<AudioSource>();
 		}
 
 		// Use this for initialization
@@ -49,6 +60,9 @@ namespace Assets.Scripts.UI
             // Change sprite to select sprite
             if (_image != null)
                 _image.sprite = _selectedSprite;
+
+			if (_audioSource != null && !_firstEnable)
+				_audioSource.PlayOneShot(_selectSound);
 		}
 
 		public void OnDeselect(BaseEventData eventData)
@@ -63,6 +77,9 @@ namespace Assets.Scripts.UI
             // Change sprite to click sprite
             if (_image != null)
                 _image.sprite = _clickSprite;
+
+			if (_audioSource != null)
+				_audioSource.PlayOneShot(_clickSound);
 		}
 
         public void SelectButtonOnEnable()
@@ -73,6 +90,8 @@ namespace Assets.Scripts.UI
 			// Select the button
             if (_button != null)
                 _button.Select();
-        }
+			// Set first enable flag to false
+			_firstEnable = false;
+		}
     }
 }

@@ -16,7 +16,7 @@ namespace Assets.Scripts.UI
 		private UIButton[] _uiButtons = null;                   // Array of UIButtons within the navigation
 
 		public UIButton[] UIButtons { get { return _uiButtons; } }
-        public int CurrentButtonID { get { return _currentButtonID; } }
+        public int CurrentButtonID { get { return _currentButtonID; } set { _currentButtonID = value; } }
 
         private void Awake()
         {
@@ -44,23 +44,25 @@ namespace Assets.Scripts.UI
 			Navigate();
 		}
 
-		private void OnEnable()
-		{
-			// Set first button as selected by default 
-			_uiButtons[0].SelectButtonOnEnable();
-			// Set current button id
-			_currentButtonID = 0;
-			// Deselect all other buttons
-			for (int i = 1; i < _buttons.Length; i++)
-			{
-				_uiButtons[i].OnDeselect(null);
-			}
-		}
+        private void OnEnable()
+        {
+            // Set first button as selected by default 
+            _uiButtons[0].SelectButtonOnEnable();
+            // Set current button id
+            _currentButtonID = 0;
+            // Deselect all other buttons
+            // Set first enable flag to false
+            for (int i = 1; i < _buttons.Length; i++)
+            {
+                _uiButtons[i].OnDeselect(null);
+				_uiButtons[i]._firstEnable = false;
+            }
+        }
 
-		/// <summary>
-		///  Navigates among the buttons
-		/// </summary>
-		private void Navigate()
+        /// <summary>
+        ///     Navigates among the buttons
+        /// </summary>
+        private void Navigate()
 		{
 			Button l_button = null;
 

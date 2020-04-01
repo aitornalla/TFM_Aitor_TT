@@ -41,6 +41,7 @@ GameObject:
   - component: {fileID: 114645771474575108}
   - component: {fileID: 114509305257793352}
   - component: {fileID: 95647712293273566}
+  - component: {fileID: 82151455071599834}
   m_Layer: 5
   m_Name: UIButtonPrefab
   m_TagString: Untagged
@@ -48,6 +49,86 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!82 &82151455071599834
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1555835838580214}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 0.75
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!95 &95647712293273566
 Animator:
   serializedVersion: 3
@@ -80,6 +161,9 @@ MonoBehaviour:
   _selectedSprite: {fileID: 21300000, guid: 502864d84af854eaf9224ccce7f5bae0, type: 3}
   _clickSprite: {fileID: 21300000, guid: d86fd543e5f8449cfa11e2b3120c09f5, type: 3}
   _lockedSprite: {fileID: 21300000, guid: be1bdb816e894442c8b31aa05ab4c515, type: 3}
+  _selectSound: {fileID: 8300000, guid: d0c6fe94a15a94399979c9c238ba3b42, type: 3}
+  _clickSound: {fileID: 8300000, guid: 86443d643332549909298206f653c1ed, type: 3}
+  _firstEnable: 1
 --- !u!114 &114645771474575108
 MonoBehaviour:
   m_ObjectHideFlags: 1
