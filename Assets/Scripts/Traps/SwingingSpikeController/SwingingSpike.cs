@@ -23,6 +23,8 @@ namespace Assets.Scripts.Traps.SwingingSpikeController
 		private float _angleLimit2 = 330.0f;                // Limit angle used to apply the force (in degrees)
 		[SerializeField]
 		private float _frequency = 10.0f;                   // Swinging frequency
+        [SerializeField]
+		private float _oscillatorAngle_0 = 180.0f;          // Initial oscillator angle
 		[SerializeField]
 		private float _bumpForce = 400.0f;                  // Force to push the player back when hit
 		[SerializeField] [Range(0.0f, 90.0f)]
@@ -30,7 +32,6 @@ namespace Assets.Scripts.Traps.SwingingSpikeController
 
 
 		private Oscillator _oscillator;                     // Oscillator object
-		private float _oscillatorAngle_0 = 180.0f;          // Initial oscillator angle
 		private const float InitialSpriteRot = 270.0f;      // Initial sprite angle
 		private float _angle;                               // Current angle
 		private float _angle_0;                             // Angle previous value
