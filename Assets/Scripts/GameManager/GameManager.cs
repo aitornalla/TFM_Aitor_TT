@@ -71,6 +71,7 @@ namespace Assets.Scripts.GameManagerController
 			{ _instance._currentCheckPointSpawnPosition = value; }
 		}
         public Transform PrefabContainer { get { return _instance._prefabContainer; } }
+        public bool IsPlayerDead { get { return _instance._playerInstance.GetComponent<CharacterFlags>().IsDead; } }
         public bool IsPaused { get { return _instance._isPaused; } }
         public BoolEvent OnPauseEvent { get { return _instance._onPauseEvent; } }
 		#endregion
@@ -214,6 +215,8 @@ namespace Assets.Scripts.GameManagerController
 				_instance._currentCheckPointSpawnPosition.x - _instance._playerInstance.transform.position.x,
 				_instance._currentCheckPointSpawnPosition.y - _instance._playerInstance.transform.position.y,
 				0.0f);
+			// Set player not dead flag
+			_instance._playerInstance.GetComponent<CharacterFlags>().IsDead = false;
             // Set player gameObject to active
 			_instance._playerInstance.SetActive(true);
 		}

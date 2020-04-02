@@ -14,6 +14,7 @@ namespace Assets.Scripts.Player
         private bool _isInGlideImpulseZone = false;     // Is the player in a glide impulse zone?
         private bool _isAttacking = false;              // Is the player attacking?
         private bool _isThrowing = false;               // Is the player throwing a kunai?
+        private bool _isDead = false;                   // Is the pplayer dead?
         #endregion
 
         #region Properties
@@ -118,6 +119,19 @@ namespace Assets.Scripts.Player
             set
             {
                 _isThrowing = value;
+            }
+        }
+
+        public bool IsDead
+        {
+            get
+            {
+                return _isDead;
+            }
+
+            set
+            {
+                _isDead = value;
             }
         }
         #endregion

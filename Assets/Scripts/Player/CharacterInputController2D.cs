@@ -37,6 +37,12 @@ namespace Assets.Scripts.Player
 		// Update is called once per frame
 		private void Update ()
 		{
+            // If player is dead control is disabled
+            if (_characterFlags.IsDead)
+            {
+				return;
+            }
+
             // If game is paused, return
 			if (GameManager.Instance.IsPaused)
             {

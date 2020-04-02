@@ -84,9 +84,12 @@ namespace Assets.Scripts.Player
             // Trigger camera shake effect
             _cameraShake.CameraShakeEffect();
 
-            // Trigger dead animation if player health drops down to 0
+            // Change character flag and trigger dead animation if player health drops down to 0
             if (_playerHealth == 0)
             {
+                // Set dead flag to true
+                GetComponent<CharacterFlags>().IsDead = true;
+                // Trigger animation
                 if (_animator != null)
                     _animator.SetBool("PlayerDead", true);
             }
