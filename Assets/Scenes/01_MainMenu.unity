@@ -448,37 +448,37 @@ Prefab:
     - target: {fileID: 224772247527707104, guid: 9a9fc335713144dfcbb90f5dd709dfb2,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 65
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224772247527707104, guid: 9a9fc335713144dfcbb90f5dd709dfb2,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 180
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224772247527707104, guid: 9a9fc335713144dfcbb90f5dd709dfb2,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 80.1
+      value: 0.099998474
       objectReference: {fileID: 0}
     - target: {fileID: 224772247527707104, guid: 9a9fc335713144dfcbb90f5dd709dfb2,
         type: 2}
       propertyPath: m_AnchorMin.x
-      value: 0.5
+      value: 0.367
       objectReference: {fileID: 0}
     - target: {fileID: 224772247527707104, guid: 9a9fc335713144dfcbb90f5dd709dfb2,
         type: 2}
       propertyPath: m_AnchorMin.y
-      value: 0.5
+      value: 0.565
       objectReference: {fileID: 0}
     - target: {fileID: 224772247527707104, guid: 9a9fc335713144dfcbb90f5dd709dfb2,
         type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0.5
+      value: 0.63346416
       objectReference: {fileID: 0}
     - target: {fileID: 224772247527707104, guid: 9a9fc335713144dfcbb90f5dd709dfb2,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0.5
+      value: 0.7732084
       objectReference: {fileID: 0}
     - target: {fileID: 224772247527707104, guid: 9a9fc335713144dfcbb90f5dd709dfb2,
         type: 2}
@@ -490,14 +490,14 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1555835838580214, guid: 9a9fc335713144dfcbb90f5dd709dfb2, type: 2}
+      propertyPath: m_Name
+      value: UIButtonTestLevel
+      objectReference: {fileID: 0}
     - target: {fileID: 114891358242536932, guid: 9a9fc335713144dfcbb90f5dd709dfb2,
         type: 2}
       propertyPath: m_Text
       value: Test Level
-      objectReference: {fileID: 0}
-    - target: {fileID: 1555835838580214, guid: 9a9fc335713144dfcbb90f5dd709dfb2, type: 2}
-      propertyPath: m_Name
-      value: UIButtonTestLevel
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9a9fc335713144dfcbb90f5dd709dfb2, type: 2}
@@ -652,47 +652,47 @@ Prefab:
     - target: {fileID: 224772247527707104, guid: 9a9fc335713144dfcbb90f5dd709dfb2,
         type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224772247527707104, guid: 9a9fc335713144dfcbb90f5dd709dfb2,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 0.00000083447
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 224772247527707104, guid: 9a9fc335713144dfcbb90f5dd709dfb2,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -55
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224772247527707104, guid: 9a9fc335713144dfcbb90f5dd709dfb2,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 112.25
+      value: -0.75
       objectReference: {fileID: 0}
     - target: {fileID: 224772247527707104, guid: 9a9fc335713144dfcbb90f5dd709dfb2,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 50
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224772247527707104, guid: 9a9fc335713144dfcbb90f5dd709dfb2,
         type: 2}
       propertyPath: m_AnchorMin.x
-      value: 0.5
+      value: 0.41453588
       objectReference: {fileID: 0}
     - target: {fileID: 224772247527707104, guid: 9a9fc335713144dfcbb90f5dd709dfb2,
         type: 2}
       propertyPath: m_AnchorMin.y
-      value: 0.5
+      value: 0.29200003
       objectReference: {fileID: 0}
     - target: {fileID: 224772247527707104, guid: 9a9fc335713144dfcbb90f5dd709dfb2,
         type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0.5
+      value: 0.58246416
       objectReference: {fileID: 0}
     - target: {fileID: 224772247527707104, guid: 9a9fc335713144dfcbb90f5dd709dfb2,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0.5
+      value: 0.42200002
       objectReference: {fileID: 0}
     - target: {fileID: 224772247527707104, guid: 9a9fc335713144dfcbb90f5dd709dfb2,
         type: 2}

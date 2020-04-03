@@ -230,14 +230,14 @@ MonoBehaviour:
     m_FontStyle: 0
     m_BestFit: 1
     m_MinSize: 10
-    m_MaxSize: 23
+    m_MaxSize: 100
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: UIButton
+  m_Text: 
 --- !u!114 &114928457799661940
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -290,10 +290,10 @@ RectTransform:
   m_Father: {fileID: 224772247527707104}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.055000003, y: 0.1874919}
+  m_AnchorMax: {x: 0.93949467, y: 0.81250817}
+  m_AnchoredPosition: {x: 0.5, y: -0.0000047683716}
+  m_SizeDelta: {x: 1, y: -0.22999954}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224772247527707104
 RectTransform:
@@ -301,7 +301,7 @@ RectTransform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1555835838580214}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -309,8 +309,8 @@ RectTransform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0.367, y: 0.565}
+  m_AnchorMax: {x: 0.63346416, y: 0.7732084}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 180, y: 80.1}
+  m_SizeDelta: {x: 0, y: 0.099998474}
   m_Pivot: {x: 0.5, y: 0.5}
