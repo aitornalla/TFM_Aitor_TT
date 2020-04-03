@@ -14,15 +14,20 @@ namespace Assets.Scripts.AnimatedSpringboardController
 		private float _angleForce = 90.0f;              // Angle used to apply the force (in degrees)
         [SerializeField]
         private bool _totalVelocityCancelation = false; // Flag for total velocity cancellation before applying spring force
+        [SerializeField]
+        private AudioClip _jumpSound = null;            // Jump sound effect
 
-		private Animator _animator;                     // Animator component
+        private Animator _animator;                     // Animator component
         private Transform _arrowChild;                  // Child gameObject arrow
         private const float ArrowRotation_0 = 45.0f;    // Initial sprite angle
+        private AudioSource _audioSource = null;        // Reference to AudioSource component
 
         private void Awake()
         {
             // Get animator component
 			_animator = gameObject.GetComponent<Animator>();
+            // Get AudioSource component
+            _audioSource = GetComponent<AudioSource>();
             // Get arrow child
             _arrowChild = gameObject.transform.GetChild(0);
         }
@@ -72,6 +77,9 @@ namespace Assets.Scripts.AnimatedSpringboardController
                     {
 						_animator.SetTrigger("Activate");
                     }
+
+                    // Play jump sound effect
+                    _audioSource.PlayOneShot(_jumpSound);
 				}
 			}
         }

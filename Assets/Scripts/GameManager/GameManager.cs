@@ -23,10 +23,10 @@ namespace Assets.Scripts.GameManagerController
 		private Dictionary<EGameScenes, string> _gameScenesDictionary = null;
         // IGameController instance
 		private IGameController _gameController = null;
-		// Vector2 instance to hold current checkpoint spawn position
-		private Vector2 _currentCheckPointSpawnPosition = Vector2.zero;
 		// Player instance
 		private GameObject _playerInstance = null;
+		// Vector2 instance to hold current checkpoint spawn position
+		private Vector2 _currentCheckPointSpawnPosition = Vector2.zero;
 		// Main camera instance
 		private Transform _mainCamera = null;
 		// PrefabContainer instance
@@ -62,7 +62,7 @@ namespace Assets.Scripts.GameManagerController
         }
         public Dictionary<EGameScenes, string> GameScenesDictionary { get { return _instance._gameScenesDictionary; } }
         public IGameController GameController { get { return _instance._gameController; } }
-		public Vector2 CurrentCheckPointSpawnPosition
+        public Vector2 CurrentCheckPointSpawnPosition
 		{
 			get
 			{ return _instance._currentCheckPointSpawnPosition; }

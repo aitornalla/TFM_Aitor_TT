@@ -8429,7 +8429,7 @@ Prefab:
     - target: {fileID: 114236132554937262, guid: e1fbebfccc0914c63945afceb2036515,
         type: 2}
       propertyPath: _springForce
-      value: 1150
+      value: 1300
       objectReference: {fileID: 0}
     - target: {fileID: 114236132554937262, guid: e1fbebfccc0914c63945afceb2036515,
         type: 2}
