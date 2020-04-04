@@ -8,6 +8,8 @@ namespace Assets.Scripts.GameManagerController.States
     {
         private static GameManager _gameManagerInstance = null;
 
+        private IGameManagerState _nextState = null;                            // To hold next state until scenes unloads
+
         public GameManagerStateTestLevel(GameManager gameManager)
         {
             _gameManagerInstance = gameManager;
@@ -17,11 +19,6 @@ namespace Assets.Scripts.GameManagerController.States
         public void StateAwake()
         {
             _gameManagerInstance.AssignLevelReferences();
-        }
-
-        public void StateStart()
-        {
-            //throw new NotImplementedException();
         }
 
         public void StateUpdate()
@@ -39,11 +36,11 @@ namespace Assets.Scripts.GameManagerController.States
             switch (gameScenes)
             {
                 case EGameScenes.MainMenu:
-                    _gameManagerInstance.GameManagerState = new GameManagerStateMainMenu(_gameManagerInstance);
+                    _nextState = new GameManagerStateMainMenu(_gameManagerInstance);
                     break;
 
                 default:
-                    _gameManagerInstance.GameManagerState = new GameManagerStateMainMenu(_gameManagerInstance);
+                    _nextState = new GameManagerStateMainMenu(_gameManagerInstance);
                     break;
             }
 
@@ -52,6 +49,17 @@ namespace Assets.Scripts.GameManagerController.States
 
             if (_gameManagerInstance.GameScenesDictionary.TryGetValue(gameScenes, out l_scene))
                 SceneManager.LoadScene(l_scene);
+        }
+
+        public void StateOnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            //throw new NotImplementedException();
+        }
+
+        public void StateOnSceneUnLoaded(Scene scene)
+        {
+            // Assing next state when scenes finishes unloading
+            _gameManagerInstance.GameManagerState = _nextState;
         }
         #endregion
     }

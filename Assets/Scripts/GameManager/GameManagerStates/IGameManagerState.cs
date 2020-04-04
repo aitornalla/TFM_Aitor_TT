@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Scenes;
 using System;
+using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.GameManagerController.States
 {
@@ -7,10 +8,12 @@ namespace Assets.Scripts.GameManagerController.States
     {
         void StateAwake();
 
-        void StateStart();
-
         void StateUpdate();
 
         void StateChange(EGameScenes gameScenes);
+
+        void StateOnSceneLoaded(Scene scene, LoadSceneMode mode);
+
+        void StateOnSceneUnLoaded(Scene scene);
     }
 }

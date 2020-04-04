@@ -10,6 +10,7 @@ using System.Linq;
 using System.Xml.Linq;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.GameManagerController
 {
@@ -31,6 +32,8 @@ namespace Assets.Scripts.GameManagerController
 		private Transform _mainCamera = null;
 		// PrefabContainer instance
 		private Transform _prefabContainer = null;
+		// Next scene to load after level load scene
+		private EGameScenes _levelLoadNextScene;
 
         #region Pause variables
         // Pause flag
@@ -71,6 +74,13 @@ namespace Assets.Scripts.GameManagerController
 			{ _instance._currentCheckPointSpawnPosition = value; }
 		}
         public Transform PrefabContainer { get { return _instance._prefabContainer; } }
+        public EGameScenes LevelLoadNextScene
+        {
+            get
+            { return _instance._levelLoadNextScene; }
+            set
+            { _instance._levelLoadNextScene = value; }
+        }
         public bool IsPlayerDead { get { return _instance._playerInstance.GetComponent<CharacterFlags>().IsDead; } }
         public bool IsPaused { get { return _instance._isPaused; } }
         public BoolEvent OnPauseEvent { get { return _instance._onPauseEvent; } }
@@ -80,8 +90,8 @@ namespace Assets.Scripts.GameManagerController
 		private void Awake ()
         {
 			// Singleton creation
-			if (_instance == null) {
-
+			if (_instance == null)
+            {
 				_instance = this;
 
 				DontDestroyOnLoad (gameObject);
@@ -89,26 +99,29 @@ namespace Assets.Scripts.GameManagerController
 				// Load scenes dictionary
 				_instance.LoadSceneDictionary();
 
-                // First state is game intro
+                // Link GameManager functions to scenes load/unload events
+				SceneManager.sceneLoaded += OnSceneLoaded;
+				SceneManager.sceneUnloaded += OnSceneUnLoaded;
+
+				// First state is game intro
 				_instance._gameManagerState = new GameManagerStateIntro(_instance);
 
 			} else {
 
-				DestroyImmediate (gameObject);
+				DestroyImmediate(gameObject);
 
 			}
 
 			// Game manager state Awake
 			_instance._gameManagerState.StateAwake();
 		}
-		#endregion
+        #endregion
 
-		#region Start
-		// Use this for initialization
-		private void Start ()
+        #region Start
+        // Use this for initialization
+        private void Start ()
         {
-			// Game manager state Start
-			_instance._gameManagerState.StateStart();
+            
 		}
 		#endregion
 
@@ -121,11 +134,32 @@ namespace Assets.Scripts.GameManagerController
 		}
 		#endregion
 
-		#region Public methods
+		#region Private methods
         /// <summary>
-        ///     For level scenes, assigns gameObjects to references needed
+        ///     Called when SceneManager has finished loading the scene
         /// </summary>
-        public void AssignLevelReferences()
+        /// <param name="scene">Loaded scene</param>
+        /// <param name="mode">Mode used to load the scene</param>
+        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+		{
+			_instance.GameManagerState.StateOnSceneLoaded(scene, mode);
+		}
+
+        /// <summary>
+        ///     Called when SceneManager has finished unloading the scene
+        /// </summary>
+        /// <param name="scene">Unloaded scene</param>
+		private void OnSceneUnLoaded(Scene scene)
+		{
+			_instance.GameManagerState.StateOnSceneUnLoaded(scene);
+		}
+		#endregion
+
+		#region Public methods
+		/// <summary>
+		///     For level scenes, assigns gameObjects to references needed
+		/// </summary>
+		public void AssignLevelReferences()
         {
 			// Get player gameObject
 			_instance._playerInstance = GameObject.FindGameObjectWithTag("Player");

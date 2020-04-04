@@ -7,13 +7,11 @@ using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.GameManagerController.States
 {
-    public sealed class GameManagerStateIntro : IGameManagerState
+    public sealed class GameManagerStateLevelLoad : IGameManagerState
     {
         private static GameManager _gameManagerInstance = null;
 
-        private IGameManagerState _nextState = null;                            // To hold next state until scenes unloads
-
-        public GameManagerStateIntro(GameManager gameManager)
+        public GameManagerStateLevelLoad(GameManager gameManager)
         {
             _gameManagerInstance = gameManager;
         }
@@ -21,8 +19,7 @@ namespace Assets.Scripts.GameManagerController.States
         #region IGameManagerState implementation
         public void StateAwake()
         {
-            // Set up the controller
-            _gameManagerInstance.SetUpController();
+            //throw new NotImplementedException();
         }
 
         public void StateUpdate()
@@ -33,24 +30,27 @@ namespace Assets.Scripts.GameManagerController.States
         public void StateChange(EGameScenes gameScenes)
         {
             // Assign new game state
-            _nextState = new GameManagerStateMainMenu(_gameManagerInstance);
+            switch (gameScenes)
+            {
+                case EGameScenes.TestLevel:
+                    _gameManagerInstance.GameManagerState = new GameManagerStateTestLevel(_gameManagerInstance);
+                    break;
 
-            // Load next scene -> main menu
-            string l_scene = string.Empty;
-
-            if (_gameManagerInstance.GameScenesDictionary.TryGetValue(gameScenes, out l_scene))
-                SceneManager.LoadScene(l_scene);
+                default:
+                    _gameManagerInstance.GameManagerState = new GameManagerStateMainMenu(_gameManagerInstance);
+                    break;
+            }
         }
 
         public void StateOnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
-            //throw new NotImplementedException();
+            GameObject.FindObjectOfType<LevelLoad>().LoadLevelSceneAsync();
         }
 
         public void StateOnSceneUnLoaded(Scene scene)
         {
-            // Assing next state when scenes finishes unloading
-            _gameManagerInstance.GameManagerState = _nextState;
+            // When scene finishes unloading, change game state to next
+            StateChange(GameManager.Instance.LevelLoadNextScene);
         }
         #endregion
     }

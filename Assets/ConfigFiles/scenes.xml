@@ -2,5 +2,6 @@
 <scenes>
     <scene name="00_Intro" enumValue="Intro" />
     <scene name="01_MainMenu" enumValue="MainMenu" />
+    <scene name="02_LevelLoad" enumValue="LevelLoad" />
     <scene name="99_TestLevel" enumValue="TestLevel" />
 </scenes>
