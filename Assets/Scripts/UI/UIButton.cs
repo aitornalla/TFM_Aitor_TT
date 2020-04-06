@@ -46,13 +46,13 @@ namespace Assets.Scripts.UI
 		// Use this for initialization
 		//private void Start()
 		//{
-            
+        //    
 		//}
 
 		// Update is called once per frame
 		//private void Update()
 		//{
-
+        //
 		//}
 
 		public void OnSelect(BaseEventData eventData)

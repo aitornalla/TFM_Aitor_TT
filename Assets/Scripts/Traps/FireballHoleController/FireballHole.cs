@@ -28,7 +28,7 @@ namespace Assets.Scripts.Traps.FireballHoleController
 		private float _rotationZ = 0.0f;                            // Fireball hole rotation in world space
 
 		// Use this for initialization
-		void Start()
+		private void Start()
 		{
             // Get initial fireball hole rotation for fireball instantiation
 			_rotationZ = transform.eulerAngles.z;
@@ -37,10 +37,10 @@ namespace Assets.Scripts.Traps.FireballHoleController
 		}
 
 		// Update is called once per frame
-		void Update()
-		{
-
-		}
+		//private void Update()
+		//{
+        //
+		//}
 
         /// <summary>
         ///     Waits for initial delay and starts shooting fireballs

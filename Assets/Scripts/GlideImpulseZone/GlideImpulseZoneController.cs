@@ -17,10 +17,10 @@ namespace Assets.Scripts.GlideImpulseZone
         private CharacterFlags _characterFlags;         // CharacterFlags component to get glide flag
 
 		// Use this for initialization
-		private void Start()
-		{
-
-		}
+		//private void Start()
+		//{
+        //
+		//}
 
 		// Update is called once per frame
 		private void Update()

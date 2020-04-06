@@ -41,10 +41,10 @@ namespace Assets.Scripts.Player
         #endregion
 
         #region Update
-        private void Update()
-		{
-            
-        }
+        //private void Update()
+		//{
+        //    
+        //}
         #endregion
 
         #region FixedUpdate

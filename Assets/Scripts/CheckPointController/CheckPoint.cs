@@ -26,16 +26,16 @@ namespace Assets.Scripts.CheckPointController
         }
 
         // Use this for initialization
-        private void Start()
-		{
-
-		}
+        //private void Start()
+		//{
+        //
+		//}
 
 		// Update is called once per frame
-		private void Update()
-		{
-
-		}
+		//private void Update()
+		//{
+        //
+		//}
 
         private void OnTriggerEnter2D(Collider2D collision)
         {

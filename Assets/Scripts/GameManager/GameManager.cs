@@ -106,10 +106,10 @@ namespace Assets.Scripts.GameManagerController
 				// First state is game intro
 				_instance._gameManagerState = new GameManagerStateIntro(_instance);
 
-			} else {
-
+			}
+            else
+            {
 				DestroyImmediate(gameObject);
-
 			}
 
 			// Game manager state Awake
