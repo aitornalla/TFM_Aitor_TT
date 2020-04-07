@@ -7,30 +7,25 @@ using UnityEngine.UI;
 
 namespace Assets.Scripts.UI
 {
-    [RequireComponent(typeof(Button))]
+    [RequireComponent(typeof(Toggle))]
     [RequireComponent(typeof(AudioSource))]
-	public sealed class UIButton : MonoBehaviour, ISelectHandler, IDeselectHandler, IUISelectable
+	public sealed class UIToggle : MonoBehaviour, ISelectHandler, IDeselectHandler, IUISelectable
 	{
 		[SerializeField]
-		private Sprite _normalSprite = null;                                    // Normal sprite when button is not selected
+		private Sprite _selectedSprite = null;                                  // Selected sprite when toggle is selected
 		[SerializeField]
-		private Sprite _selectedSprite = null;                                  // Selected sprite when button is selected
-		[SerializeField]
-		private Sprite _clickSprite = null;                                     // Click sprite when button is clicked
-		[SerializeField]
-		private Sprite _lockedSprite = null;                                    // Lock sprite when button is locked
+		private Image _checkmarkImage = null;                                   // Checkmark Image inside the toggle
 		[SerializeField]
 		private AudioClip _selectSound = null;                                  // Button select sound
 		[SerializeField]
 		private AudioClip _clickSound = null;                                   // Button click sound
 
-		private Button _button = null;                                          // Reference to Button component
-		private Image _image = null;                                            // Reference to Image component
+		private Toggle _toggle = null;                                          // Reference to Button component
 		private AudioSource _audioSource = null;                                // Reference to AudioSource component
 		private bool _firstEnable = true;
 
 		#region IUISelectable implementation
-		public Selectable Selectable { get { return GetComponent<Button>(); } }
+		public Selectable Selectable { get { return GetComponent<Toggle>(); } }
 		public UISelectableOnClick OnClickCallback { get; set; }
 		public bool FirstEnable
 		{
@@ -44,15 +39,13 @@ namespace Assets.Scripts.UI
 
 		private void Awake()
 		{
-			// Get Button component
-			_button = GetComponent<Button>();
-			// Get Image component
-			_image = GetComponent<Image>();
+			// Get Toggle component
+			_toggle = GetComponent<Toggle>();
 			// Get AudioSource component
 			_audioSource = GetComponent<AudioSource>();
-            // Assign AudioMixerGroup for AudioSource component
+			// Assign AudioMixerGroup for AudioSource component
 			_audioSource.outputAudioMixerGroup =
-			    GameManager.Instance.AudioMixerController.MainAudioMixerGroups[0];
+				GameManager.Instance.AudioMixerController.MainAudioMixerGroups[0];
 		}
 
         // Use this for initialization
@@ -67,12 +60,24 @@ namespace Assets.Scripts.UI
         //
         //}
 
+        /// <summary>
+        ///     Set toogle on/off
+        /// </summary>
+        /// <param name="isOn">Is toggle on or off?</param>
+        public void SetToggle(bool isOn)
+        {
+			// Set toggle isOn flag
+			_toggle.isOn = isOn;
+			// Change checkmark whether is on or not
+			_checkmarkImage.sprite = isOn ? _selectedSprite : null;
+		}
+
         #region ISelectHandler implementation
         public void OnSelect(BaseEventData eventData)
 		{
-            // Change sprite to select sprite
-            if (_image != null)
-                _image.sprite = _selectedSprite;
+			// Change sprite to select sprite
+			//if (_image != null)
+			//    _image.sprite = _selectedSprite;
 
 			if (_audioSource != null && !FirstEnable)
 				_audioSource.PlayOneShot(_selectSound);
@@ -83,17 +88,16 @@ namespace Assets.Scripts.UI
         public void OnDeselect(BaseEventData eventData)
 		{
             // Change sprite to normal sprite
-            if (_image != null)
-                _image.sprite = _normalSprite;
+            //if (_image != null)
+            //    _image.sprite = _normalSprite;
 		}
 		#endregion
 
 		#region IUISelectable implementation
 		public void OnClick()
 		{
-			// Change sprite to click sprite
-			if (_image != null)
-				_image.sprite = _clickSprite;
+            // Change checkmark whether is on or not
+			_checkmarkImage.sprite = _toggle.isOn ? _selectedSprite : null;
 
 			if (_audioSource != null)
 				_audioSource.PlayOneShot(_clickSound);
@@ -101,12 +105,8 @@ namespace Assets.Scripts.UI
 
 		public void SelectOnEnable()
         {
-            // Set selected sprite
-            if (_image != null)
-                _image.sprite = _selectedSprite;
-			// Select the button
-            if (_button != null)
-                _button.Select();
+			// Change checkmark whether is on or not
+			_checkmarkImage.sprite = _toggle.isOn ? _selectedSprite : null;
 			// Set first enable flag to false
 			FirstEnable = false;
 		}

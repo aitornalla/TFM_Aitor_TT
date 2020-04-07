@@ -6,15 +6,15 @@ using Assets.Scripts.Scenes;
 
 namespace Assets.Scripts.UI
 {
-    [RequireComponent(typeof(UIButtonNavigation))]
+    [RequireComponent(typeof(UINavigation))]
     public sealed class UIPauseMenu : MonoBehaviour
     {
-        private UIButtonNavigation _uiButtonNavigation = null;          // Reference to the UIButtonNavigation component
+        private UINavigation _uiNavigation = null;                              // Reference to the UINavigation component
 
         private void Awake()
         {
-            // Get UIButtonNavigation component
-            _uiButtonNavigation = GetComponent<UIButtonNavigation>();
+            // Get UINavigation component
+            _uiNavigation = GetComponent<UINavigation>();
             // Add on click listeners to buttons
             //_uiButtonNavigation.Buttons[0].onClick.AddListener(() => OnButtonResumeClicked(_uiButtonNavigation.Buttons[0]));
             //_uiButtonNavigation.Buttons[1].onClick.AddListener(() => OnButtonMenuClicked(_uiButtonNavigation.Buttons[1]));
@@ -25,9 +25,9 @@ namespace Assets.Scripts.UI
         private void Start()
         {
             // Link methods to UIButtons
-            _uiButtonNavigation.UIButtons[0].onClick = OnButtonResumeClicked;
-            _uiButtonNavigation.UIButtons[1].onClick = OnButtonMenuClicked;
-            _uiButtonNavigation.UIButtons[2].onClick = OnButtonQuitClicked;
+            _uiNavigation.Selectables[0].GetComponent<UIButton>().OnClickCallback = OnButtonResumeClicked;
+            _uiNavigation.Selectables[1].GetComponent<UIButton>().OnClickCallback = OnButtonMenuClicked;
+            _uiNavigation.Selectables[2].GetComponent<UIButton>().OnClickCallback = OnButtonQuitClicked;
 
             // Set pause menu inactive
             gameObject.SetActive(false);
@@ -39,25 +39,8 @@ namespace Assets.Scripts.UI
             if (GameManager.Instance.GameController.Accept())
             {
                 // Invoke method linked to the UIButton
-                _uiButtonNavigation.UIButtons[_uiButtonNavigation.CurrentButtonID]
-                    .onClick.Invoke(_uiButtonNavigation.UIButtons[_uiButtonNavigation.CurrentButtonID]);
-
-                //_uiButtonNavigation.Buttons[_uiButtonNavigation.CurrentButtonID].onClick.Invoke();
-
-                //switch (_uiButtonNavigation.CurrentButtonID)
-                //{
-                //    case 0:
-                //        //OnButtonResumeClicked(_uiButtonNavigation.Buttons[_uiButtonNavigation.CurrentButtonID]);
-                //        break;
-                //    case 1:
-                //        //OnButtonMenuClicked(_uiButtonNavigation.Buttons[_uiButtonNavigation.CurrentButtonID]);
-                //        break;
-                //    case 2:
-                //        //OnButtonQuitClicked(_uiButtonNavigation.Buttons[_uiButtonNavigation.CurrentButtonID]);
-                //        break;
-                //    default:
-                //        break;
-                //}
+                _uiNavigation.Selectables[_uiNavigation.CurrentSelectableID].GetComponent<IUISelectable>()
+                    .OnClickCallback.Invoke(_uiNavigation.Selectables[_uiNavigation.CurrentSelectableID].GetComponent<IUISelectable>());
             }
 
             if (GameManager.Instance.GameController.Cancel())
@@ -67,14 +50,14 @@ namespace Assets.Scripts.UI
             }
         }
 
-        public void OnButtonResumeClicked(UIButton uiButton)
+        public void OnButtonResumeClicked(IUISelectable uiButton)
         {
             uiButton.OnClick();
 
             GameManager.Instance.ManagePause();
         }
 
-        public void OnButtonMenuClicked(UIButton uiButton)
+        public void OnButtonMenuClicked(IUISelectable uiButton)
         {
             uiButton.OnClick();
 
@@ -84,7 +67,7 @@ namespace Assets.Scripts.UI
             GameManager.Instance.GameManagerState.StateChange(EGameScenes.MainMenu);
         }
 
-        public void OnButtonQuitClicked(UIButton uiButton)
+        public void OnButtonQuitClicked(IUISelectable uiButton)
         {
             uiButton.OnClick();
 

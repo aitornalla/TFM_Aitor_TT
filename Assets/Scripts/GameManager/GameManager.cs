@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.GameController;
+﻿using Assets.Scripts.CustomClasses;
+using Assets.Scripts.GameController;
 using Assets.Scripts.GameManagerController.States;
 using Assets.Scripts.Player;
 using Assets.Scripts.Scenes;
@@ -24,7 +25,9 @@ namespace Assets.Scripts.GameManagerController
 		private Dictionary<EGameScenes, string> _gameScenesDictionary = null;
         // IGameController instance
 		private IGameController _gameController = null;
-		// Player instance
+		// Main AudioMixer instance
+		private AudioMixerController _audioMixerController = null;
+        // Player instance
 		private GameObject _playerInstance = null;
 		// Vector2 instance to hold current checkpoint spawn position
 		private Vector2 _currentCheckPointSpawnPosition = Vector2.zero;
@@ -46,15 +49,15 @@ namespace Assets.Scripts.GameManagerController
 
         #region readonly variables
         // Path to xml file for controllers configuration
-        private readonly string ControllersXMLPath = string.Join(Path.DirectorySeparatorChar.ToString(), new string[] { "Assets", "ConfigFiles", "controllers.xml" });
+        private readonly string ControllersXMLPath = string.Join(Path.DirectorySeparatorChar.ToString(), new string[] { "Assets", "Resources", "ConfigFiles", "controllers.xml" });
 		// Path to xml file for controllers configuration
-		private readonly string ScenesXMLPath = string.Join(Path.DirectorySeparatorChar.ToString(), new string[] { "Assets", "ConfigFiles", "scenes.xml" });
+		private readonly string ScenesXMLPath = string.Join(Path.DirectorySeparatorChar.ToString(), new string[] { "Assets", "Resources", "ConfigFiles", "scenes.xml" });
 		// Initial player spawn position in levels
 		private readonly Vector2 _initialPlayerSpawnPosition = new Vector2(0.0f, 5.0f);
-        #endregion
+		#endregion
 
-        #region Properties
-        public static GameManager Instance { get { return _instance; } }
+		#region Properties
+		public static GameManager Instance { get { return _instance; } }
         public IGameManagerState GameManagerState
         {
             get
@@ -65,6 +68,7 @@ namespace Assets.Scripts.GameManagerController
         }
         public Dictionary<EGameScenes, string> GameScenesDictionary { get { return _instance._gameScenesDictionary; } }
         public IGameController GameController { get { return _instance._gameController; } }
+        public AudioMixerController AudioMixerController { get { return _instance._audioMixerController; } }
         public Vector2 CurrentCheckPointSpawnPosition
 		{
 			get
@@ -73,7 +77,7 @@ namespace Assets.Scripts.GameManagerController
             set
 			{ _instance._currentCheckPointSpawnPosition = value; }
 		}
-        public Transform PrefabContainer { get { return _instance._prefabContainer; } }
+		public Transform PrefabContainer { get { return _instance._prefabContainer; } }
         public EGameScenes LevelLoadNextScene
         {
             get
@@ -95,13 +99,6 @@ namespace Assets.Scripts.GameManagerController
 				_instance = this;
 
 				DontDestroyOnLoad (gameObject);
-
-				// Load scenes dictionary
-				_instance.LoadSceneDictionary();
-
-                // Link GameManager functions to scenes load/unload events
-				SceneManager.sceneLoaded += OnSceneLoaded;
-				SceneManager.sceneUnloaded += OnSceneUnLoaded;
 
 				// First state is game intro
 				_instance._gameManagerState = new GameManagerStateIntro(_instance);
@@ -135,24 +132,6 @@ namespace Assets.Scripts.GameManagerController
 		#endregion
 
 		#region Private methods
-        /// <summary>
-        ///     Called when SceneManager has finished loading the scene
-        /// </summary>
-        /// <param name="scene">Loaded scene</param>
-        /// <param name="mode">Mode used to load the scene</param>
-        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-		{
-			_instance.GameManagerState.StateOnSceneLoaded(scene, mode);
-		}
-
-        /// <summary>
-        ///     Called when SceneManager has finished unloading the scene
-        /// </summary>
-        /// <param name="scene">Unloaded scene</param>
-		private void OnSceneUnLoaded(Scene scene)
-		{
-			_instance.GameManagerState.StateOnSceneUnLoaded(scene);
-		}
 		#endregion
 
 		#region Public methods
@@ -254,6 +233,33 @@ namespace Assets.Scripts.GameManagerController
             // Set player gameObject to active
 			_instance._playerInstance.SetActive(true);
 		}
+
+		/// <summary>
+		///     Called when SceneManager has finished loading the scene
+		/// </summary>
+		/// <param name="scene">Loaded scene</param>
+		/// <param name="mode">Mode used to load the scene</param>
+		public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+		{
+			_instance.GameManagerState.StateOnSceneLoaded(scene, mode);
+		}
+
+		/// <summary>
+		///     Called when SceneManager has finished unloading the scene
+		/// </summary>
+		/// <param name="scene">Unloaded scene</param>
+		public void OnSceneUnLoaded(Scene scene)
+		{
+			_instance.GameManagerState.StateOnSceneUnLoaded(scene);
+		}
+
+		/// <summary>
+		///     Create AudioMixerController instance
+		/// </summary>
+		public void SetUpAudioMixerController()
+        {
+			_instance._audioMixerController = new AudioMixerController();
+        }
 
 		/// <summary>
 		/// 	Adds controller components to GameManager gameObject.

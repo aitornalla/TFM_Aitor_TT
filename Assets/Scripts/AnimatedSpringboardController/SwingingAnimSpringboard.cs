@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Assets.Scripts.CustomClasses;
 using Assets.Scripts.CustomClasses.OscillatorFunctions;
+using Assets.Scripts.GameManagerController;
 
 namespace Assets.Scripts.AnimatedSpringboardController
 {
@@ -40,6 +41,9 @@ namespace Assets.Scripts.AnimatedSpringboardController
             _animator = gameObject.GetComponent<Animator>();
             // Get AudioSource component
             _audioSource = GetComponent<AudioSource>();
+            // Assign AudioMixerGroup for AudioSource component
+            _audioSource.outputAudioMixerGroup =
+                GameManager.Instance.AudioMixerController.MainAudioMixerGroups[0];
             // Get arrow child
             _arrowChild = gameObject.transform.GetChild(0);
         }

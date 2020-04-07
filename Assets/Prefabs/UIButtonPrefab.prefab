@@ -163,7 +163,6 @@ MonoBehaviour:
   _lockedSprite: {fileID: 21300000, guid: be1bdb816e894442c8b31aa05ab4c515, type: 3}
   _selectSound: {fileID: 8300000, guid: d0c6fe94a15a94399979c9c238ba3b42, type: 3}
   _clickSound: {fileID: 8300000, guid: 86443d643332549909298206f653c1ed, type: 3}
-  _firstEnable: 1
 --- !u!114 &114645771474575108
 MonoBehaviour:
   m_ObjectHideFlags: 1

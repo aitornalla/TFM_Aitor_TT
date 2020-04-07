@@ -45,6 +45,13 @@ namespace Assets.Scripts.GameManagerController.States
                     }
                     break;
 
+                case EGameScenes.Settings:
+                    {
+                        // Assing settings game state
+                        _nextState = new GameManagerStateSettings(_gameManagerInstance);
+                    }
+                    break;
+
                 default:
                     _nextState = new GameManagerStateMainMenu(_gameManagerInstance);
                     break;

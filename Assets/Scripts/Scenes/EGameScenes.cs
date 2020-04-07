@@ -6,6 +6,7 @@ namespace Assets.Scripts.Scenes
     {
         Intro,
         MainMenu,
+        Settings,
         LevelLoad,
         TestLevel
     }

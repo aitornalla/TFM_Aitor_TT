@@ -6,15 +6,15 @@ using Assets.Scripts.Scenes;
 
 namespace Assets.Scripts.UI
 {
-    [RequireComponent(typeof(UIButtonNavigation))]
+    [RequireComponent(typeof(UINavigation))]
     public sealed class UIMainMenu : MonoBehaviour
     {
-        private UIButtonNavigation _uiButtonNavigation = null;          // Reference to the UIButtonNavigation component
+        private UINavigation _uiNavigation = null;                              // Reference to the UINavigation component
 
         private void Awake()
         {
-            // Get UIButtonNavigation component
-            _uiButtonNavigation = GetComponent<UIButtonNavigation>();
+            // Get UINavigation component
+            _uiNavigation = GetComponent<UINavigation>();
             // Add on click listeners to UIButtons
             //_uiButtonNavigation.Buttons[0].onClick.AddListener(() => OnButtonTestLevelClicked(_uiButtonNavigation.Buttons[0]));
             //_uiButtonNavigation.Buttons[1].onClick.AddListener(() => OnButtonQuitClicked(_uiButtonNavigation.Buttons[1]));
@@ -24,8 +24,9 @@ namespace Assets.Scripts.UI
         private void Start()
         {
             // Link methods to UIButtons
-            _uiButtonNavigation.UIButtons[0].onClick = OnButtonTestLevelClicked;
-            _uiButtonNavigation.UIButtons[1].onClick = OnButtonQuitClicked;
+            _uiNavigation.Selectables[0].GetComponent<UIButton>().OnClickCallback = OnButtonTestLevelClicked;
+            _uiNavigation.Selectables[1].GetComponent<UIButton>().OnClickCallback = OnButtonSettingsClicked;
+            _uiNavigation.Selectables[2].GetComponent<UIButton>().OnClickCallback = OnButtonQuitClicked;
         }
 
         // Update is called once per frame
@@ -34,24 +35,12 @@ namespace Assets.Scripts.UI
             if (GameManager.Instance.GameController.Accept())
             {
                 // Invoke method linked to the UIButton
-                _uiButtonNavigation.UIButtons[_uiButtonNavigation.CurrentButtonID]
-                    .onClick.Invoke(_uiButtonNavigation.UIButtons[_uiButtonNavigation.CurrentButtonID]);
-
-                //switch (_uiButtonNavigation.CurrentButtonID)
-                //{
-                //    case 0:
-                //        OnButtonTestLevelClicked(_uiButtonNavigation.Buttons[_uiButtonNavigation.CurrentButtonID]);
-                //        break;
-                //    case 1:
-                //        OnButtonQuitClicked(_uiButtonNavigation.Buttons[_uiButtonNavigation.CurrentButtonID]);
-                //        break;
-                //    default:
-                //        break;
-                //}
+                _uiNavigation.Selectables[_uiNavigation.CurrentSelectableID].GetComponent<IUISelectable>()
+                    .OnClickCallback.Invoke(_uiNavigation.Selectables[_uiNavigation.CurrentSelectableID].GetComponent<IUISelectable>());
             }
         }
 
-        public void OnButtonTestLevelClicked(UIButton uiButton)
+        public void OnButtonTestLevelClicked(IUISelectable uiButton)
         {
             uiButton.OnClick();
 
@@ -59,7 +48,15 @@ namespace Assets.Scripts.UI
             GameManager.Instance.GameManagerState.StateChange(EGameScenes.TestLevel);
         }
 
-        public void OnButtonQuitClicked(UIButton uiButton)
+        public void OnButtonSettingsClicked(IUISelectable uiButton)
+        {
+            uiButton.OnClick();
+
+            // Load settings scene
+            GameManager.Instance.GameManagerState.StateChange(EGameScenes.Settings);
+        }
+
+        public void OnButtonQuitClicked(IUISelectable uiButton)
         {
             uiButton.OnClick();
 

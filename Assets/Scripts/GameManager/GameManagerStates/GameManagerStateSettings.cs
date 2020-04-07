@@ -7,13 +7,13 @@ using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.GameManagerController.States
 {
-    public sealed class GameManagerStateIntro : IGameManagerState
+    public sealed class GameManagerStateSettings : IGameManagerState
     {
         private static GameManager _gameManagerInstance = null;
 
         private IGameManagerState _nextState = null;                            // To hold next state until scenes unloads
 
-        public GameManagerStateIntro(GameManager gameManager)
+        public GameManagerStateSettings(GameManager gameManager)
         {
             _gameManagerInstance = gameManager;
         }
@@ -21,15 +21,7 @@ namespace Assets.Scripts.GameManagerController.States
         #region IGameManagerState implementation
         public void StateAwake()
         {
-            // Load scenes dictionary
-            _gameManagerInstance.LoadSceneDictionary();
-            // Link GameManager functions to scenes load/unload events
-            SceneManager.sceneLoaded += _gameManagerInstance.OnSceneLoaded;
-            SceneManager.sceneUnloaded += _gameManagerInstance.OnSceneUnLoaded;
-            // Set up the controller
-            _gameManagerInstance.SetUpController();
-            // Set up AudioMixerController
-            _gameManagerInstance.SetUpAudioMixerController();
+            //throw new NotImplementedException();
         }
 
         public void StateUpdate()
@@ -40,9 +32,18 @@ namespace Assets.Scripts.GameManagerController.States
         public void StateChange(EGameScenes gameScenes)
         {
             // Assign new game state
-            _nextState = new GameManagerStateMainMenu(_gameManagerInstance);
+            switch (gameScenes)
+            {
+                case EGameScenes.MainMenu:
+                    _nextState = new GameManagerStateMainMenu(_gameManagerInstance);
+                    break;
 
-            // Load next scene -> main menu
+                default:
+                    _nextState = new GameManagerStateMainMenu(_gameManagerInstance);
+                    break;
+            }
+
+            // Load next scene
             string l_scene = string.Empty;
 
             if (_gameManagerInstance.GameScenesDictionary.TryGetValue(gameScenes, out l_scene))
