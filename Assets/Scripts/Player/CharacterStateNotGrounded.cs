@@ -9,55 +9,48 @@ namespace Assets.Scripts.Player
 		private Collider2D[] _collider2DArrary = null;
 		private Vector3 _velocity = Vector3.zero;
 
-		private Vector2 _firstVelocity = Vector2.zero;                  // Variable for air control management
-
 		public CharacterStateNotGrounded(CharacterComponents characterComponents, Collider2D[] collider2DArrary, Vector3 velocity)
 		{
 			_characterComponents = characterComponents;
 			_collider2DArrary = collider2DArrary;
 			_velocity = velocity;
-
-			_firstVelocity = characterComponents.Rigidbody2D.velocity;
 		}
 
 		public void StateControl(ControlFlags controlFlags)
 		{
 			#region Not grounded
             // If air control is enabled
-            if (_characterComponents.CharacterParams.AirControl)
+			if (_characterComponents.CharacterParams.AirControl)
 			{
-                // Player is not gliding (gliding has its own control and section)
-                if (!_characterComponents.CharacterFlags.WasGliding)
+				float l_move = 0.0f;
+
+                // Give the player the possibility to decrease the speed in mid air
+                if (Math.Sign(_characterComponents.Rigidbody2D.velocity.x) != Math.Sign(controlFlags.HorizontalMove) &&
+                    Math.Abs(controlFlags.HorizontalMove) > 0.1f)
                 {
-					float l_move = 0.0f;
+                    l_move = Math.Sign(_characterComponents.Rigidbody2D.velocity.x) * _characterComponents.CharacterParams.JumpControlTargetHorizontalSpeed;
 
-                    if (Math.Abs(_firstVelocity.x) < 0.1f)
+                    _characterComponents.Rigidbody2D.velocity =
+                    Vector3.SmoothDamp(
+                        _characterComponents.Rigidbody2D.velocity,
+                        new Vector3(l_move, _characterComponents.Rigidbody2D.velocity.y, 0.0f),
+                        ref _velocity,
+                        _characterComponents.CharacterParams.JumpControlMovementSmoothing);
+                }
+
+                // Give the player a little bit of control in mid air
+                if (controlFlags.HorizontalMove != 0.0f)
+                {
+                    if (Mathf.Abs(_characterComponents.Rigidbody2D.velocity.x) < _characterComponents.CharacterParams.JumpControlTargetHorizontalSpeed)
                     {
-						l_move = controlFlags.HorizontalMove * _characterComponents.CharacterParams.JumpControlTargetHorizontalSpeed_0;
+						l_move = controlFlags.HorizontalMove * _characterComponents.CharacterParams.JumpControlTargetHorizontalSpeed;
 
-						_characterComponents.Rigidbody2D.velocity =
-						Vector3.SmoothDamp(
-							_characterComponents.Rigidbody2D.velocity,
-							new Vector3(l_move, _characterComponents.Rigidbody2D.velocity.y, 0.0f),
-							ref _velocity,
-							_characterComponents.CharacterParams.JumpControlMovementSmoothing);
-						// Manage player facing direction and relevant components
-						CharacterController2D.ManagePlayerFacing(_characterComponents, _collider2DArrary, l_move);
-					}
-                    else
-                    {
-						if (Math.Sign(_characterComponents.Rigidbody2D.velocity.x) != Math.Sign(controlFlags.HorizontalMove) &&
-                            Math.Abs(controlFlags.HorizontalMove) > 0.1f)
-                        {
-							l_move = Math.Sign(_characterComponents.Rigidbody2D.velocity.x) * _characterComponents.CharacterParams.JumpControlTargetHorizontalSpeed;
-
-							_characterComponents.Rigidbody2D.velocity =
-							Vector3.SmoothDamp(
-								_characterComponents.Rigidbody2D.velocity,
-								new Vector3(l_move, _characterComponents.Rigidbody2D.velocity.y, 0.0f),
-								ref _velocity,
-								_characterComponents.CharacterParams.JumpControlMovementSmoothing);
-						}
+                        _characterComponents.Rigidbody2D.velocity =
+                        Vector3.SmoothDamp(
+                            _characterComponents.Rigidbody2D.velocity,
+                            new Vector3(l_move, _characterComponents.Rigidbody2D.velocity.y, 0.0f),
+                            ref _velocity,
+                            _characterComponents.CharacterParams.JumpControlMovementSmoothing);
                     }
 				}
 			}

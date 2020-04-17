@@ -68,7 +68,12 @@ namespace Assets.Scripts.Player
 			}
 
 			// Animator player speed parameter setting
-			_animator.SetFloat("PlayerSpeed", Mathf.Abs(_controlFlags.HorizontalMove));
+			//_animator.SetFloat("PlayerSpeed", Mathf.Abs(_controlFlags.HorizontalMove));
+			_animator.SetFloat("PlayerSpeed", Mathf.Abs(GetComponent<Rigidbody2D>().velocity.x));
+            // For very low velocities set float to 0.0f
+            if (Mathf.Abs(GetComponent<Rigidbody2D>().velocity.x) < 0.1f)
+				_animator.SetFloat("PlayerSpeed", 0.0f);
+
 
 			// Player jump
 			if (_gameController.PlayerJump())
