@@ -19,8 +19,8 @@ namespace Assets.Scripts.Player
         #endregion
 
         #region Variables
-        private Vector3 _velocity = Vector3.zero;       // Velocity Vector3 of the gameObject
-		private Collider2D[] _collider2DArrary;         // GameObject Collider2D array
+        private Vector3 _velocity = Vector3.zero;                               // Velocity Vector3 of the gameObject
+		private Collider2D[] _collider2DArrary;                                 // GameObject Collider2D array
         #endregion
 
         #region Character State

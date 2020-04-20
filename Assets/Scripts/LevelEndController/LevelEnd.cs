@@ -9,9 +9,9 @@ namespace Assets.Scripts.LevelEndController
 	public class LevelEnd : MonoBehaviour
 	{
 		[SerializeField]
-		private LayerMask _playerLayer;                             // Player layer to check conditions
+		private LayerMask _playerLayer;                                         // Player layer to check conditions
 		[SerializeField]
-		private EGameScenes _gameScenes;                            // Game scene to load after player reaches level end
+		private EGameScenes _gameScenes;                                        // Game scene to load after player reaches level end
 
 		// Use this for initialization
 		//private void Start()

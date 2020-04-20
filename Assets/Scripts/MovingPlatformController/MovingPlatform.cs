@@ -9,20 +9,20 @@ namespace Assets.Scripts.MovingPlatformController
     public sealed class MovingPlatform : MonoBehaviour
 	{
 		[SerializeField]
-		private LayerMask _playerLayer;                             // Player layer to check conditions
+		private LayerMask _playerLayer;                                         // Player layer to check conditions
         [SerializeField]
-		private float _frequency = 10.0f;                           // Moving frequency
+		private float _frequency = 10.0f;                                       // Moving frequency
 		[SerializeField]
-		private float _movementSemiLength = 10.0f;                  // Half the total movement of the platform
+		private float _movementSemiLength = 10.0f;                              // Half the total movement of the platform
         [SerializeField]
-		private float _initialPosition = 0.0f;                      // Initial platform position (must be between -semilength and +semilength)
+		private float _initialPosition = 0.0f;                                  // Initial platform position (must be between -semilength and +semilength)
 		[SerializeField] [Range(0.0f, 180.0f)]
-		private float _platformDirection = 0.0f;                    // Platform direction in degrees
+		private float _platformDirection = 0.0f;                                // Platform direction in degrees
         [SerializeField]
-		private bool _reverseInitialDirection = false;              // Flag for intial platform direction
+		private bool _reverseInitialDirection = false;                          // Flag for intial platform direction
 
-		private Oscillator _oscillator;                             // Oscillator object
-		private float _platformPosition_0;                          // Platform previous position
+		private Oscillator _oscillator;                                         // Oscillator object
+		private float _platformPosition_0;                                      // Platform previous position
 
 		// Use this for initialization
 		private void Start()

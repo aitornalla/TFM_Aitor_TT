@@ -9,13 +9,13 @@ namespace Assets.Scripts.Traps.FireballHoleController
 	public sealed class FireballHole : MonoBehaviour
 	{
 		[SerializeField]
-		private GameObject _fireballPrefab;                         // Fireball prefab
+		private GameObject _fireballPrefab;                                     // Fireball prefab
 		[SerializeField]
-		private Transform _fireballSpawnPosition;                   // Fireball spawn position
+		private Transform _fireballSpawnPosition;                               // Fireball spawn position
         [SerializeField]
-		private float _initialDelay = 0.0f;                         // Initial delay before start shooting
+		private float _initialDelay = 0.0f;                                     // Initial delay before start shooting
 		[SerializeField]
-		private float _delayBetweenShots = 1.0f;                    // Delay between shots
+		private float _delayBetweenShots = 1.0f;                                // Delay between shots
 
 		[Header("Fireball properties")]
 		[SerializeField]
@@ -25,7 +25,7 @@ namespace Assets.Scripts.Traps.FireballHoleController
 		[SerializeField]
 		private float _fireballLifetime = 5.0f;
 
-		private float _rotationZ = 0.0f;                            // Fireball hole rotation in world space
+		private float _rotationZ = 0.0f;                                        // Fireball hole rotation in world space
 
 		// Use this for initialization
 		private void Start()

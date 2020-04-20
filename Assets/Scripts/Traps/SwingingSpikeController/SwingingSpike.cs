@@ -10,31 +10,31 @@ namespace Assets.Scripts.Traps.SwingingSpikeController
 	public sealed class SwingingSpike : MonoBehaviour
 	{
 		[SerializeField]
-		private LayerMask _playerLayer;                     // Player layer to check conditions
+		private LayerMask _playerLayer;                                         // Player layer to check conditions
 		[SerializeField]
-		private int _damage = 15;                           // Damage taken by the player when colliding with the spike
+		private int _damage = 15;                                               // Damage taken by the player when colliding with the spike
 		[SerializeField]
-		private Transform _nut;                             // Nut gameObject to rotate around
+		private Transform _nut;                                                 // Nut gameObject to rotate around
 		[SerializeField]
-		private Transform _ropechain;                       // gameObject with rope/chain elements to rotate
+		private Transform _ropechain;                                           // gameObject with rope/chain elements to rotate
 		[SerializeField] [Range(180.0f, 270.0f)]
-		private float _angleLimit1 = 210.0f;                // Limit angle used to apply the force (in degrees)
+		private float _angleLimit1 = 210.0f;                                    // Limit angle used to apply the force (in degrees)
 		[SerializeField] [Range(270.0f, 360.0f)]
-		private float _angleLimit2 = 330.0f;                // Limit angle used to apply the force (in degrees)
+		private float _angleLimit2 = 330.0f;                                    // Limit angle used to apply the force (in degrees)
 		[SerializeField]
-		private float _frequency = 10.0f;                   // Swinging frequency
+		private float _frequency = 10.0f;                                       // Swinging frequency
         [SerializeField]
-		private float _oscillatorAngle_0 = 180.0f;          // Initial oscillator angle
+		private float _oscillatorAngle_0 = 180.0f;                              // Initial oscillator angle
 		[SerializeField]
-		private float _bumpForce = 400.0f;                  // Force to push the player back when hit
+		private float _bumpForce = 400.0f;                                      // Force to push the player back when hit
 		[SerializeField] [Range(0.0f, 90.0f)]
-		private float _bumpForceAngle = 45.0f;              // Angle of bump force
+		private float _bumpForceAngle = 45.0f;                                  // Angle of bump force
 
 
-		private Oscillator _oscillator;                     // Oscillator object
-		private const float InitialSpriteRot = 270.0f;      // Initial sprite angle
-		private float _angle;                               // Current angle
-		private float _angle_0;                             // Angle previous value
+		private Oscillator _oscillator;                                         // Oscillator object
+		private const float InitialSpriteRot = 270.0f;                          // Initial sprite angle
+		private float _angle;                                                   // Current angle
+		private float _angle_0;                                                 // Angle previous value
 
 		// Use this for initialization
 		private void Start()

@@ -18,31 +18,31 @@ namespace Assets.Scripts.CrystalGemController
 	public sealed class CrystalGem : MonoBehaviour
 	{
 		[SerializeField]
-		private ECrystalGemType _crystalGemType;                    // Type of gem
+		private ECrystalGemType _crystalGemType;                                // Type of gem
 		[SerializeField]
-		private LayerMask _playerLayer;                             // Player layer to check conditions
+		private LayerMask _playerLayer;                                         // Player layer to check conditions
 		[SerializeField]
-		private Transform _upLimit;                                 // Movement up limit
+		private Transform _upLimit;                                             // Movement up limit
 		[SerializeField]
-		private Transform _downLimit;                               // Movement down limit
+		private Transform _downLimit;                                           // Movement down limit
 		[SerializeField]
-		private Transform _initialPosition;                         // Initial gem position (one of the two limits)
+		private Transform _initialPosition;                                     // Initial gem position (one of the two limits)
 		[SerializeField]
-		private float _frequency = 10.0f;                           // Moving frequency
+		private float _frequency = 10.0f;                                       // Moving frequency
 		[SerializeField]
-		private float _bMovementParam = 1.0f;                       // Parameter for oscillating movement
+		private float _bMovementParam = 1.0f;                                   // Parameter for oscillating movement
 		[SerializeField]
-		private bool _reverseInitialDirection = false;              // Flag for intial gem direction
+		private bool _reverseInitialDirection = false;                          // Flag for intial gem direction
 
-		private ParticleSystem _particleSystem = null;              // ParticleSystem component
-		private SpriteRenderer _spriteRenderer = null;              // SpriteRenderer component
-		private CapsuleCollider2D _capsuleCollider2D = null;        // CapsuleCollider2D component
+		private ParticleSystem _particleSystem = null;                          // ParticleSystem component
+		private SpriteRenderer _spriteRenderer = null;                          // SpriteRenderer component
+		private CapsuleCollider2D _capsuleCollider2D = null;                    // CapsuleCollider2D component
 
-        private Oscillator _oscillator;                             // Oscillator object
-		private float _gemPosition_0;                               // Gem previous position
+        private Oscillator _oscillator;                                         // Oscillator object
+		private float _gemPosition_0;                                           // Gem previous position
 		private float _movementSemiLength;
-		private bool _isDestroying = false;                         // Flag for when the gem is destroying
-        private bool _isVisible = false;                            // If gameObject no visible, don't update (save resources)
+		private bool _isDestroying = false;                                     // Flag for when the gem is destroying
+        private bool _isVisible = false;                                        // If gameObject no visible, don't update (save resources)
 
         private void Awake()
         {

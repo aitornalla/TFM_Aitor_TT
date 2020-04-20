@@ -8,7 +8,7 @@ namespace Assets.Scripts.CustomClasses.OscillatorFunctions
     /// </summary>
     public sealed class SinHalfPICosbOscillatorFunction : OscillatorFunction
     {
-        private float _b = 1.0f;            // Function parameter
+        private float _b = 1.0f;                                                // Function parameter
 
         /// <summary>
         ///     Returns oscillations of function: sin(PI/2 * cos(b * x))

@@ -8,7 +8,7 @@ namespace Assets.Scripts.CustomClasses.OscillatorFunctions
     /// </summary>
     public sealed class CosSqrtbOscillatorFunction : OscillatorFunction
     {
-        private float _b = 1.0f;            // Function parameter
+        private float _b = 1.0f;                                                // Function parameter
 
         /// <summary>
         ///     Returns oscillations of function: cos(x) * sqrt((1 + b^2)/(1 + b^2 * cos^2(x)))

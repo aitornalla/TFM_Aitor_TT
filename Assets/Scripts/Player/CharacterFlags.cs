@@ -6,15 +6,15 @@ namespace Assets.Scripts.Player
     public sealed class CharacterFlags : MonoBehaviour
     {
         #region Flags
-        private bool _grounded;							// Whether or not the player is grounded
-        private bool _facingRight = true;               // For determining which way the player is currently facing
-        private bool _wasSliding = false;               // Was the player sliding in the previous frame?
-        private bool _hasDoubleJumped = false;          // Flag for double jumping
-        private bool _wasGliding = false;               // Is the player gliding?
-        private bool _isInGlideImpulseZone = false;     // Is the player in a glide impulse zone?
-        private bool _isAttacking = false;              // Is the player attacking?
-        private bool _isThrowing = false;               // Is the player throwing a kunai?
-        private bool _isDead = false;                   // Is the pplayer dead?
+        private bool _grounded;							                        // Whether or not the player is grounded
+        private bool _facingRight = true;                                       // For determining which way the player is currently facing
+        private bool _wasSliding = false;                                       // Was the player sliding in the previous frame?
+        private bool _hasDoubleJumped = false;                                  // Flag for double jumping
+        private bool _wasGliding = false;                                       // Is the player gliding?
+        private bool _isInGlideImpulseZone = false;                             // Is the player in a glide impulse zone?
+        private bool _isAttacking = false;                                      // Is the player attacking?
+        private bool _isThrowing = false;                                       // Is the player throwing a kunai?
+        private bool _isDead = false;                                           // Is the pplayer dead?
         #endregion
 
         #region Properties

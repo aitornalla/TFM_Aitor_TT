@@ -8,19 +8,19 @@ namespace Assets.Scripts.Traps.FireballController
 	public sealed class Fireball : MonoBehaviour
 	{
 		[SerializeField]
-		private LayerMask _playerLayer;                             // Player layer to check conditions
+		private LayerMask _playerLayer;                                         // Player layer to check conditions
 		[SerializeField]
-		private int _damage = 15;                                   // Damage taken by the player when hit with the fireball
+		private int _damage = 15;                                               // Damage taken by the player when hit with the fireball
 		[SerializeField]
-		private float _velocity = 5.0f;                             // Velocity of the fireball
+		private float _velocity = 5.0f;                                         // Velocity of the fireball
 		[SerializeField]
-		private float _lifetime = 5.0f;                             // Fireball lifetime in seconds (s)
+		private float _lifetime = 5.0f;                                         // Fireball lifetime in seconds (s)
 
-		private Animator _animator;                                 // Reference to the Animator component 
-		private CapsuleCollider2D _capsuleCollider2D;               // Reference to the CapsuleCollider2D component
-		private Coroutine _coroutine;                               // Variable to store coroutine reference
-        private bool _isDestroying = false;                         // Flag for when the fireball is destroying
-		private bool _firstCollision = false;                       // Flag to check for fist collision (should be containing collider) and not destroy de fireball
+		private Animator _animator;                                             // Reference to the Animator component 
+		private CapsuleCollider2D _capsuleCollider2D;                           // Reference to the CapsuleCollider2D component
+		private Coroutine _coroutine;                                           // Variable to store coroutine reference
+        private bool _isDestroying = false;                                     // Flag for when the fireball is destroying
+		private bool _firstCollision = false;                                   // Flag to check for fist collision (should be containing collider) and not destroy de fireball
 
         #region Properties
         public int Damage

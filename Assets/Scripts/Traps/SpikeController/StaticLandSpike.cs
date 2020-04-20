@@ -8,7 +8,7 @@ namespace Assets.Scripts.Traps.SpikeController
 	public sealed class StaticLandSpike : MonoBehaviour
 	{
 		[SerializeField]
-		private LayerMask _playerLayer;                 // Player layer to check conditions
+		private LayerMask _playerLayer;                                         // Player layer to check conditions
 
 		// Use this for initialization
 		//private void Start()

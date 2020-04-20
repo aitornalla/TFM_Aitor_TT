@@ -9,15 +9,15 @@ namespace Assets.Scripts.Player
 	public sealed class CharacterInputController2D : MonoBehaviour
     {
 		[SerializeField]
-		private CharacterController2D _characterController2D;       // CharacterController2D component to control character physics
+		private CharacterController2D _characterController2D;                   // CharacterController2D component to control character physics
 		[SerializeField]
-		private CharacterFlags _characterFlags;                     // CharacterFlags component to control character states
+		private CharacterFlags _characterFlags;                                 // CharacterFlags component to control character states
 		[SerializeField]
-		private Animator _animator;                                 // Animator component for setting player animation transitions
+		private Animator _animator;                                             // Animator component for setting player animation transitions
 
-		private IGameController _gameController;                    // IGameController component for player input
-		private ControlFlags _controlFlags;                         // Control flags grouped in a class
-		private bool _wasPaused = false;                            // Flag for game paused in previous frame
+		private IGameController _gameController;                                // IGameController component for player input
+		private ControlFlags _controlFlags;                                     // Control flags grouped in a class
+		private bool _wasPaused = false;                                        // Flag for game paused in previous frame
 
         #region Start
 		// Use this for initialization

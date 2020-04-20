@@ -8,13 +8,13 @@ namespace Assets.Scripts.GlideImpulseZone
 	public sealed class GlideImpulseZoneController : MonoBehaviour
 	{
         [SerializeField]
-		private LayerMask _playerLayer;                 // Player layer to check conditions
+		private LayerMask _playerLayer;                                         // Player layer to check conditions
         [SerializeField]
-        private AreaEffector2D _areaEffector2D;         // AreaEffector2D attached to this gameObject
+        private AreaEffector2D _areaEffector2D;                                 // AreaEffector2D attached to this gameObject
         [SerializeField]
-		private bool _isPlayerIn = false;               // Flag to chech whether the player is in the area or not
+		private bool _isPlayerIn = false;                                       // Flag to chech whether the player is in the area or not
 
-        private CharacterFlags _characterFlags;         // CharacterFlags component to get glide flag
+        private CharacterFlags _characterFlags;                                 // CharacterFlags component to get glide flag
 
 		// Use this for initialization
 		//private void Start()

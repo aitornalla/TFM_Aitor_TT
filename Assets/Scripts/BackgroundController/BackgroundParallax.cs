@@ -7,11 +7,11 @@ namespace Assets.Scripts.BackgroundController
 	public sealed class BackgroundParallax : MonoBehaviour
 	{
 		[SerializeField]
-		private Transform _camera;                      // Main camera transform
+		private Transform _camera;                                              // Main camera transform
 		[SerializeField]
-		private float _parallaxEffect;                  // Parallax effect strength
+		private float _parallaxEffect;                                          // Parallax effect strength
 
-		private float _length, _startPosition;          // Variables for processing parallax effect
+		private float _length, _startPosition;                                  // Variables for processing parallax effect
 
 		// Use this for initialization
 		private void Start()

@@ -8,37 +8,37 @@ namespace Assets.Scripts.Player
         [Header("Components")]
 	    #region Components
 	    [SerializeField]
-	    private CharacterParams _characterParams;       // Component to hold character parameters
+	    private CharacterParams _characterParams;                               // Component to hold character parameters
         [SerializeField]
-        private CharacterFlags _characterFlags;         // Component to hold character flags
+        private CharacterFlags _characterFlags;                                 // Component to hold character flags
         [SerializeField]
-        private CharacterEvents _characterEvents;       // Component to hold character events
+        private CharacterEvents _characterEvents;                               // Component to hold character events
         [SerializeField]
-	    private Rigidbody2D _rigidbody2D;               // Rigidbody2D component of the gameObject
+	    private Rigidbody2D _rigidbody2D;                                       // Rigidbody2D component of the gameObject
 	    [SerializeField]
-	    private CapsuleCollider2D _mainCapCollider2D;   // Not-sliding CapsuleCollider2D component of the gameObject
+	    private CapsuleCollider2D _mainCapCollider2D;                           // Not-sliding CapsuleCollider2D component of the gameObject
 	    [SerializeField]
-	    private CapsuleCollider2D _slideCapCollider2D;  // Sliding CapsuleCollider2D component of the gameObject
+	    private CapsuleCollider2D _slideCapCollider2D;                          // Sliding CapsuleCollider2D component of the gameObject
 	    [SerializeField]
-	    private CapsuleCollider2D _glideCapCollider2D;  // Gliding CapsuleCollider2D component of the gameObject
+	    private CapsuleCollider2D _glideCapCollider2D;                          // Gliding CapsuleCollider2D component of the gameObject
 	    [SerializeField]
-	    private CapsuleCollider2D _attackCapCollider2D; // Attack CapsuleCollider2D component of the gameObject
+	    private CapsuleCollider2D _attackCapCollider2D;                         // Attack CapsuleCollider2D component of the gameObject
         [SerializeField]
-        private CapsuleCollider2D _throwCapCollider2D;  // Throw CapsuleCollider2D component of the gameObject
+        private CapsuleCollider2D _throwCapCollider2D;                          // Throw CapsuleCollider2D component of the gameObject
         [SerializeField]
-	    private SpriteRenderer _spriteRenderer;         // SpriteRenderer component of the gameObject
+	    private SpriteRenderer _spriteRenderer;                                 // SpriteRenderer component of the gameObject
         #endregion
 
         [Header("Transform References")]
         #region Transform References
         [SerializeField]
-        private Transform _groundCheck;                 // A position marking where to check if the player is grounded
+        private Transform _groundCheck;                                         // A position marking where to check if the player is grounded
         [SerializeField]
-        private Transform _ceilingCheck;                // A position marking where to check for ceilings
+        private Transform _ceilingCheck;                                        // A position marking where to check for ceilings
         [SerializeField]
-        private Transform _attackCheck;                 // A position marking where to check for attack
+        private Transform _attackCheck;                                         // A position marking where to check for attack
         [SerializeField]
-        private Transform _throwCheck;                  // A position marking where to check for throw
+        private Transform _throwCheck;                                          // A position marking where to check for throw
         #endregion
 
         #region Properties

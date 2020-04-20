@@ -10,30 +10,30 @@ namespace Assets.Scripts.Traps.RotatingHalfSawController
 	public sealed class RotatingHalfSaw : MonoBehaviour
 	{
 		[SerializeField]
-		private LayerMask _playerLayer;                             // Player layer to check conditions
+		private LayerMask _playerLayer;                                         // Player layer to check conditions
 		[SerializeField]
-		private int _damage = 15;                                   // Damage taken by the player when colliding with the rotating saw
+		private int _damage = 15;                                               // Damage taken by the player when colliding with the rotating saw
 		[SerializeField]
-		private Transform _leftLimit;                               // Movement left limit
+		private Transform _leftLimit;                                           // Movement left limit
         [SerializeField]
-        private Transform _rightLimit;                              // Movement right limit
+        private Transform _rightLimit;                                          // Movement right limit
 		[SerializeField]
-		private Transform _initialPosition;                         // Initial saw position (one of the two limits)
+		private Transform _initialPosition;                                     // Initial saw position (one of the two limits)
 		[SerializeField]
-		private float _frequency = 10.0f;                           // Moving frequency
+		private float _frequency = 10.0f;                                       // Moving frequency
 		[SerializeField]
-		private int _intensity = 1;                                 // Intensity of the oscillations
+		private int _intensity = 1;                                             // Intensity of the oscillations
 		[SerializeField]
-		private float _strikes = 1.0f;                              // Number of strikes per oscillation
+		private float _strikes = 1.0f;                                          // Number of strikes per oscillation
         [SerializeField]
-		private bool _reverseInitialDirection = false;              // Flag for intial saw direction
+		private bool _reverseInitialDirection = false;                          // Flag for intial saw direction
 		[SerializeField]
-		private float _bumpForce = 400.0f;                          // Force to push the player back when hit
+		private float _bumpForce = 400.0f;                                      // Force to push the player back when hit
 		[SerializeField] [Range(0.0f, 90.0f)]
-		private float _bumpForceAngle = 45.0f;                      // Angle of bump force
+		private float _bumpForceAngle = 45.0f;                                  // Angle of bump force
 
-		private Oscillator _oscillator;                             // Oscillator object
-		private float _sawPosition_0;                               // Saw previous position
+		private Oscillator _oscillator;                                         // Oscillator object
+		private float _sawPosition_0;                                           // Saw previous position
 		private float _movementSemiLength;
 
 		// Use this for initialization

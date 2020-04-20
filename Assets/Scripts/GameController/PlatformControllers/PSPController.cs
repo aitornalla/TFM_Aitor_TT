@@ -9,14 +9,14 @@ namespace Assets.Scripts.GameController.PlatformControllers
 	/// </summary>
 	public sealed class PSPController : MonoBehaviour
 	{
-		private bool m_IsButtonPressedDPadDown = false;                     // Flag to treat DPad axis as button
-		private bool m_WasButtonPressedDPadDown = false;                    // Flag to treat DPad axis as button
-		private bool m_IsButtonPressedDPadLeft = false;                     // Flag to treat DPad axis as button
-		private bool m_WasButtonPressedDPadLeft = false;                    // Flag to treat DPad axis as button
-		private bool m_IsButtonPressedDPadRight = false;                    // Flag to treat DPad axis as button
-		private bool m_WasButtonPressedDPadRight = false;                   // Flag to treat DPad axis as button
-		private bool m_IsButtonPressedDPadUp = false;                       // Flag to treat DPad axis as button
-		private bool m_WasButtonPressedDPadUp = false;                      // Flag to treat DPad axis as button
+		private bool m_IsButtonPressedDPadDown = false;                         // Flag to treat DPad axis as button
+		private bool m_WasButtonPressedDPadDown = false;                        // Flag to treat DPad axis as button
+		private bool m_IsButtonPressedDPadLeft = false;                         // Flag to treat DPad axis as button
+		private bool m_WasButtonPressedDPadLeft = false;                        // Flag to treat DPad axis as button
+		private bool m_IsButtonPressedDPadRight = false;                        // Flag to treat DPad axis as button
+		private bool m_WasButtonPressedDPadRight = false;                       // Flag to treat DPad axis as button
+		private bool m_IsButtonPressedDPadUp = false;                           // Flag to treat DPad axis as button
+		private bool m_WasButtonPressedDPadUp = false;                          // Flag to treat DPad axis as button
 
 		private const float PadDeadZone = 0.004f;
 

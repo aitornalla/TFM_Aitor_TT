@@ -8,12 +8,12 @@ namespace Assets.Scripts.CheckPointController
 	public sealed class CheckPoint : MonoBehaviour
 	{
         [SerializeField]
-        private LayerMask _playerLayer;                             // Player layer to check conditions
+        private LayerMask _playerLayer;                                         // Player layer to check conditions
         [SerializeField]
-        private Transform _respawnPoint;                            // Respawn transform
+        private Transform _respawnPoint;                                        // Respawn transform
 
-		private ParticleSystem[] _particleSystems;                  // Array of ParticleSystem components from sakura tree
-        private bool _isChecked = false;                            // Flag for checking the checkpoint
+		private ParticleSystem[] _particleSystems;                              // Array of ParticleSystem components from sakura tree
+        private bool _isChecked = false;                                        // Flag for checking the checkpoint
 
         #region Properties
         public Transform RespawnPoint { get { return _respawnPoint; } }

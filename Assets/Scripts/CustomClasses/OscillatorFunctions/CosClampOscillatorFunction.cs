@@ -8,7 +8,7 @@ namespace Assets.Scripts.CustomClasses.OscillatorFunctions
     /// </summary>
     public sealed class CosClampOscillatorFunction : OscillatorFunction
     {
-        private float _mult = 1.0f;         // Function parameter
+        private float _mult = 1.0f;                                             // Function parameter
 
         /// <summary>
         ///     Returns oscillations of function: Clamp(mult * cos(x), -1.0f, 1.0f)
