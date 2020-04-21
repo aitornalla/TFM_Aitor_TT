@@ -37,6 +37,8 @@ namespace Assets.Scripts.GameManagerController
 		private Transform _prefabContainer = null;
 		// Next scene to load after level load scene
 		private EGameScenes _levelLoadNextScene;
+		// Black panel on canvas to make transition from death to respawn player
+		private GameObject _deathRespawnBlackPanel = null;
 
         #region Pause variables
         // Pause flag
@@ -85,6 +87,7 @@ namespace Assets.Scripts.GameManagerController
             set
             { _instance._levelLoadNextScene = value; }
         }
+        public GameObject DeathRespawnBlackPanel { get { return _instance._deathRespawnBlackPanel; } }
         public bool IsPlayerDead { get { return _instance._playerInstance.GetComponent<CharacterFlags>().IsDead; } }
         public bool IsPaused { get { return _instance._isPaused; } }
         public BoolEvent OnPauseEvent { get { return _instance._onPauseEvent; } }
@@ -157,6 +160,9 @@ namespace Assets.Scripts.GameManagerController
 
 			// Initialize OnPauseEvent
 			_instance._onPauseEvent = new BoolEvent();
+
+			// Get black panel on canvas for transition from death to respawn
+			_instance._deathRespawnBlackPanel = GameObject.FindGameObjectWithTag("DeathRespawnBlackPanel");
 		}
 
         /// <summary>
@@ -232,6 +238,8 @@ namespace Assets.Scripts.GameManagerController
 			_instance._playerInstance.GetComponent<CharacterFlags>().IsDead = false;
             // Set player gameObject to active
 			_instance._playerInstance.SetActive(true);
+			// Once everything is set up, set black panel inactive
+			_instance._deathRespawnBlackPanel.SetActive(false);
 		}
 
 		/// <summary>

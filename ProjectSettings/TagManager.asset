@@ -8,6 +8,7 @@ TagManager:
   - CheckPoint
   - PrefabContainer
   - PauseMenu
+  - DeathRespawnBlackPanel
   layers:
   - Default
   - TransparentFX

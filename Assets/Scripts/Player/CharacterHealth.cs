@@ -170,7 +170,11 @@ namespace Assets.Scripts.Player
         public void OnPlayerDeathEndAnimationEvent()
         {
             // Calls GameManager to manage player death/respawn after death animation ends
-            GameManager.Instance.ManagePlayerDeathAndRespawn();
+            //GameManager.Instance.ManagePlayerDeathAndRespawn();
+
+            // Starts transition from death to respawn the player
+            // The transition gameObject will call the GameManager to handle the player death/respawn once its animation ends
+            GameManager.Instance.DeathRespawnBlackPanel.SetActive(true);
         }
     }
 }
