@@ -11,6 +11,8 @@ namespace Assets.Scripts.CheckPointController
         private LayerMask _playerLayer;                                         // Player layer to check conditions
         [SerializeField]
         private Transform _respawnPoint;                                        // Respawn transform
+        [SerializeField]
+        private GameObject _checkpointBanner;                                   // Checkpoint banner gameObject
 
 		private ParticleSystem[] _particleSystems;                              // Array of ParticleSystem components from sakura tree
         private bool _isChecked = false;                                        // Flag for checking the checkpoint
@@ -46,13 +48,17 @@ namespace Assets.Scripts.CheckPointController
             // If player gets to the checkpoint, play sakura tree particle system
             if (_playerLayer == (_playerLayer | (1 << collision.gameObject.layer)))
             {
+                // Check flag
+                _isChecked = true;
+
+                // Play all particle systems
                 for (int i = 0; i < _particleSystems.Length; i++)
                 {
                     _particleSystems[i].Play();
                 }
 
-                // Check flag
-                _isChecked = true;
+                // Enable checkpoint banner
+                _checkpointBanner.SetActive(true);
 
                 // Assign checkpoint respawn position to current GameManager respawn position
                 GameManager.Instance.CurrentCheckPointSpawnPosition = _respawnPoint.position;
