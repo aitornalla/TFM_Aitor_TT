@@ -1,19 +1,16 @@
 ﻿using Assets.Scripts.Scenes;
-using System.Collections;
-using System.Collections.Generic;
 using System;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.GameManagerController.States
 {
-    public sealed class GameManagerStateMainMenu : IGameManagerState
+    public sealed class GameManagerStateLevel : IGameManagerState
     {
         private static GameManager _gameManagerInstance = null;
 
         private IGameManagerState _nextState = null;                            // To hold next state until scenes unloads
 
-        public GameManagerStateMainMenu(GameManager gameManager)
+        public GameManagerStateLevel(GameManager gameManager)
         {
             _gameManagerInstance = gameManager;
         }
@@ -21,12 +18,16 @@ namespace Assets.Scripts.GameManagerController.States
         #region IGameManagerState implementation
         public void StateAwake()
         {
-            //throw new NotImplementedException();
+            _gameManagerInstance.AssignLevelReferences();
         }
 
         public void StateUpdate()
         {
-            //throw new NotImplementedException();
+            // When player press pause
+            if (_gameManagerInstance.GameController.Pause() && !_gameManagerInstance.IsPlayerDead)
+            {
+                _gameManagerInstance.ManagePause();
+            }
         }
 
         public void StateChange(EGameScenes gameScenes)
@@ -34,29 +35,12 @@ namespace Assets.Scripts.GameManagerController.States
             // Assign new game state
             switch (gameScenes)
             {
+                case EGameScenes.MainMenu:
+                    _nextState = new GameManagerStateMainMenu(_gameManagerInstance);
+                    break;
+
                 case EGameScenes.LevelsMenu:
-                    {
-                        // Assing new game state
-                        _nextState = new GameManagerStateLevelsMenu(_gameManagerInstance);
-                    }
-                    break;
-
-                case EGameScenes.TestLevel:
-                    {
-                        // Level scene to be loaded next
-                        _gameManagerInstance.LevelLoadNextScene = gameScenes;
-                        // Assing new game state
-                        _nextState = new GameManagerStateLevelLoad(_gameManagerInstance);
-                        // Load LevelLoad scene that will load the next level asynchronously
-                        gameScenes = EGameScenes.LevelLoad;
-                    }
-                    break;
-
-                case EGameScenes.SettingsMenu:
-                    {
-                        // Assing settings game state
-                        _nextState = new GameManagerStateSettingsMenu(_gameManagerInstance);
-                    }
+                    _nextState = new GameManagerStateLevelsMenu(_gameManagerInstance);
                     break;
 
                 default:

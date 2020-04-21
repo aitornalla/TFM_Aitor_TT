@@ -7,7 +7,7 @@ using Assets.Scripts.Scenes;
 namespace Assets.Scripts.UI
 {
     [RequireComponent(typeof(UINavigation))]
-    public sealed class UIMainMenu : MonoBehaviour
+    public sealed class UILevelsMenu : MonoBehaviour
     {
         private UINavigation _uiNavigation = null;                              // Reference to the UINavigation component
 
@@ -24,10 +24,8 @@ namespace Assets.Scripts.UI
         private void Start()
         {
             // Link methods to UIButtons
-            _uiNavigation.Selectables[0].GetComponent<UIButton>().OnClickCallback = OnButtonLevelsClicked;
-            _uiNavigation.Selectables[1].GetComponent<UIButton>().OnClickCallback = OnButtonTestLevelClicked;
-            _uiNavigation.Selectables[2].GetComponent<UIButton>().OnClickCallback = OnButtonSettingsClicked;
-            _uiNavigation.Selectables[3].GetComponent<UIButton>().OnClickCallback = OnButtonQuitClicked;
+            _uiNavigation.Selectables[0].GetComponent<UIButton>().OnClickCallback = OnButtonBackClicked;
+            _uiNavigation.Selectables[1].GetComponent<UIButton>().OnClickCallback = OnButtonLevel01Clicked;
         }
 
         // Update is called once per frame
@@ -41,37 +39,20 @@ namespace Assets.Scripts.UI
             }
         }
 
-        public void OnButtonLevelsClicked(IUISelectable uiButton)
+        public void OnButtonBackClicked(IUISelectable uiButton)
         {
             uiButton.OnClick();
 
-            // Load test level scene
-            GameManager.Instance.GameManagerState.StateChange(EGameScenes.LevelsMenu);
+            // Load main menu scene
+            GameManager.Instance.GameManagerState.StateChange(EGameScenes.MainMenu);
         }
 
-        public void OnButtonTestLevelClicked(IUISelectable uiButton)
+        public void OnButtonLevel01Clicked(IUISelectable uiButton)
         {
             uiButton.OnClick();
 
-            // Load test level scene
-            GameManager.Instance.GameManagerState.StateChange(EGameScenes.TestLevel);
-        }
-
-        public void OnButtonSettingsClicked(IUISelectable uiButton)
-        {
-            uiButton.OnClick();
-
-            // Load settings scene
-            GameManager.Instance.GameManagerState.StateChange(EGameScenes.SettingsMenu);
-        }
-
-        public void OnButtonQuitClicked(IUISelectable uiButton)
-        {
-            uiButton.OnClick();
-
-            Debug.Log("QUIT");
-
-            Application.Quit();
+            // Load main menu scene
+            GameManager.Instance.GameManagerState.StateChange(EGameScenes.Level_01);
         }
     }
 }

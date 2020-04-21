@@ -33,8 +33,13 @@ namespace Assets.Scripts.GameManagerController.States
             switch (gameScenes)
             {
                 case EGameScenes.TestLevel:
-                    _gameManagerInstance.GameManagerState = new GameManagerStateTestLevel(_gameManagerInstance);
+                case EGameScenes.Level_01:
+                    _gameManagerInstance.GameManagerState = new GameManagerStateLevel(_gameManagerInstance);
                     break;
+
+                //case EGameScenes.TestLevel:
+                //    _gameManagerInstance.GameManagerState = new GameManagerStateTestLevel(_gameManagerInstance);
+                //    break;
 
                 default:
                     _gameManagerInstance.GameManagerState = new GameManagerStateMainMenu(_gameManagerInstance);

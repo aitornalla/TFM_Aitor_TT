@@ -2,7 +2,9 @@
 <scenes>
     <scene name="00_Intro" enumValue="Intro" />
     <scene name="01_00_MainMenu" enumValue="MainMenu" />
-    <scene name="01_02_Settings" enumValue="Settings" />
+    <scene name="01_01_LevelsMenu" enumValue="LevelsMenu" />
+    <scene name="01_02_SettingsMenu" enumValue="SettingsMenu" />
     <scene name="02_LevelLoad" enumValue="LevelLoad" />
-    <scene name="99_TestLevel" enumValue="TestLevel" />
+    <scene name="03_00_TestLevel" enumValue="TestLevel" />
+    <scene name="03_01_Level_01" enumValue="Level_01" />
 </scenes>

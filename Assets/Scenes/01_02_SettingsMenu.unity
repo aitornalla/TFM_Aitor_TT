@@ -458,7 +458,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Volume
+  m_Text: '       Volume       '
 --- !u!222 &494539148
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -674,7 +674,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 786c0d5dd08714e6481641ef1f3938bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _audioMixer: {fileID: 24100000, guid: 975defafe41894b7b9ef1f924520ee15, type: 2}
   _resolutionOptionText: {fileID: 1269730144}
   _volumeSlider: {fileID: 518781099}
 --- !u!114 &625656550
@@ -2358,22 +2357,22 @@ Prefab:
     - target: {fileID: 224772247527707104, guid: 9a9fc335713144dfcbb90f5dd709dfb2,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 57.555
       objectReference: {fileID: 0}
     - target: {fileID: 224772247527707104, guid: 9a9fc335713144dfcbb90f5dd709dfb2,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 224772247527707104, guid: 9a9fc335713144dfcbb90f5dd709dfb2,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 0.25
+      value: 54.9
       objectReference: {fileID: 0}
     - target: {fileID: 224772247527707104, guid: 9a9fc335713144dfcbb90f5dd709dfb2,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 57.2
       objectReference: {fileID: 0}
     - target: {fileID: 224772247527707104, guid: 9a9fc335713144dfcbb90f5dd709dfb2,
         type: 2}
@@ -2388,12 +2387,12 @@ Prefab:
     - target: {fileID: 224772247527707104, guid: 9a9fc335713144dfcbb90f5dd709dfb2,
         type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0.5825359
+      value: 0.416
       objectReference: {fileID: 0}
     - target: {fileID: 224772247527707104, guid: 9a9fc335713144dfcbb90f5dd709dfb2,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0.16700001
+      value: 0.037166666
       objectReference: {fileID: 0}
     - target: {fileID: 224772247527707104, guid: 9a9fc335713144dfcbb90f5dd709dfb2,
         type: 2}
@@ -2408,11 +2407,46 @@ Prefab:
     - target: {fileID: 114891358242536932, guid: 9a9fc335713144dfcbb90f5dd709dfb2,
         type: 2}
       propertyPath: m_Text
-      value: Back
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1555835838580214, guid: 9a9fc335713144dfcbb90f5dd709dfb2, type: 2}
       propertyPath: m_Name
       value: UIButtonBack
+      objectReference: {fileID: 0}
+    - target: {fileID: 114928457799661940, guid: 9a9fc335713144dfcbb90f5dd709dfb2,
+        type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 2c0005ef8fd6e439a986b30a470309f1,
+        type: 3}
+    - target: {fileID: 114509305257793352, guid: 9a9fc335713144dfcbb90f5dd709dfb2,
+        type: 2}
+      propertyPath: _normalSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 2c0005ef8fd6e439a986b30a470309f1,
+        type: 3}
+    - target: {fileID: 114509305257793352, guid: 9a9fc335713144dfcbb90f5dd709dfb2,
+        type: 2}
+      propertyPath: _clickSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 7db8ed621d07041fea540bab29942cbd,
+        type: 3}
+    - target: {fileID: 114509305257793352, guid: 9a9fc335713144dfcbb90f5dd709dfb2,
+        type: 2}
+      propertyPath: _selectedSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 597137a2b1b2b49b78938756eb8e8441,
+        type: 3}
+    - target: {fileID: 114509305257793352, guid: 9a9fc335713144dfcbb90f5dd709dfb2,
+        type: 2}
+      propertyPath: _lockedSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: a13674a27a1164192a31b482926ca01f,
+        type: 3}
+    - target: {fileID: 114928457799661940, guid: 9a9fc335713144dfcbb90f5dd709dfb2,
+        type: 2}
+      propertyPath: m_PreserveAspect
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9a9fc335713144dfcbb90f5dd709dfb2, type: 2}

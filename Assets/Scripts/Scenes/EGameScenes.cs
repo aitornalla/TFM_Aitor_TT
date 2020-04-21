@@ -4,10 +4,19 @@ namespace Assets.Scripts.Scenes
 {
     public enum EGameScenes
     {
+        // 00_Intro
         Intro,
+        // 01_00_MainMenu
         MainMenu,
-        Settings,
+        // 01_01_LevelsMenu
+        LevelsMenu,
+        // 01_02_SettingsMenu
+        SettingsMenu,
+        // 02_LevelLoad
         LevelLoad,
-        TestLevel
+        // 03_00_TestLevel
+        TestLevel,
+        // 03_01_Level_01
+        Level_01
     }
 }

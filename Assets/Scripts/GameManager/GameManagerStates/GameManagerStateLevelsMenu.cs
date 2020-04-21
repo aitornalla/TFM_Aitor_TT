@@ -7,13 +7,13 @@ using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.GameManagerController.States
 {
-    public sealed class GameManagerStateMainMenu : IGameManagerState
+    public sealed class GameManagerStateLevelsMenu : IGameManagerState
     {
         private static GameManager _gameManagerInstance = null;
 
         private IGameManagerState _nextState = null;                            // To hold next state until scenes unloads
 
-        public GameManagerStateMainMenu(GameManager gameManager)
+        public GameManagerStateLevelsMenu(GameManager gameManager)
         {
             _gameManagerInstance = gameManager;
         }
@@ -34,14 +34,11 @@ namespace Assets.Scripts.GameManagerController.States
             // Assign new game state
             switch (gameScenes)
             {
-                case EGameScenes.LevelsMenu:
-                    {
-                        // Assing new game state
-                        _nextState = new GameManagerStateLevelsMenu(_gameManagerInstance);
-                    }
+                case EGameScenes.MainMenu:
+                    _nextState = new GameManagerStateMainMenu(_gameManagerInstance);
                     break;
 
-                case EGameScenes.TestLevel:
+                case EGameScenes.Level_01:
                     {
                         // Level scene to be loaded next
                         _gameManagerInstance.LevelLoadNextScene = gameScenes;
@@ -49,13 +46,6 @@ namespace Assets.Scripts.GameManagerController.States
                         _nextState = new GameManagerStateLevelLoad(_gameManagerInstance);
                         // Load LevelLoad scene that will load the next level asynchronously
                         gameScenes = EGameScenes.LevelLoad;
-                    }
-                    break;
-
-                case EGameScenes.SettingsMenu:
-                    {
-                        // Assing settings game state
-                        _nextState = new GameManagerStateSettingsMenu(_gameManagerInstance);
                     }
                     break;
 

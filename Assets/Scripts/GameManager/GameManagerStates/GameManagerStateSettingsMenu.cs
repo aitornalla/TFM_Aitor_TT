@@ -7,13 +7,13 @@ using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.GameManagerController.States
 {
-    public sealed class GameManagerStateSettings : IGameManagerState
+    public sealed class GameManagerStateSettingsMenu : IGameManagerState
     {
         private static GameManager _gameManagerInstance = null;
 
         private IGameManagerState _nextState = null;                            // To hold next state until scenes unloads
 
-        public GameManagerStateSettings(GameManager gameManager)
+        public GameManagerStateSettingsMenu(GameManager gameManager)
         {
             _gameManagerInstance = gameManager;
         }
