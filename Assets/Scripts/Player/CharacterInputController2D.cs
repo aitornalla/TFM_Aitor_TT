@@ -19,9 +19,13 @@ namespace Assets.Scripts.Player
 		private ControlFlags _controlFlags;                                     // Control flags grouped in a class
 		private bool _wasPaused = false;                                        // Flag for game paused in previous frame
 
+        #region
+        public ControlFlags ControlFlags { get { return _controlFlags; } }
+        #endregion
+
         #region Start
-		// Use this for initialization
-		private void Start ()
+        // Use this for initialization
+        private void Start ()
 		{
 			// Get IGameController component from GameManager
 			// _gameController = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<IGameController> ();

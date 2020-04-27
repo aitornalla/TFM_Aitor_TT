@@ -237,6 +237,8 @@ namespace Assets.Scripts.GameManagerController
 				0.0f);
 			// Set player not dead flag
 			_instance._playerInstance.GetComponent<CharacterFlags>().IsDead = false;
+            // Reset player control flags
+			_instance._playerInstance.GetComponent<CharacterInputController2D>().ControlFlags.ResetFlags();
             // Set player gameObject to active
 			_instance._playerInstance.SetActive(true);
 			// Once everything is set up, set black panel inactive
