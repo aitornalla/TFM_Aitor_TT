@@ -9,6 +9,7 @@ TagManager:
   - PrefabContainer
   - PauseMenu
   - DeathRespawnBlackPanel
+  - LevelEnd
   layers:
   - Default
   - TransparentFX

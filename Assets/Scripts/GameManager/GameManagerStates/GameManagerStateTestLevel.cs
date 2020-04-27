@@ -24,7 +24,9 @@ namespace Assets.Scripts.GameManagerController.States
         public void StateUpdate()
         {
             // When player press pause
-            if (_gameManagerInstance.GameController.Pause() && !_gameManagerInstance.IsPlayerDead)
+            if (_gameManagerInstance.GameController.Pause() &&
+                !_gameManagerInstance.IsPlayerDead &&
+                _gameManagerInstance.IsPlayerControlAllowed)
             {
                 _gameManagerInstance.ManagePause();
             }

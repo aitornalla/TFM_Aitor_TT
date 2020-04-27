@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 114604125144126590}
   m_Layer: 0
   m_Name: LevelEnd
-  m_TagString: Untagged
+  m_TagString: LevelEnd
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -74,6 +74,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   _gameScenes: 1
+  _levelCompletedBanner: {fileID: 0}
 --- !u!212 &212569375758535494
 SpriteRenderer:
   m_ObjectHideFlags: 1

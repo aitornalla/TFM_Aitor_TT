@@ -89,7 +89,8 @@ namespace Assets.Scripts.GameManagerController
         }
         public GameObject DeathRespawnBlackPanel { get { return _instance._deathRespawnBlackPanel; } }
         public bool IsPlayerDead { get { return _instance._playerInstance.GetComponent<CharacterFlags>().IsDead; } }
-        public bool IsPaused { get { return _instance._isPaused; } }
+        public bool IsPlayerControlAllowed { get { return _instance._playerInstance.GetComponent<CharacterFlags>().IsPlayerControlAllowed; } }
+		public bool IsPaused { get { return _instance._isPaused; } }
         public BoolEvent OnPauseEvent { get { return _instance._onPauseEvent; } }
 		#endregion
 

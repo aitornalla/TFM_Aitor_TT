@@ -37,8 +37,8 @@ namespace Assets.Scripts.Player
 		// Update is called once per frame
 		private void Update ()
 		{
-            // If player is dead control is disabled
-            if (_characterFlags.IsDead)
+			// If player is dead control is disabled
+			if (_characterFlags.IsDead)
             {
 				return;
             }
@@ -123,6 +123,12 @@ namespace Assets.Scripts.Player
 				_controlFlags.Throw = true;
 				// Animator player throw parameter setting
 				_animator.SetBool("PlayerThrow", true);
+			}
+
+			// If player control is not allowed then reset control flags
+			if (!_characterFlags.IsPlayerControlAllowed)
+			{
+				_controlFlags.ResetFlags();
 			}
 		}
 		#endregion
