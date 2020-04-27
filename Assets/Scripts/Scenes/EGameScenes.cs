@@ -17,6 +17,8 @@ namespace Assets.Scripts.Scenes
         // 03_00_TestLevel
         TestLevel,
         // 03_01_Level_01
-        Level_01
+        Level_01,
+        // 03_02_Level_02
+        Level_02
     }
 }

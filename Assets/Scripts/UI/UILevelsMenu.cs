@@ -26,6 +26,7 @@ namespace Assets.Scripts.UI
             // Link methods to UIButtons
             _uiNavigation.Selectables[0].GetComponent<UIButton>().OnClickCallback = OnButtonBackClicked;
             _uiNavigation.Selectables[1].GetComponent<UIButton>().OnClickCallback = OnButtonLevel01Clicked;
+            _uiNavigation.Selectables[2].GetComponent<UIButton>().OnClickCallback = OnButtonLevel02Clicked;
         }
 
         // Update is called once per frame
@@ -51,8 +52,16 @@ namespace Assets.Scripts.UI
         {
             uiButton.OnClick();
 
-            // Load main menu scene
+            // Load level 01 scene
             GameManager.Instance.GameManagerState.StateChange(EGameScenes.Level_01);
+        }
+
+        public void OnButtonLevel02Clicked(IUISelectable uiButton)
+        {
+            uiButton.OnClick();
+
+            // Load level 02 scene
+            GameManager.Instance.GameManagerState.StateChange(EGameScenes.Level_02);
         }
     }
 }

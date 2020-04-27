@@ -7,4 +7,5 @@
     <scene name="02_LevelLoad" enumValue="LevelLoad" />
     <scene name="03_00_TestLevel" enumValue="TestLevel" />
     <scene name="03_01_Level_01" enumValue="Level_01" />
+    <scene name="03_02_Level_02" enumValue="Level_02" />
 </scenes>

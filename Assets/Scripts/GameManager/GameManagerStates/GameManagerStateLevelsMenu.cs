@@ -39,6 +39,7 @@ namespace Assets.Scripts.GameManagerController.States
                     break;
 
                 case EGameScenes.Level_01:
+                case EGameScenes.Level_02:
                     {
                         // Level scene to be loaded next
                         _gameManagerInstance.LevelLoadNextScene = gameScenes;
