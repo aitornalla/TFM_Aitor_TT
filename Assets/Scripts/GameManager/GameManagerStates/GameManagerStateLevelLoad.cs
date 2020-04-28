@@ -35,6 +35,7 @@ namespace Assets.Scripts.GameManagerController.States
                 case EGameScenes.TestLevel:
                 case EGameScenes.Level_01:
                 case EGameScenes.Level_02:
+                case EGameScenes.Level_03:
                     _gameManagerInstance.GameManagerState = new GameManagerStateLevel(_gameManagerInstance);
                     break;
 

@@ -1323,6 +1323,7 @@ MonoBehaviour:
   - {fileID: 364387961}
   - {fileID: 85577487}
   - {fileID: 23412290}
+  - {fileID: 862892117}
   _currentSelectableID: 0
 --- !u!1001 &687032655
 Prefab:
@@ -1692,7 +1693,7 @@ Prefab:
         type: 2}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: a252aaa02f72a4784ae1d793818d1794,
+      objectReference: {fileID: 21300000, guid: 7fd6ef4cce9334f7bbc8194ed6659833,
         type: 3}
     - target: {fileID: 114928457799661940, guid: 9a9fc335713144dfcbb90f5dd709dfb2,
         type: 2}
@@ -1702,7 +1703,7 @@ Prefab:
     - target: {fileID: 114645771474575108, guid: 9a9fc335713144dfcbb90f5dd709dfb2,
         type: 2}
       propertyPath: m_Navigation.m_Mode
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9a9fc335713144dfcbb90f5dd709dfb2, type: 2}
@@ -1712,6 +1713,12 @@ RectTransform:
   m_PrefabParentObject: {fileID: 224772247527707104, guid: 9a9fc335713144dfcbb90f5dd709dfb2,
     type: 2}
   m_PrefabInternal: {fileID: 862892115}
+--- !u!114 &862892117 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114645771474575108, guid: 9a9fc335713144dfcbb90f5dd709dfb2,
+    type: 2}
+  m_PrefabInternal: {fileID: 862892115}
+  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1 &1531774813
 GameObject:
   m_ObjectHideFlags: 0

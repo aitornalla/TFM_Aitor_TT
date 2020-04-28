@@ -19,6 +19,8 @@ namespace Assets.Scripts.Scenes
         // 03_01_Level_01
         Level_01,
         // 03_02_Level_02
-        Level_02
+        Level_02,
+        // 03_03_Level_03
+        Level_03
     }
 }

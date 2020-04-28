@@ -40,6 +40,7 @@ namespace Assets.Scripts.GameManagerController.States
 
                 case EGameScenes.Level_01:
                 case EGameScenes.Level_02:
+                case EGameScenes.Level_03:
                     {
                         // Level scene to be loaded next
                         _gameManagerInstance.LevelLoadNextScene = gameScenes;
