@@ -12,6 +12,7 @@ using System.Xml.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace Assets.Scripts.GameManagerController
 {
@@ -39,6 +40,8 @@ namespace Assets.Scripts.GameManagerController
 		private EGameScenes _levelLoadNextScene;
 		// Black panel on canvas to make transition from death to respawn player
 		private GameObject _deathRespawnBlackPanel = null;
+		// Player lifes text in level UI
+		private GameObject _playerLifesText = null;
 
         #region Pause variables
         // Pause flag
@@ -71,6 +74,7 @@ namespace Assets.Scripts.GameManagerController
         public Dictionary<EGameScenes, string> GameScenesDictionary { get { return _instance._gameScenesDictionary; } }
         public IGameController GameController { get { return _instance._gameController; } }
         public AudioMixerController AudioMixerController { get { return _instance._audioMixerController; } }
+        public GameObject PlayerInstance { get { return _instance._playerInstance; } }
         public Vector2 CurrentCheckPointSpawnPosition
 		{
 			get
@@ -88,6 +92,8 @@ namespace Assets.Scripts.GameManagerController
             { _instance._levelLoadNextScene = value; }
         }
         public GameObject DeathRespawnBlackPanel { get { return _instance._deathRespawnBlackPanel; } }
+		public GameObject PlayerLifesText { get { return _instance._playerLifesText; } }
+		public int PlayerLifes { get; set; }
         public bool IsPlayerDead { get { return _instance._playerInstance.GetComponent<CharacterFlags>().IsDead; } }
         public bool IsPlayerControlAllowed { get { return _instance._playerInstance.GetComponent<CharacterFlags>().IsPlayerControlAllowed; } }
 		public bool IsPaused { get { return _instance._isPaused; } }
@@ -164,6 +170,9 @@ namespace Assets.Scripts.GameManagerController
 
 			// Get black panel on canvas for transition from death to respawn
 			_instance._deathRespawnBlackPanel = GameObject.FindGameObjectWithTag("DeathRespawnBlackPanel");
+
+			// Get player lifes text on canvas for displaying remaining lifes
+			_instance._playerLifesText = GameObject.FindGameObjectWithTag("PlayerLifesText");
 		}
 
         /// <summary>
@@ -218,6 +227,18 @@ namespace Assets.Scripts.GameManagerController
 		/// </summary>
 		public void ManagePlayerDeathAndRespawn()
         {
+			// Manage player lifes
+			_instance.PlayerLifes--;
+			// Update remaining lifes
+			_instance._playerLifesText.GetComponent<Text>().text = "x" + _instance.PlayerLifes.ToString();
+            // If no more lifes left, return to main menu
+			if (_instance.PlayerLifes == 0)
+            {
+				_instance._gameManagerState.StateChange(EGameScenes.MainMenu);
+
+				return;
+            }
+
             // Get CharacterHealth component from player instance
 			CharacterHealth l_characterHealth = _instance._playerInstance.GetComponent<CharacterHealth>();
             // Restore maximum health

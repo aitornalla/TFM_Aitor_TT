@@ -9,6 +9,8 @@ namespace Assets.Scripts.Player
     public sealed class CharacterHealth : MonoBehaviour
     {
         [SerializeField]
+        private int _playerMaxLifes = 5;
+        [SerializeField]
         private int _playerMaxHealth = 100;
         [SerializeField]
         private int _playerHealth;
@@ -33,6 +35,14 @@ namespace Assets.Scripts.Player
         private Color _defaultSpriteColor;
 
         #region Properties
+        public int PlayerMaxLifes
+        {
+            get
+            {
+                return _playerMaxLifes;
+            }
+        }
+
         public int PlayerMaxHealth
         {
             get

@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Scenes;
 using System;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace Assets.Scripts.GameManagerController.States
 {
@@ -19,6 +20,15 @@ namespace Assets.Scripts.GameManagerController.States
         public void StateAwake()
         {
             _gameManagerInstance.AssignLevelReferences();
+
+            // First player lifes assigment
+            if (_gameManagerInstance.PlayerLifes == 0)
+            {
+                _gameManagerInstance.PlayerLifes =
+                    _gameManagerInstance.PlayerInstance.GetComponent<Assets.Scripts.Player.CharacterHealth>().PlayerMaxLifes;
+
+                _gameManagerInstance.PlayerLifesText.GetComponent<Text>().text = "x" + _gameManagerInstance.PlayerLifes.ToString();
+            }
         }
 
         public void StateUpdate()
