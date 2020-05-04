@@ -30,6 +30,7 @@ namespace Assets.Scripts.UI
 
 		private void Awake()
         {
+            // Get SpriteRenderer component
 			_spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
@@ -45,6 +46,12 @@ namespace Assets.Scripts.UI
         //
 		//}
 
+        /// <summary>
+        ///     Coroutine for sprite appearing on the screen
+        /// </summary>
+        /// <param name="lastPosition">Sprite last position</param>
+        /// <param name="facingRight">Is the sprite facing right direction?</param>
+        /// <returns>The reference to the coroutine</returns>
         private IEnumerator NinjaGirlMainMenuFXCoroutine(int lastPosition, bool facingRight)
         {
             // If sprite was not facing right direction, put it facing right direction

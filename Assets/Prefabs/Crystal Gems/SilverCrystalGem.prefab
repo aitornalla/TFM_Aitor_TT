@@ -158,6 +158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _crystalGemType: 1
+  _score: 250
   _playerLayer:
     serializedVersion: 2
     m_Bits: 256

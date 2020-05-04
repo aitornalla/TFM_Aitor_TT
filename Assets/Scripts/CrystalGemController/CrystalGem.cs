@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using Assets.Scripts.CustomClasses;
 using Assets.Scripts.CustomClasses.OscillatorFunctions;
+using Assets.Scripts.GameManagerController;
 using Assets.Scripts.Player;
+using Assets.Scripts.UI;
 using UnityEngine;
 
 namespace Assets.Scripts.CrystalGemController
@@ -20,6 +22,8 @@ namespace Assets.Scripts.CrystalGemController
 		[SerializeField]
 		private ECrystalGemType _crystalGemType;                                // Type of gem
 		[SerializeField]
+		private int _score;                                                     // Score of the crystal gem
+        [SerializeField]
 		private LayerMask _playerLayer;                                         // Player layer to check conditions
 		[SerializeField]
 		private Transform _upLimit;                                             // Movement up limit
@@ -104,7 +108,10 @@ namespace Assets.Scripts.CrystalGemController
                         }
                         break;
 
+					case ECrystalGemType.Silver:
 					case ECrystalGemType.Turquoise:
+					case ECrystalGemType.Yellow:
+						GameManager.Instance.LevelScoreCounter.GetComponent<LevelScoreCounter>().AddScore(_score);
 						break;
 
 					default:

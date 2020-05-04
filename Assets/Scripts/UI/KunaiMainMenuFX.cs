@@ -13,17 +13,18 @@ namespace Assets.Scripts.UI
 		[SerializeField]
 		private float _kunaiRotationSpeed = -1750.0f;                           // Kunai rotation speed
 
-		private float _kunaiSpeed = 0.0f;
-		private float _initialRotation = 0.0f;
-		private bool _kunaiRotates = false;
+		private float _kunaiSpeed = 0.0f;                                       // Kunai speed
+		private float _initialRotation = 0.0f;                                  // Direction to move the kunai along the screen when it rotates
+		private bool _kunaiRotates = false;                                     // Whether the kunai rotates or not
 
 		// Use this for initialization
 		private void Start()
 		{
+            // Set random kunai speed between upper and lower limits
 			_kunaiSpeed = _kunaiSpeedLower + Random.value * (_kunaiSpeedUpper - _kunaiSpeedLower);
-
+			// Set whether the kunai rotates or not
 			_kunaiRotates = (int)(Random.value * 1000) % 2 == 0;
-
+            // If kunai rotates then destroy the gameObject in a given time and save move direction
 			if (_kunaiRotates)
 			{
 				Destroy(this.gameObject, 10.0f);
@@ -52,6 +53,7 @@ namespace Assets.Scripts.UI
 
         private void OnBecameInvisible()
         {
+            // For not rotating kunais, when it becomes not visible in the screen then destroy the gameObject
             if (!_kunaiRotates)
 			    Destroy(this.gameObject);
         }

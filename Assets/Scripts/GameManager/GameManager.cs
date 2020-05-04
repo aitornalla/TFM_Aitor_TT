@@ -42,6 +42,8 @@ namespace Assets.Scripts.GameManagerController
 		private GameObject _deathRespawnBlackPanel = null;
 		// Player lifes text in level UI
 		private GameObject _playerLifesText = null;
+		// Level score counter
+		private GameObject _levelScoreCounter = null;
 
         #region Pause variables
         // Pause flag
@@ -93,6 +95,7 @@ namespace Assets.Scripts.GameManagerController
         }
         public GameObject DeathRespawnBlackPanel { get { return _instance._deathRespawnBlackPanel; } }
 		public GameObject PlayerLifesText { get { return _instance._playerLifesText; } }
+        public GameObject LevelScoreCounter { get { return _instance._levelScoreCounter; } }
 		public int PlayerLifes { get; set; }
         public bool IsPlayerDead { get { return _instance._playerInstance.GetComponent<CharacterFlags>().IsDead; } }
         public bool IsPlayerControlAllowed { get { return _instance._playerInstance.GetComponent<CharacterFlags>().IsPlayerControlAllowed; } }
@@ -173,6 +176,9 @@ namespace Assets.Scripts.GameManagerController
 
 			// Get player lifes text on canvas for displaying remaining lifes
 			_instance._playerLifesText = GameObject.FindGameObjectWithTag("PlayerLifesText");
+
+			// Get level score counter reference
+			_instance._levelScoreCounter = GameObject.FindGameObjectWithTag("LevelScoreCounter");
 		}
 
         /// <summary>
