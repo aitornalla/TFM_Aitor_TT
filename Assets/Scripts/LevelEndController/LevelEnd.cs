@@ -47,6 +47,9 @@ namespace Assets.Scripts.LevelEndController
 
 				GameManager.Instance.UpdateLevelScore(l_levelName, l_levelScore);
 
+				// Unlock next level
+				GameManager.Instance.UnlockNextLevel(l_levelName);
+
 				// Set level completed banner active
 				_levelCompletedBanner.SetActive(true);
 			}

@@ -363,6 +363,78 @@ namespace Assets.Scripts.GameManagerController
 		}
 
         /// <summary>
+        ///     Returns array of index of unlocked levels
+        /// </summary>
+        /// <returns></returns>
+        public int[] UnlockedLevels()
+        {
+			List<int> l_unlockedLevelsList = new List<int>();
+
+			// Load levels xml file
+			XDocument l_xDoc = XDocument.Load(_instance.LevelsXMLPath);
+			// 
+			XElement[] l_levelXElems = l_xDoc.Descendants("level").ToArray();
+
+            for (int i = 0; i < l_levelXElems.ToArray().Length; i++)
+            {
+				bool l_levelUnlocked = false;
+
+                if (bool.TryParse(l_levelXElems[i].Element("unlocked").Value, out l_levelUnlocked))
+                {
+                    if (l_levelUnlocked)
+                    {
+						int l_index = 0;
+
+                        if (int.TryParse(l_levelXElems[i].Attribute("index").Value, out l_index))
+                        {
+							l_unlockedLevelsList.Add(l_index);
+                        }
+                    }
+                }
+            }
+
+			return l_unlockedLevelsList.ToArray();
+        }
+
+        /// <summary>
+        ///     Unlock next level
+        /// </summary>
+        /// <param name="levelName">Current level</param>
+        public void UnlockNextLevel(string levelName)
+        {
+			// Load levels xml file
+			XDocument l_xDoc = XDocument.Load(_instance.LevelsXMLPath);
+			// Find level elements by attribute ("name")
+			XElement l_currentLevelXElem = l_xDoc.Descendants("level").Where(atr => (string)atr.Attribute("name") == levelName).FirstOrDefault();
+            // Initialize index to 0
+			int l_currentLevelIndex = 0;
+            // Parse current level index and unlock next level if there is one
+            if (int.TryParse(l_currentLevelXElem.Attribute("index").Value, out l_currentLevelIndex))
+            {
+                // Next level index
+				float l_nextLevelIndex = l_currentLevelIndex + 1;
+				// Find next level by attribute ("index")
+				XElement l_nextLevelXElem = l_xDoc.Descendants("level").Where(atr => (string)atr.Attribute("index") == l_nextLevelIndex.ToString()).FirstOrDefault();
+                // If there is a next level
+                if (l_nextLevelXElem != null)
+                {
+                    // Check if next level is already unlocked
+					bool l_nextLevelUnlocked = false;
+                    // Parse bool value for unlocked element
+					bool.TryParse(l_nextLevelXElem.Element("unlocked").Value, out l_nextLevelUnlocked);
+                    // If next level is not unlocked
+                    if (!l_nextLevelUnlocked)
+                    {
+						// Unlock level
+						l_nextLevelXElem.Element("unlocked").Value = "true";
+						// Save changes
+						l_xDoc.Save(_instance.LevelsXMLPath);
+					}
+				}
+			}
+		}
+
+        /// <summary>
         ///     Updates maximum and last score of the played level
         /// </summary>
         /// <param name="levelName">Level name</param>

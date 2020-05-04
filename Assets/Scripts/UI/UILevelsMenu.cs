@@ -28,6 +28,9 @@ namespace Assets.Scripts.UI
             _uiNavigation.Selectables[1].GetComponent<UIButton>().OnClickCallback = OnButtonLevel01Clicked;
             _uiNavigation.Selectables[2].GetComponent<UIButton>().OnClickCallback = OnButtonLevel02Clicked;
             _uiNavigation.Selectables[3].GetComponent<UIButton>().OnClickCallback = OnButtonLevel03Clicked;
+
+            // Set buttons for unlocked levels
+            SetButtonsForUnlockedLevels();
         }
 
         // Update is called once per frame
@@ -38,6 +41,27 @@ namespace Assets.Scripts.UI
                 // Invoke method linked to the UIButton
                 _uiNavigation.Selectables[_uiNavigation.CurrentSelectableID].GetComponent<IUISelectable>()
                     .OnClickCallback.Invoke(_uiNavigation.Selectables[_uiNavigation.CurrentSelectableID].GetComponent<IUISelectable>());
+            }
+        }
+
+        private void SetButtonsForUnlockedLevels()
+        {
+            // Set navigation mode to Automatic and change button sprite for buttons of unlocked levels
+            int[] l_unlockedLevelsIndex = GameManager.Instance.UnlockedLevels();
+
+            for (int i = 0; i < l_unlockedLevelsIndex.Length; i++)
+            {
+                // Change navigation mode
+                Button l_button = _uiNavigation.Selectables[l_unlockedLevelsIndex[i]].GetComponent<Button>();
+
+                Navigation l_buttonNavigation = l_button.navigation;
+
+                l_buttonNavigation.mode = Navigation.Mode.Automatic;
+
+                l_button.navigation = l_buttonNavigation;
+
+                // Change sprite
+                _uiNavigation.Selectables[l_unlockedLevelsIndex[i]].GetComponent<UIButton>().ChangeButtonSprite(EButtonSpriteType.Normal);
             }
         }
 

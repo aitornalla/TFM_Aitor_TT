@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <levels>
-  <level name="03_01_Level_01">
-    <unlocked>true</unlocked>
-    <maxScore>2000</maxScore>
-    <lastScore>2000</lastScore>
-  </level>
-  <level name="03_02_Level_02">
+  <level name="03_01_Level_01" index="1">
     <unlocked>true</unlocked>
     <maxScore>0</maxScore>
     <lastScore>0</lastScore>
   </level>
-  <level name="03_03_Level_03">
+  <level name="03_02_Level_02" index="2">
+    <unlocked>true</unlocked>
+    <maxScore>0</maxScore>
+    <lastScore>0</lastScore>
+  </level>
+  <level name="03_03_Level_03" index="3">
     <unlocked>true</unlocked>
     <maxScore>0</maxScore>
     <lastScore>0</lastScore>

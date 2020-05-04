@@ -7,6 +7,14 @@ using UnityEngine.UI;
 
 namespace Assets.Scripts.UI
 {
+    public enum EButtonSpriteType
+    {
+		Clicked,
+		Locked,
+		Normal,
+        Selected
+    }
+
     [RequireComponent(typeof(Button))]
     [RequireComponent(typeof(AudioSource))]
 	public sealed class UIButton : MonoBehaviour, ISelectHandler, IDeselectHandler, IUISelectable
@@ -110,6 +118,32 @@ namespace Assets.Scripts.UI
 			// Set first enable flag to false
 			FirstEnable = false;
 		}
+
+        public void ChangeButtonSprite(EButtonSpriteType buttonSpriteType)
+        {
+			Sprite l_sprite = null;
+
+            switch (buttonSpriteType)
+            {
+				case EButtonSpriteType.Clicked:
+					l_sprite = _clickSprite;
+					break;
+				case EButtonSpriteType.Locked:
+					l_sprite = _lockedSprite;
+					break;
+				case EButtonSpriteType.Normal:
+					l_sprite = _normalSprite;
+					break;
+				case EButtonSpriteType.Selected:
+					l_sprite = _selectedSprite;
+					break;
+				default:
+					l_sprite = _lockedSprite;
+					break;
+            }
+
+			_image.sprite = l_sprite;
+        }
         #endregion
     }
 }
