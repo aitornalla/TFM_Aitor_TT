@@ -12,6 +12,8 @@ namespace Assets.Scripts.Scenes
         LevelsMenu,
         // 01_02_SettingsMenu
         SettingsMenu,
+        // 01_03_HowToPlay
+        HowToPlayMenu,
         // 02_LevelLoad
         LevelLoad,
         // 03_00_TestLevel

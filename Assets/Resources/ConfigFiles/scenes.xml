@@ -4,6 +4,7 @@
     <scene name="01_00_MainMenu" enumValue="MainMenu" />
     <scene name="01_01_LevelsMenu" enumValue="LevelsMenu" />
     <scene name="01_02_SettingsMenu" enumValue="SettingsMenu" />
+    <scene name="01_03_HowToPlayMenu" enumValue="HowToPlayMenu" />
     <scene name="02_LevelLoad" enumValue="LevelLoad" />
     <scene name="03_00_TestLevel" enumValue="TestLevel" />
     <scene name="03_01_Level_01" enumValue="Level_01" />

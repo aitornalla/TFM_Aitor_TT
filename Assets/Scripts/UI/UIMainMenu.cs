@@ -27,7 +27,8 @@ namespace Assets.Scripts.UI
             _uiNavigation.Selectables[0].GetComponent<UIButton>().OnClickCallback = OnButtonLevelsClicked;
             _uiNavigation.Selectables[1].GetComponent<UIButton>().OnClickCallback = OnButtonTestLevelClicked;
             _uiNavigation.Selectables[2].GetComponent<UIButton>().OnClickCallback = OnButtonSettingsClicked;
-            _uiNavigation.Selectables[3].GetComponent<UIButton>().OnClickCallback = OnButtonQuitClicked;
+            _uiNavigation.Selectables[3].GetComponent<UIButton>().OnClickCallback = OnButtonHowToPlayClicked;
+            _uiNavigation.Selectables[4].GetComponent<UIButton>().OnClickCallback = OnButtonQuitClicked;
         }
 
         // Update is called once per frame
@@ -45,7 +46,7 @@ namespace Assets.Scripts.UI
         {
             uiButton.OnClick();
 
-            // Load test level scene
+            // Load levels scene
             GameManager.Instance.GameManagerState.StateChange(EGameScenes.LevelsMenu);
         }
 
@@ -63,6 +64,14 @@ namespace Assets.Scripts.UI
 
             // Load settings scene
             GameManager.Instance.GameManagerState.StateChange(EGameScenes.SettingsMenu);
+        }
+
+        public void OnButtonHowToPlayClicked(IUISelectable uiButton)
+        {
+            uiButton.OnClick();
+
+            // Load how to play scene
+            GameManager.Instance.GameManagerState.StateChange(EGameScenes.HowToPlayMenu);
         }
 
         public void OnButtonQuitClicked(IUISelectable uiButton)
