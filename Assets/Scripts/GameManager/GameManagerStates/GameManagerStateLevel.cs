@@ -26,9 +26,9 @@ namespace Assets.Scripts.GameManagerController.States
             {
                 _gameManagerInstance.PlayerLifes =
                     _gameManagerInstance.PlayerInstance.GetComponent<Assets.Scripts.Player.CharacterHealth>().PlayerMaxLifes;
-
-                _gameManagerInstance.PlayerLifesText.GetComponent<Text>().text = "x" + _gameManagerInstance.PlayerLifes.ToString();
             }
+
+            _gameManagerInstance.PlayerLifesText.GetComponent<Text>().text = "x" + _gameManagerInstance.PlayerLifes.ToString();
         }
 
         public void StateUpdate()

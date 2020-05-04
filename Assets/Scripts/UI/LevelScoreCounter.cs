@@ -17,6 +17,8 @@ namespace Assets.Scripts.UI
 
 		private Coroutine _incrementingScoreCoroutine = null;                   // Holds reference to the coroutine used for the incrementing visual effect
 
+        public int TotalScore { get { return _totalScore; } }
+
 		// Use this for initialization
 		private void Start()
 		{

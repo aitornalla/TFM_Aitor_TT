@@ -59,6 +59,8 @@ namespace Assets.Scripts.GameManagerController
         private readonly string ControllersXMLPath = string.Join(Path.DirectorySeparatorChar.ToString(), new string[] { "Assets", "Resources", "ConfigFiles", "controllers.xml" });
 		// Path to xml file for controllers configuration
 		private readonly string ScenesXMLPath = string.Join(Path.DirectorySeparatorChar.ToString(), new string[] { "Assets", "Resources", "ConfigFiles", "scenes.xml" });
+		// Path to xml file for controllers configuration
+		private readonly string LevelsXMLPath = string.Join(Path.DirectorySeparatorChar.ToString(), new string[] { "Assets", "Resources", "ConfigFiles", "levels.xml" });
 		// Initial player spawn position in levels
 		private readonly Vector2 _initialPlayerSpawnPosition = new Vector2(0.0f, 5.0f);
 		#endregion
@@ -192,8 +194,8 @@ namespace Assets.Scripts.GameManagerController
 			XDocument l_xDoc = XDocument.Load(_instance.ScenesXMLPath);
             // Get all descendant elements
 			XElement[] l_xElems = l_xDoc.Descendants("scene").ToArray();
-            // Fill in the dictionary
-            for (int i = 0; i < l_xElems.Length; i++)
+			// Fill in the dictionary
+			for (int i = 0; i < l_xElems.Length; i++)
             {
 				string l_sceneName = l_xElems[i].Attribute("name").Value;
                 string l_enumValue = l_xElems[i].Attribute("enumValue").Value;
@@ -358,6 +360,40 @@ namespace Assets.Scripts.GameManagerController
 				// Enables controller debug in development mode
 				//_instance._gameControllerInstance.ControllerDebug (true);
 			}
+		}
+
+        /// <summary>
+        ///     Updates maximum and last score of the played level
+        /// </summary>
+        /// <param name="levelName">Level name</param>
+        /// <param name="score">Level score</param>
+        public void UpdateLevelScore(string levelName, int score)
+        {
+			// Load levels xml file
+			XDocument l_xDoc = XDocument.Load(_instance.LevelsXMLPath);
+			// Find level elements by attribute ("name")
+			XElement l_xElem = l_xDoc.Descendants("level").Where(atr => (string)atr.Attribute("name") == levelName).FirstOrDefault();
+            // Update last score and max score
+            if (l_xElem != null)
+            {
+                // Update last score
+				XElement l_lastScoreXElem = l_xElem.Element("lastScore");
+
+				l_lastScoreXElem.Value = score.ToString();
+
+				// Update max score if it is greater than the current one
+				XElement l_maxScoreXElem = l_xElem.Element("maxScore");
+
+				int l_maxScore = 0;
+
+                if (int.TryParse(l_maxScoreXElem.Value, out l_maxScore))
+                {
+					if (score > l_maxScore)
+						l_maxScoreXElem.Value = score.ToString();
+                }
+			}
+            // Save changes
+			l_xDoc.Save(_instance.LevelsXMLPath);
 		}
 		#endregion
 	}

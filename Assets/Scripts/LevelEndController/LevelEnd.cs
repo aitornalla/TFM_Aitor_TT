@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Assets.Scripts.Scenes;
 using Assets.Scripts.GameManagerController;
 using Assets.Scripts.Player;
+using Assets.Scripts.UI;
 
 namespace Assets.Scripts.LevelEndController
 {
@@ -38,6 +40,12 @@ namespace Assets.Scripts.LevelEndController
 
 				// Disable player control
 				GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterFlags>().IsPlayerControlAllowed = false;
+
+				// Update score
+				string l_levelName = SceneManager.GetActiveScene().name;
+				int l_levelScore = GameManager.Instance.LevelScoreCounter.GetComponent<LevelScoreCounter>().TotalScore;
+
+				GameManager.Instance.UpdateLevelScore(l_levelName, l_levelScore);
 
 				// Set level completed banner active
 				_levelCompletedBanner.SetActive(true);
