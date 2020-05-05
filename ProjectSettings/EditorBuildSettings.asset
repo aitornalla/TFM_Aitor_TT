@@ -18,7 +18,7 @@ EditorBuildSettings:
     path: Assets/Scenes/01_02_SettingsMenu.unity
     guid: a5a07bb886162432783333c35d00fec3
   - enabled: 1
-    path: Assets/Scenes/01_03_HowToPlay.unity
+    path: Assets/Scenes/01_03_HowToPlayMenu.unity
     guid: d416ede4bb12d4022a87599c4606d410
   - enabled: 1
     path: Assets/Scenes/02_LevelLoad.unity
