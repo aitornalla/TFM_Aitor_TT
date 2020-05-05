@@ -114,6 +114,8 @@ namespace Assets.Scripts.Player
                 CharacterController2D.FlipFacingDirection(characterComponents.CharacterFlags.IsFacingRight, characterComponents.SpriteRenderer);
                 // ReOffsets gameObject Collider2Ds
                 CharacterController2D.ReOffsetCollider2Ds(collider2DArrary);
+                // Flip needed transforms
+                CharacterController2D.ManageTransforms(new Transform[] { characterComponents.AttackCheck, characterComponents.ThrowCheck });
             }
             // Otherwise if the input is moving the player left and the player is facing right...
             else if (move < 0.0f && characterComponents.CharacterFlags.IsFacingRight)
@@ -123,6 +125,8 @@ namespace Assets.Scripts.Player
                 CharacterController2D.FlipFacingDirection(characterComponents.CharacterFlags.IsFacingRight, characterComponents.SpriteRenderer);
                 // ReOffsets gameObject Collider2Ds
                 CharacterController2D.ReOffsetCollider2Ds(collider2DArrary);
+                // Flip needed transforms
+                CharacterController2D.ManageTransforms(new Transform[] { characterComponents.AttackCheck, characterComponents.ThrowCheck });
             }
         }
 
@@ -155,6 +159,19 @@ namespace Assets.Scripts.Player
 			}
 		}
 
+        /// <summary>
+        ///     Flips transforms
+        /// </summary>
+        /// <param name="transforms">Array of transforms to flip</param>
+        public static void ManageTransforms(Transform[] transforms)
+        {
+            for (int i = 0; i < transforms.Length; i++)
+            {
+                transforms[i].localPosition =
+                    new Vector3(-transforms[i].localPosition.x, transforms[i].localPosition.y, transforms[i].localPosition.z);
+            }
+        }
+
 		/// <summary>
 		///     ReOffsets gameObject Collider2Ds when changing facing direction
 		/// </summary>
@@ -178,7 +195,22 @@ namespace Assets.Scripts.Player
         /// </summary>
         public void OnAttackAnimationEvent()
         {
-			throw new NotImplementedException("Implement enemy check and damage");
+            // Check if an enemy has been hit
+            Collider2D l_collider = Physics2D.OverlapCircle(
+                _characterComponents.AttackCheck.position,
+                CharacterParams.AttackRadius,
+                _characterComponents.CharacterParams.EnemyLayer);
+            // If an enemy has been hit...
+            if (l_collider != null)
+            {
+                // Apply damage
+                l_collider.GetComponent<EnemyController.IEnemy>().TakeDamage(_characterComponents.CharacterParams.AttackDamage);
+                // Apply force
+                //float l_hForce = transform.position.x > l_collider.transform.position.x ? -_attackForce : _attackForce;
+                //float l_vForce = _attackForce;
+
+                //l_collider.GetComponent<Rigidbody2D>().AddForce(new Vector2(l_hForce, l_vForce));
+            }
         }
 
         /// <summary>

@@ -8,6 +8,7 @@ namespace Assets.Scripts.Player
         #region Constants
         public const float GroundedRadius = 0.2f;                               // Radius of the overlap circle to determine if grounded
         public const float CeilingRadius = 0.2f;                                // Radius of the overlap circle to determine if the player can stand up
+        public const float AttackRadius = 0.2f;                                 // Radius of the overlap circle when player attacks
         #endregion
 
 
@@ -44,7 +45,13 @@ namespace Assets.Scripts.Player
 
         [Space]
         [SerializeField]
+        private int _attackDamage = 20;                                         // Player attack damage
+
+        [Header("Layers")]
+        [SerializeField]
 		private LayerMask _groundLayer;                                         // A mask determining what is ground to the character
+        [SerializeField]
+        private LayerMask _enemyLayer;                                          // Enemy layer
         #endregion
 
         #region Properties
@@ -136,6 +143,14 @@ namespace Assets.Scripts.Player
             }
         }
 
+        public int AttackDamage
+        {
+            get
+            {
+                return _attackDamage;
+            }
+        }
+
 		public LayerMask GroundLayer
         {
             get
@@ -143,6 +158,14 @@ namespace Assets.Scripts.Player
                 return _groundLayer;
             }
         }
-		#endregion
-	}
+
+        public LayerMask EnemyLayer
+        {
+            get
+            {
+                return _enemyLayer;
+            }
+        }
+        #endregion
+    }
 }

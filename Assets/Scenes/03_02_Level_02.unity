@@ -7837,9 +7837,13 @@ MonoBehaviour:
   _jumpControlMovSmoothing: 0.075
   _glideMovementSmoothing: 0.1
   _airControl: 1
+  _attackDamage: 20
   _groundLayer:
     serializedVersion: 2
     m_Bits: 512
+  _enemyLayer:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!114 &823096779
 MonoBehaviour:
   m_ObjectHideFlags: 0
