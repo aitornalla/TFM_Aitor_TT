@@ -11718,7 +11718,7 @@ GameObject:
   - component: {fileID: 1500153873}
   m_Layer: 5
   m_Name: ScoreText
-  m_TagString: PlayerLifesText
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30591,6 +30591,35 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 745aa4f0ae62146e4884f43ee23a45ea, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1806729541
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1806729542}
+  m_Layer: 0
+  m_Name: EnemyContainer
+  m_TagString: EnemyContainer
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1806729542
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1806729541}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1972728380}
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1808074285
 GameObject:
   m_ObjectHideFlags: 0
@@ -48897,6 +48926,57 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 745aa4f0ae62146e4884f43ee23a45ea, type: 2}
   m_IsPrefabParent: 0
+--- !u!1001 &1972728379
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1806729542}
+    m_Modifications:
+    - target: {fileID: 4367800877592264, guid: c79416cf3b7ab462bbb123eef92a060b, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 126.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4367800877592264, guid: c79416cf3b7ab462bbb123eef92a060b, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 4367800877592264, guid: c79416cf3b7ab462bbb123eef92a060b, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4367800877592264, guid: c79416cf3b7ab462bbb123eef92a060b, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4367800877592264, guid: c79416cf3b7ab462bbb123eef92a060b, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4367800877592264, guid: c79416cf3b7ab462bbb123eef92a060b, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4367800877592264, guid: c79416cf3b7ab462bbb123eef92a060b, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4367800877592264, guid: c79416cf3b7ab462bbb123eef92a060b, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1368237365619702, guid: c79416cf3b7ab462bbb123eef92a060b, type: 2}
+      propertyPath: m_Name
+      value: EnemyGolemChibi2_00
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: c79416cf3b7ab462bbb123eef92a060b, type: 2}
+  m_IsPrefabParent: 0
+--- !u!4 &1972728380 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4367800877592264, guid: c79416cf3b7ab462bbb123eef92a060b,
+    type: 2}
+  m_PrefabInternal: {fileID: 1972728379}
 --- !u!1 &1995959638
 GameObject:
   m_ObjectHideFlags: 0

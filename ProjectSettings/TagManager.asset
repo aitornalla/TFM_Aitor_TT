@@ -12,6 +12,7 @@ TagManager:
   - LevelEnd
   - PlayerLifesText
   - LevelScoreCounter
+  - EnemyContainer
   layers:
   - Default
   - TransparentFX

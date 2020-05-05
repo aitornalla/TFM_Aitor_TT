@@ -36,6 +36,8 @@ namespace Assets.Scripts.GameManagerController
 		private Transform _mainCamera = null;
 		// PrefabContainer instance
 		private Transform _prefabContainer = null;
+		// EnemyContainer instance
+		private Transform _enemyContainer = null;
 		// Next scene to load after level load scene
 		private EGameScenes _levelLoadNextScene;
 		// Black panel on canvas to make transition from death to respawn player
@@ -88,7 +90,8 @@ namespace Assets.Scripts.GameManagerController
 			{ _instance._currentCheckPointSpawnPosition = value; }
 		}
 		public Transform PrefabContainer { get { return _instance._prefabContainer; } }
-        public EGameScenes LevelLoadNextScene
+		public Transform EnemyContainer { get { return _instance._enemyContainer; } }
+		public EGameScenes LevelLoadNextScene
         {
             get
             { return _instance._levelLoadNextScene; }
@@ -163,6 +166,9 @@ namespace Assets.Scripts.GameManagerController
 
 			// Get empty gameObject to place instantiations prefabs
 			_instance._prefabContainer = GameObject.FindGameObjectWithTag("PrefabContainer").transform;
+
+			// Get gameObject where enemies are placed
+			_instance._enemyContainer = GameObject.FindGameObjectWithTag("EnemyContainer").transform;
 
 			// Assign initial player spawn position
 			_instance._currentCheckPointSpawnPosition = _instance._initialPlayerSpawnPosition;
