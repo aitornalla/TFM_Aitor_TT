@@ -6,8 +6,12 @@ namespace Assets.Scripts.Player
     public sealed class CharacterComponents : MonoBehaviour
     {
         [Header("Components")]
-	    #region Components
-	    [SerializeField]
+        #region Components
+        [SerializeField]
+        private CharacterController2D _characterController2D;                   // CharacterController2D component
+        [SerializeField]
+        private CharacterInputController2D _characterInputController2D;         // CharacterInputController2D component
+        [SerializeField]
 	    private CharacterParams _characterParams;                               // Component to hold character parameters
         [SerializeField]
         private CharacterFlags _characterFlags;                                 // Component to hold character flags
@@ -26,6 +30,8 @@ namespace Assets.Scripts.Player
         [SerializeField]
         private CapsuleCollider2D _throwCapCollider2D;                          // Throw CapsuleCollider2D component of the gameObject
         [SerializeField]
+        private Animator _animator;                                             // Animator component
+        [SerializeField]
 	    private SpriteRenderer _spriteRenderer;                                 // SpriteRenderer component of the gameObject
         #endregion
 
@@ -42,6 +48,22 @@ namespace Assets.Scripts.Player
         #endregion
 
         #region Properties
+        public CharacterController2D CharacterController2D
+        {
+            get
+            {
+                return _characterController2D;
+            }
+        }
+
+        public CharacterInputController2D CharacterInputController2D
+        {
+            get
+            {
+                return _characterInputController2D;
+            }
+        }
+
         public CharacterParams CharacterParams
         {
             get
@@ -111,6 +133,14 @@ namespace Assets.Scripts.Player
             get
             {
                 return _throwCapCollider2D;
+            }
+        }
+
+        public Animator Animator
+        {
+            get
+            {
+                return _animator;
             }
         }
 

@@ -220,8 +220,10 @@ namespace Assets.Scripts.Player
         {
 			// Set "is attacking" flag to false
 			_characterComponents.CharacterFlags.IsAttacking = false;
-			// Triggers attack end event for character input control states
-			_characterComponents.CharacterEvents.OnAttackEndEvent.Invoke();
+            // Triggers attack end event for character input control states
+            //_characterComponents.CharacterEvents.OnAttackEndEvent.Invoke();
+            // Call method directly instead of using and event (more difficult to break Animator)
+            _characterComponents.CharacterInputController2D.OnAttackEnd();
 		}
 
         /// <summary>
@@ -240,7 +242,9 @@ namespace Assets.Scripts.Player
             // Set "is throwing" flag to false
             _characterComponents.CharacterFlags.IsThrowing = false;
             // Triggers throw end event for character input control states
-            _characterComponents.CharacterEvents.OnThrowEndEvent.Invoke();
+            //_characterComponents.CharacterEvents.OnThrowEndEvent.Invoke();
+            // Call method directly instead of using and event (more difficult to break Animator)
+            _characterComponents.CharacterInputController2D.OnThrowEnd();
         }
         #endregion
     }

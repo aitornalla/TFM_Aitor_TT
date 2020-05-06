@@ -5906,6 +5906,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a36099dc2287c4219980baa68827ba78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _characterController2D: {fileID: 823096769}
+  _characterInputController2D: {fileID: 823096773}
   _characterParams: {fileID: 823096778}
   _characterFlags: {fileID: 823096780}
   _characterEvents: {fileID: 823096781}
@@ -5915,6 +5917,7 @@ MonoBehaviour:
   _glideCapCollider2D: {fileID: 823096771}
   _attackCapCollider2D: {fileID: 823096777}
   _throwCapCollider2D: {fileID: 823096782}
+  _animator: {fileID: 823096774}
   _spriteRenderer: {fileID: 823096768}
   _groundCheck: {fileID: 301462133}
   _ceilingCheck: {fileID: 1264282594}
