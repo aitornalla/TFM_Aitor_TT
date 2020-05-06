@@ -50,6 +50,17 @@ namespace Assets.Scripts.UI
             }
         }
 
+        public void OnEnable()
+        {
+            // Deselect all buttons
+            for (int i = 0; i < _uiNavigation.Selectables.Length; i++)
+            {
+                _uiNavigation.Selectables[i].GetComponent<UIButton>().OnDeselect(null);
+            }
+            // Select first button
+            _uiNavigation.Selectables[0].Select();
+        }
+
         public void OnButtonResumeClicked(IUISelectable uiButton)
         {
             uiButton.OnClick();
