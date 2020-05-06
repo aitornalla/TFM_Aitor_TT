@@ -98,6 +98,11 @@ namespace Assets.Scripts.GameController
 		{
 			return _controller.PS4CircleButtonDown();
 		}
+
+        public bool Option ()
+        {
+			return _controller.PS4CircleButtonDown();
+        }
 		#endregion
 
 		#region Menu

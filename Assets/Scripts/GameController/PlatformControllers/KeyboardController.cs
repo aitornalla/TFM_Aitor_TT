@@ -295,5 +295,19 @@ namespace Assets.Scripts.GameController.PlatformControllers
 			return false;
 		}
 		#endregion
-    }
+
+		#region Keyboard option key
+		public bool GetKeyOptionDown()
+		{
+			if (Input.GetButtonDown("KB_Option_Key"))
+			{
+				if (IsDebugEnabled) Debug.Log("Keyboard option key down");
+
+				return true;
+			}
+
+			return false;
+		}
+		#endregion
+	}
 }

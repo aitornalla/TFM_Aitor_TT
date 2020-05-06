@@ -98,6 +98,11 @@ namespace Assets.Scripts.GameController
 		{
 			return _controller.PSPCircleButtonDown();
 		}
+
+        public bool Option ()
+        {
+			return _controller.PSPTriangleButtonDown();
+        }
 		#endregion
 
 		#region Menu

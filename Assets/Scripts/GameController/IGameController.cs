@@ -34,6 +34,7 @@ namespace Assets.Scripts.GameController
 		bool Pause();
 		bool Accept();
 		bool Cancel();
+		bool Option();
 		#endregion
 
 		#region Menu

@@ -299,6 +299,46 @@ namespace Assets.Scripts.GameManagerController
 			_instance.GameManagerState.StateOnSceneUnLoaded(scene);
 		}
 
+        /// <summary>
+        ///     Retrieve max and last level score by level index
+        /// </summary>
+        /// <param name="levelIndex">Level index</param>
+        /// <returns>Array with max score and last score</returns>
+        public int[] RetrieveLevelScores(int levelIndex)
+        {
+			int[] l_levelScores = new int[2];
+
+			// Load levels xml file
+			XDocument l_xDoc = XDocument.Load(_instance.LevelsXMLPath);
+			// Find level elements by attribute ("index")
+			XElement l_xElem = l_xDoc.Descendants("level").Where(atr => (string)atr.Attribute("index") == levelIndex.ToString()).FirstOrDefault();
+			// Retrieve last score and max score
+			if (l_xElem != null)
+			{
+				// Retrieve max score
+				int l_levelMaxScore = 0;
+
+                if (int.TryParse(l_xElem.Element("maxScore").Value, out l_levelMaxScore))
+                {
+					l_levelScores[0] = l_levelMaxScore;
+                }
+
+				// Retrieve last score
+				int l_levelLastScore = 0;
+
+                if (int.TryParse(l_xElem.Element("lastScore").Value, out l_levelLastScore))
+                {
+					l_levelScores[1] = l_levelLastScore;
+                }
+			}
+            else
+            {
+				return null;
+            }
+            // Return scores
+			return l_levelScores;
+        }
+
 		/// <summary>
 		///     Create AudioMixerController instance
 		/// </summary>

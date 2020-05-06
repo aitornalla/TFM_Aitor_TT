@@ -98,6 +98,11 @@ namespace Assets.Scripts.GameController
 		{
 			return _controller.GetKeyCancelDown ();
 		}
+
+        public bool Option ()
+        {
+			return _controller.GetKeyOptionDown();
+        }
         #endregion
 
         #region Menu

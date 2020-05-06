@@ -101,6 +101,11 @@ namespace Assets.Scripts.GameController
 		{
 			return _controller.PS3CircleButtonDown ();
 		}
+
+        public bool Option ()
+        {
+			return _controller.PS3TriangleButtonDown();
+        }
         #endregion
 
         #region Menu
