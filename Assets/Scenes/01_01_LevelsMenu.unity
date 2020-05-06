@@ -2128,6 +2128,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1002195224}
+  - component: {fileID: 1002195225}
   m_Layer: 5
   m_Name: LevelStats
   m_TagString: Untagged
@@ -2155,6 +2156,23 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!95 &1002195225
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1002195223}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0af1b77d0fb0c4b8a9ad1cba8124b0a3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &1104275524
 GameObject:
   m_ObjectHideFlags: 0
