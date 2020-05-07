@@ -21,6 +21,8 @@ namespace Assets.Scripts.GameManagerController.States
         #region IGameManagerState implementation
         public void StateAwake()
         {
+            // Set resolution
+            Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, true);
             // Load scenes dictionary
             _gameManagerInstance.LoadSceneDictionary();
             // Link GameManager functions to scenes load/unload events
