@@ -3,11 +3,11 @@
   <level name="03_01_Level_01" index="1">
     <unlocked>true</unlocked>
     <maxScore>2700</maxScore>
-    <lastScore>1800</lastScore>
+    <lastScore>1900</lastScore>
     <timeTrialEnabled>true</timeTrialEnabled>
     <timeTrialFirstTime>00:00:34.548</timeTrialFirstTime>
-    <timeTrialSecondTime>00:00:35.210</timeTrialSecondTime>
-    <timeTrialThirdTime>00:00:35.478</timeTrialThirdTime>
+    <timeTrialSecondTime>00:00:34.877</timeTrialSecondTime>
+    <timeTrialThirdTime>00:00:35.210</timeTrialThirdTime>
   </level>
   <level name="03_02_Level_02" index="2">
     <unlocked>true</unlocked>
