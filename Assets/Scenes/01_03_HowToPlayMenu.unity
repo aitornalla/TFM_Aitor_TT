@@ -260,7 +260,7 @@ GameObject:
   - component: {fileID: 189725052}
   - component: {fileID: 189725051}
   m_Layer: 5
-  m_Name: 05_PS3
+  m_Name: 06_PS3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -353,7 +353,7 @@ GameObject:
   - component: {fileID: 198298901}
   - component: {fileID: 198298900}
   m_Layer: 5
-  m_Name: 05_PS4
+  m_Name: 06_PS4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -851,7 +851,7 @@ Prefab:
     - target: {fileID: 224772247527707104, guid: 9a9fc335713144dfcbb90f5dd709dfb2,
         type: 2}
       propertyPath: m_RootOrder
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 224772247527707104, guid: 9a9fc335713144dfcbb90f5dd709dfb2,
         type: 2}
@@ -1125,7 +1125,7 @@ GameObject:
   m_Component:
   - component: {fileID: 448262401}
   m_Layer: 5
-  m_Name: 05_Controls
+  m_Name: 06_Controls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1146,7 +1146,7 @@ RectTransform:
   - {fileID: 198298899}
   - {fileID: 1763926979}
   m_Father: {fileID: 625656546}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1330,6 +1330,7 @@ RectTransform:
   - {fileID: 805343523}
   - {fileID: 988719114}
   - {fileID: 1540128940}
+  - {fileID: 881742815}
   - {fileID: 448262401}
   - {fileID: 837607542}
   - {fileID: 1599044684}
@@ -1392,6 +1393,7 @@ MonoBehaviour:
   - {fileID: 805343522}
   - {fileID: 988719113}
   - {fileID: 1540128939}
+  - {fileID: 881742814}
   - {fileID: 448262400}
   _controlsSlides:
   - {fileID: 1301941075}
@@ -1414,6 +1416,88 @@ MonoBehaviour:
   - {fileID: 1599044685}
   - {fileID: 364387961}
   _currentSelectableID: 0
+--- !u!1 &792916054
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 792916055}
+  - component: {fileID: 792916057}
+  - component: {fileID: 792916056}
+  m_Layer: 5
+  m_Name: 05_TimeTrialText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &792916055
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 792916054}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 881742815}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.12346414, y: 0.5415885}
+  m_AnchorMax: {x: 0.87753594, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0.30000305}
+  m_SizeDelta: {x: 0.13000488, y: -0.41000366}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &792916056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 792916054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 01e62b152d1224ab5ab271e8862c7d5f, type: 3}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 1
+    m_MinSize: 10
+    m_MaxSize: 100
+    m_Alignment: 3
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 'Do you want to challenge yourself further?
+
+
+    Once you complete a level this clock will appear at the begining of the level.
+    If you pick it up a time trial mode will start. You will have to get to the end
+    of the level as fast as possible!
+
+
+    Get the best time you can with your ninja abilities!'
+--- !u!222 &792916057
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 792916054}
 --- !u!1 &793629940
 GameObject:
   m_ObjectHideFlags: 0
@@ -1660,7 +1744,7 @@ Prefab:
     - target: {fileID: 224772247527707104, guid: 9a9fc335713144dfcbb90f5dd709dfb2,
         type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 224772247527707104, guid: 9a9fc335713144dfcbb90f5dd709dfb2,
         type: 2}
@@ -1770,6 +1854,41 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 837607541}
   m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+--- !u!1 &881742814
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 881742815}
+  m_Layer: 5
+  m_Name: 05_TimeTrial
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &881742815
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 881742814}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.0000697, y: 1.0000697, z: 1.0000697}
+  m_Children:
+  - {fileID: 792916055}
+  - {fileID: 1338688446}
+  m_Father: {fileID: 625656546}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &883555493
 GameObject:
   m_ObjectHideFlags: 0
@@ -2242,7 +2361,7 @@ GameObject:
   - component: {fileID: 1301941078}
   - component: {fileID: 1301941077}
   m_Layer: 5
-  m_Name: 05_Keyboard
+  m_Name: 06_Keyboard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2356,6 +2475,74 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1338688445
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1338688446}
+  - component: {fileID: 1338688448}
+  - component: {fileID: 1338688447}
+  m_Layer: 5
+  m_Name: 05_TimeTrialClock
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1338688446
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1338688445}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 881742815}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.4267511, y: 0.2631913}
+  m_AnchorMax: {x: 0.57346416, y: 0.52080864}
+  m_AnchoredPosition: {x: 0, y: -0.29999924}
+  m_SizeDelta: {x: 0, y: 1}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1338688447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1338688445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 21300000, guid: c64775e5fd86845778738c7f27b78a66, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 1
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+--- !u!222 &1338688448
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1338688445}
 --- !u!1 &1489282018
 GameObject:
   m_ObjectHideFlags: 0
@@ -2994,7 +3181,7 @@ Prefab:
     - target: {fileID: 224772247527707104, guid: 9a9fc335713144dfcbb90f5dd709dfb2,
         type: 2}
       propertyPath: m_RootOrder
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 224772247527707104, guid: 9a9fc335713144dfcbb90f5dd709dfb2,
         type: 2}
@@ -3392,7 +3579,7 @@ GameObject:
   - component: {fileID: 1763926981}
   - component: {fileID: 1763926980}
   m_Layer: 5
-  m_Name: 05_PSP
+  m_Name: 06_PSP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
