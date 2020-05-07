@@ -13,6 +13,8 @@ namespace Assets.Scripts.DeathRespawnBlackPanelController
 		[SerializeField]
 		private GameObject _playerUILifesText;
 		[SerializeField]
+		private GameObject _playerUIScoreText;
+		[SerializeField]
 		private Text _noMoreLifesUIText;
 		[SerializeField]
 		private string _noMoreLifesText;
@@ -57,6 +59,7 @@ namespace Assets.Scripts.DeathRespawnBlackPanelController
 			{
 				_playerUIHealthBar.SetActive(false);
 				_playerUILifesText.SetActive(false);
+				_playerUIScoreText.SetActive(false);
 			}
 		}
 

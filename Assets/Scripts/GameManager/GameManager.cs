@@ -3,6 +3,7 @@ using Assets.Scripts.GameController;
 using Assets.Scripts.GameManagerController.States;
 using Assets.Scripts.Player;
 using Assets.Scripts.Scenes;
+using Assets.Scripts.TimeTrialController;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -46,6 +47,8 @@ namespace Assets.Scripts.GameManagerController
 		private GameObject _playerLifesText = null;
 		// Level score counter
 		private GameObject _levelScoreCounter = null;
+		// Time trial clock
+		private GameObject _timeTrialClock = null;
 
         #region Pause variables
         // Pause flag
@@ -101,6 +104,7 @@ namespace Assets.Scripts.GameManagerController
         public GameObject DeathRespawnBlackPanel { get { return _instance._deathRespawnBlackPanel; } }
 		public GameObject PlayerLifesText { get { return _instance._playerLifesText; } }
         public GameObject LevelScoreCounter { get { return _instance._levelScoreCounter; } }
+		public GameObject TimeTrialClock { get { return _instance._timeTrialClock; } }
 		public int PlayerLifes { get; set; }
         public bool IsPlayerDead { get { return _instance._playerInstance.GetComponent<CharacterFlags>().IsDead; } }
         public bool IsPlayerControlAllowed { get { return _instance._playerInstance.GetComponent<CharacterFlags>().IsPlayerControlAllowed; } }
@@ -187,12 +191,36 @@ namespace Assets.Scripts.GameManagerController
 
 			// Get level score counter reference
 			_instance._levelScoreCounter = GameObject.FindGameObjectWithTag("LevelScoreCounter");
+
+			// Get time trial clock gameObject and set it to enabled/disabled
+			_instance._timeTrialClock = GameObject.FindGameObjectWithTag("TimeTrialClock");
+			string l_levelName = SceneManager.GetActiveScene().name;
+			_instance._timeTrialClock.SetActive(_instance.IsTimeTrialEnabled(l_levelName));
 		}
 
-        /// <summary>
-        ///     Loads scenes names linked to EGameScenes enum into a dictionary
+		/// <summary>
+        ///     Flag for level time trial enabled
         /// </summary>
-        public void LoadSceneDictionary()
+        /// <param name="levelName">Current level</param>
+        /// <returns><code>true</code> if level time trial is enabled, otherwise <code>false</code></returns>
+		public bool IsTimeTrialEnabled(string levelName)
+		{
+			// Load levels xml file
+			XDocument l_xDoc = XDocument.Load(_instance.LevelsXMLPath);
+			// Find level elements by attribute ("name")
+			XElement l_currentLevelXElem = l_xDoc.Descendants("level").Where(atr => (string)atr.Attribute("name") == levelName).FirstOrDefault();
+			// Initialize flag
+			bool l_currentTimeTrialLevel = false;
+			// Parse current level time trial status
+			bool.TryParse(l_currentLevelXElem.Element("timeTrialEnabled").Value, out l_currentTimeTrialLevel);
+            // Return flag
+			return l_currentTimeTrialLevel;
+		}
+
+		/// <summary>
+		///     Loads scenes names linked to EGameScenes enum into a dictionary
+		/// </summary>
+		public void LoadSceneDictionary()
         {
             // Instantiate game scenes dictionary
 			_instance._gameScenesDictionary = new Dictionary<EGameScenes, string>();
@@ -225,11 +253,23 @@ namespace Assets.Scripts.GameManagerController
 			// Change time scale
 			if (_instance._isPaused)
 			{
+                // Change time scale
 				Time.timeScale = 0.0f;
+                // If time trial
+                if (_instance._timeTrialClock.GetComponent<TimeTrial>().IsTimeTrial)
+                {
+					_instance._timeTrialClock.GetComponent<TimeTrial>().PauseTimeTrial();
+				}
 			}
 			else
 			{
+                // Change time scale
 				Time.timeScale = 1.0f;
+				// If time trial
+				if (_instance._timeTrialClock.GetComponent<TimeTrial>().IsTimeTrial)
+				{
+					_instance._timeTrialClock.GetComponent<TimeTrial>().ResumeTimeTrial();
+				}
 			}
 
 			// Call event
@@ -241,6 +281,21 @@ namespace Assets.Scripts.GameManagerController
 		/// </summary>
 		public void ManagePlayerDeathAndRespawn()
         {
+			// If time trial then reload the level
+			if (_instance._timeTrialClock.GetComponent<TimeTrial>().IsTimeTrial)
+			{
+                // Get scene name
+				string l_levelName = SceneManager.GetActiveScene().name;
+                // Prepare game scene enum
+				EGameScenes l_gameScene = EGameScenes.MainMenu;
+                // Look for game scene enum
+				l_gameScene = _instance._gameScenesDictionary.FirstOrDefault(x => x.Value == l_levelName).Key;
+                // Change state
+				_instance.GameManagerState.StateChange(l_gameScene);
+				// Return
+				return;
+			}
+
 			// Manage player lifes
 			_instance.PlayerLifes--;
 			// Update remaining lifes
@@ -338,6 +393,91 @@ namespace Assets.Scripts.GameManagerController
             // Return scores
 			return l_levelScores;
         }
+
+		/// <summary>
+		///     Retrieve level times
+		/// </summary>
+		/// <param name="levelName">Level name</param>
+		/// <returns>Array with first, second and third times</returns>
+		public string[] RetrieveLevelTimes(string levelName)
+        {
+			// Load levels xml file
+			XDocument l_xDoc = XDocument.Load(_instance.LevelsXMLPath);
+			// Find level elements by attribute ("name")
+			XElement l_xElem = l_xDoc.Descendants("level").Where(atr => (string)atr.Attribute("name") == levelName).FirstOrDefault();
+            // Retrieve level index
+            if (l_xElem != null)
+            {
+				int l_index = 0;
+
+				if (int.TryParse(l_xElem.Attribute("index").Value, out l_index))
+                {
+					return _instance.RetrieveLevelTimes(l_index);
+                }
+            }
+			//
+			return null;
+		}
+
+		/// <summary>
+		///     Retrieve level times
+		/// </summary>
+		/// <param name="levelIndex">Level index</param>
+		/// <returns>Array with first, second and third times</returns>
+		public string[] RetrieveLevelTimes(int levelIndex)
+        {
+			string[] l_levelTimes = new string[3];
+
+			string l_noTime = "--:--:---";
+
+			// Load levels xml file
+			XDocument l_xDoc = XDocument.Load(_instance.LevelsXMLPath);
+			// Find level elements by attribute ("index")
+			XElement l_xElem = l_xDoc.Descendants("level").Where(atr => (string)atr.Attribute("index") == levelIndex.ToString()).FirstOrDefault();
+			// Retrieve last score and max score
+			if (l_xElem != null)
+			{
+				// First time
+				if (string.IsNullOrEmpty(l_xElem.Element("timeTrialFirstTime").Value))
+				{
+					l_levelTimes[0] = l_noTime;
+                }
+                else
+                {
+					int l_index = l_xElem.Element("timeTrialFirstTime").Value.IndexOf(":");
+
+					l_levelTimes[0] = l_xElem.Element("timeTrialFirstTime").Value.Substring(l_index + 1).Replace('.', ':');
+				}
+				// Second time
+				if (string.IsNullOrEmpty(l_xElem.Element("timeTrialSecondTime").Value))
+				{
+					l_levelTimes[1] = l_noTime;
+				}
+				else
+				{
+					int l_index = l_xElem.Element("timeTrialSecondTime").Value.IndexOf(":");
+
+					l_levelTimes[1] = l_xElem.Element("timeTrialSecondTime").Value.Substring(l_index + 1).Replace('.', ':');
+				}
+				// Third time
+				if (string.IsNullOrEmpty(l_xElem.Element("timeTrialThirdTime").Value))
+				{
+					l_levelTimes[2] = l_noTime;
+				}
+				else
+				{
+					int l_index = l_xElem.Element("timeTrialThirdTime").Value.IndexOf(":");
+
+					l_levelTimes[2] = l_xElem.Element("timeTrialThirdTime").Value.Substring(l_index + 1).Replace('.', ':');
+				}
+			}
+            else
+            {
+				return null;
+            }
+			// Return times
+			return l_levelTimes;
+		}
 
 		/// <summary>
 		///     Create AudioMixerController instance
@@ -442,11 +582,37 @@ namespace Assets.Scripts.GameManagerController
 			return l_unlockedLevelsList.ToArray();
         }
 
-        /// <summary>
-        ///     Unlock next level
-        /// </summary>
-        /// <param name="levelName">Current level</param>
-        public void UnlockNextLevel(string levelName)
+		/// <summary>
+		///     Unlock level time trial
+		/// </summary>
+		/// <param name="levelName">Current level</param>
+		public void UnlockLevelTimeTrial(string levelName)
+		{
+			// Load levels xml file
+			XDocument l_xDoc = XDocument.Load(_instance.LevelsXMLPath);
+			// Find level elements by attribute ("name")
+			XElement l_currentLevelXElem = l_xDoc.Descendants("level").Where(atr => (string)atr.Attribute("name") == levelName).FirstOrDefault();
+			// Initialize flag
+			bool l_currentTimeTrialLevel = false;
+            // Parse current level time trial status
+            if (bool.TryParse(l_currentLevelXElem.Element("timeTrialEnabled").Value, out l_currentTimeTrialLevel))
+            {
+                // If time trial not enabled
+                if (!l_currentTimeTrialLevel)
+                {
+                    // Change value
+					l_currentLevelXElem.Element("timeTrialEnabled").Value = "true";
+					// Save changes
+					l_xDoc.Save(_instance.LevelsXMLPath);
+				}
+            }
+		}
+
+		/// <summary>
+		///     Unlock next level
+		/// </summary>
+		/// <param name="levelName">Current level</param>
+		public void UnlockNextLevel(string levelName)
         {
 			// Load levels xml file
 			XDocument l_xDoc = XDocument.Load(_instance.LevelsXMLPath);
@@ -512,6 +678,146 @@ namespace Assets.Scripts.GameManagerController
 			}
             // Save changes
 			l_xDoc.Save(_instance.LevelsXMLPath);
+		}
+
+		/// <summary>
+		///     Updates level times
+		/// </summary>
+		/// <param name="levelName">Level name</param>
+		/// <param name="levelTime">Level time</param>
+		public void UpdateLevelTime(string levelName, TimeSpan levelTime)
+        {
+			// Load levels xml file
+			XDocument l_xDoc = XDocument.Load(_instance.LevelsXMLPath);
+			// Find level elements by attribute ("name")
+			XElement l_xElem = l_xDoc.Descendants("level").Where(atr => (string)atr.Attribute("name") == levelName).FirstOrDefault();
+			// Update last score and max score
+			if (l_xElem != null)
+			{
+                // First time
+                if (string.IsNullOrEmpty(l_xElem.Element("timeTrialFirstTime").Value))
+                {
+                    // Format time value
+					l_xElem.Element("timeTrialFirstTime").Value =
+						levelTime.Hours.ToString("D2") + ":" +
+						levelTime.Minutes.ToString("D2") + ":" +
+						levelTime.Seconds.ToString("D2") + "." +
+						levelTime.Milliseconds.ToString("D3");
+					// Save changes
+					l_xDoc.Save(_instance.LevelsXMLPath);
+					// Go back
+					return;
+				}
+                else
+                {
+                    // Prepare Timespan variable
+					TimeSpan l_firstLevelTime;
+					// Parse Timespan
+					if (TimeSpan.TryParse(l_xElem.Element("timeTrialFirstTime").Value, out l_firstLevelTime))
+                    {
+                        if (levelTime < l_firstLevelTime)
+                        {
+							// Set third time with second time
+							l_xElem.Element("timeTrialThirdTime").Value =
+								l_xElem.Element("timeTrialSecondTime").Value;
+							// Set second time with first time
+							l_xElem.Element("timeTrialSecondTime").Value =
+								l_xElem.Element("timeTrialFirstTime").Value;
+							// Set first time
+							l_xElem.Element("timeTrialFirstTime").Value =
+						        levelTime.Hours.ToString("D2") + ":" +
+						        levelTime.Minutes.ToString("D2") + ":" +
+						        levelTime.Seconds.ToString("D2") + "." +
+						        levelTime.Milliseconds.ToString("D3");
+							// Save changes
+							l_xDoc.Save(_instance.LevelsXMLPath);
+							// Go back
+							return;
+						}
+                    }
+                }
+
+				// Second time
+				if (string.IsNullOrEmpty(l_xElem.Element("timeTrialSecondTime").Value))
+				{
+					// Format time value
+					l_xElem.Element("timeTrialSecondTime").Value =
+						levelTime.Hours.ToString("D2") + ":" +
+						levelTime.Minutes.ToString("D2") + ":" +
+						levelTime.Seconds.ToString("D2") + "." +
+						levelTime.Milliseconds.ToString("D3");
+					// Save changes
+					l_xDoc.Save(_instance.LevelsXMLPath);
+					// Go back
+					return;
+				}
+				else
+				{
+					// Prepare Timespan variable
+					TimeSpan l_secondLevelTime;
+					// Parse Timespan
+					if (TimeSpan.TryParse(l_xElem.Element("timeTrialSecondTime").Value, out l_secondLevelTime))
+					{
+						if (levelTime < l_secondLevelTime)
+						{
+							// Set third time with second time
+							l_xElem.Element("timeTrialThirdTime").Value =
+								l_xElem.Element("timeTrialSecondTime").Value;
+							// Set second time
+							l_xElem.Element("timeTrialSecondTime").Value =
+								levelTime.Hours.ToString("D2") + ":" +
+								levelTime.Minutes.ToString("D2") + ":" +
+								levelTime.Seconds.ToString("D2") + "." +
+								levelTime.Milliseconds.ToString("D3");
+							// Save changes
+							l_xDoc.Save(_instance.LevelsXMLPath);
+							// Go back
+							return;
+						}
+					}
+				}
+
+				// Third time
+				if (string.IsNullOrEmpty(l_xElem.Element("timeTrialThirdTime").Value))
+				{
+					// Format time value
+					l_xElem.Element("timeTrialThirdTime").Value =
+						levelTime.Hours.ToString("D2") + ":" +
+						levelTime.Minutes.ToString("D2") + ":" +
+						levelTime.Seconds.ToString("D2") + "." +
+						levelTime.Milliseconds.ToString("D3");
+					// Save changes
+					l_xDoc.Save(_instance.LevelsXMLPath);
+					// Go back
+					return;
+				}
+				else
+				{
+					// Prepare Timespan variable
+					TimeSpan l_thirdLevelTime;
+					// Parse Timespan
+					if (TimeSpan.TryParse(l_xElem.Element("timeTrialThirdTime").Value, out l_thirdLevelTime))
+					{
+						if (levelTime < l_thirdLevelTime)
+						{
+							// Set third time
+							l_xElem.Element("timeTrialThirdTime").Value =
+								levelTime.Hours.ToString("D2") + ":" +
+								levelTime.Minutes.ToString("D2") + ":" +
+								levelTime.Seconds.ToString("D2") + "." +
+								levelTime.Milliseconds.ToString("D3");
+							// Save changes
+							l_xDoc.Save(_instance.LevelsXMLPath);
+							// Go back
+							return;
+						}
+					}
+				}
+			}
+			// Parse example
+			//TimeSpan timeSpan;
+			//TimeSpan.TryParse("0:12:22.435", out timeSpan);
+			//Debug.Log(timeSpan.Minutes + ":" + timeSpan.Seconds + ":" + timeSpan.Milliseconds);
 		}
 		#endregion
 	}

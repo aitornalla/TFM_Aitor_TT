@@ -55,6 +55,19 @@ namespace Assets.Scripts.GameManagerController.States
                     _nextState = new GameManagerStateLevelsMenu(_gameManagerInstance);
                     break;
 
+                case EGameScenes.Level_01:
+                case EGameScenes.Level_02:
+                case EGameScenes.Level_03:
+                    {
+                        // Level scene to be loaded next
+                        _gameManagerInstance.LevelLoadNextScene = gameScenes;
+                        // Assing new game state
+                        _nextState = new GameManagerStateLevelLoad(_gameManagerInstance);
+                        // Load LevelLoad scene that will load the next level asynchronously
+                        gameScenes = EGameScenes.LevelLoad;
+                    }
+                    break;
+
                 default:
                     _nextState = new GameManagerStateMainMenu(_gameManagerInstance);
                     break;

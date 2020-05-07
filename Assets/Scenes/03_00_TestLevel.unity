@@ -77313,6 +77313,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerUIHealthBar: {fileID: 427787270}
   _playerUILifesText: {fileID: 326625637}
+  _playerUIScoreText: {fileID: 2057542731}
   _noMoreLifesUIText: {fileID: 285265213}
   _noMoreLifesText: No more lifes...
   _timespanForNoMoreLifesText: 3

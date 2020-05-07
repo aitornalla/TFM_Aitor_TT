@@ -2,17 +2,30 @@
 <levels>
   <level name="03_01_Level_01" index="1">
     <unlocked>true</unlocked>
-    <maxScore>0</maxScore>
-    <lastScore>0</lastScore>
+    <maxScore>2700</maxScore>
+    <lastScore>1800</lastScore>
+    <timeTrialEnabled>true</timeTrialEnabled>
+    <timeTrialFirstTime>00:00:34.548</timeTrialFirstTime>
+    <timeTrialSecondTime>00:00:35.210</timeTrialSecondTime>
+    <timeTrialThirdTime>00:00:35.478</timeTrialThirdTime>
   </level>
   <level name="03_02_Level_02" index="2">
     <unlocked>true</unlocked>
-    <maxScore>0</maxScore>
-    <lastScore>0</lastScore>
+    <maxScore>12150</maxScore>
+    <lastScore>12150</lastScore>
+    <timeTrialEnabled>true</timeTrialEnabled>
+    <timeTrialFirstTime>00:00:21.099</timeTrialFirstTime>
+    <timeTrialSecondTime>00:00:21.316</timeTrialSecondTime>
+    <timeTrialThirdTime>00:00:29.705</timeTrialThirdTime>
   </level>
   <level name="03_03_Level_03" index="3">
     <unlocked>true</unlocked>
     <maxScore>0</maxScore>
     <lastScore>0</lastScore>
+    <timeTrialEnabled>true</timeTrialEnabled>
+    <timeTrialFirstTime>00:00:24.700</timeTrialFirstTime>
+    <timeTrialSecondTime>00:00:25.095</timeTrialSecondTime>
+    <timeTrialThirdTime>
+    </timeTrialThirdTime>
   </level>
 </levels>

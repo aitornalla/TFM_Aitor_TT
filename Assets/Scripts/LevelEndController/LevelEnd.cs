@@ -6,6 +6,7 @@ using Assets.Scripts.Scenes;
 using Assets.Scripts.GameManagerController;
 using Assets.Scripts.Player;
 using Assets.Scripts.UI;
+using Assets.Scripts.TimeTrialController;
 
 namespace Assets.Scripts.LevelEndController
 {
@@ -17,6 +18,8 @@ namespace Assets.Scripts.LevelEndController
 		private LayerMask _playerLayer;                                         // Player layer to check conditions
 		[SerializeField]
 		private GameObject _levelCompletedBanner;                               // Level completed banner gameObject
+		[SerializeField]
+		private GameObject _timeTrialCompletedBanner;                           // Time trial completed banner gameObject
 
 		// Use this for initialization
 		//private void Start()
@@ -39,20 +42,48 @@ namespace Assets.Scripts.LevelEndController
 				//GameManager.Instance.GameManagerState.StateChange(_gameScenes);
 
 				// Disable player control
-				GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterFlags>().IsPlayerControlAllowed = false;
+				GameManager.Instance.PlayerInstance.GetComponent<CharacterFlags>().IsPlayerControlAllowed = false;
 
-				// Update score
-				string l_levelName = SceneManager.GetActiveScene().name;
-				int l_levelScore = GameManager.Instance.LevelScoreCounter.GetComponent<LevelScoreCounter>().TotalScore;
+				// Check for time trial
+				TimeTrial l_timeTrial = GameManager.Instance.TimeTrialClock.GetComponent<TimeTrial>();
 
-				GameManager.Instance.UpdateLevelScore(l_levelName, l_levelScore);
-
-				// Unlock next level
-				GameManager.Instance.UnlockNextLevel(l_levelName);
-
-				// Set level completed banner active
-				_levelCompletedBanner.SetActive(true);
+                // Whether is time trial or not
+				if (l_timeTrial.IsTimeTrial)
+                {
+					ManageTimeTrialLevelEnd(l_timeTrial);
+				}
+                else
+                {
+					ManageLevelEnd();
+                }
 			}
         }
+
+		private void ManageTimeTrialLevelEnd(TimeTrial timeTrial)
+        {
+            // Manage end of time trial
+			timeTrial.EndTimeTrial();
+
+            // Set time trial completed banner active
+			_timeTrialCompletedBanner.SetActive(true);
+		}
+
+        private void ManageLevelEnd()
+        {
+			// Update level score
+			string l_levelName = SceneManager.GetActiveScene().name;
+			int l_levelScore = GameManager.Instance.LevelScoreCounter.GetComponent<LevelScoreCounter>().TotalScore;
+
+			GameManager.Instance.UpdateLevelScore(l_levelName, l_levelScore);
+
+			// Unlock next level
+			GameManager.Instance.UnlockNextLevel(l_levelName);
+
+			// Unlock level time trial
+			GameManager.Instance.UnlockLevelTimeTrial(l_levelName);
+
+			// Set level completed banner active
+			_levelCompletedBanner.SetActive(true);
+		}
     }
 }

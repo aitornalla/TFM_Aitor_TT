@@ -25,6 +25,8 @@ namespace Assets.Scripts.CrystalGemController
 		private int _score;                                                     // Score of the crystal gem
         [SerializeField]
 		private LayerMask _playerLayer;                                         // Player layer to check conditions
+
+		[Header("Oscillator Params")]
 		[SerializeField]
 		private Transform _upLimit;                                             // Movement up limit
 		[SerializeField]
@@ -72,9 +74,9 @@ namespace Assets.Scripts.CrystalGemController
 			}
 			// Instantiate new Oscillator object
 			_oscillator = new Oscillator(l_oscillatorAngle_0, _frequency, new CosSqrtbOscillatorFunction(l_oscillatorAngle_0, _frequency, _bMovementParam));
-			// Translate saw to the initial position
+			// Translate gem to the initial position
 			transform.Translate(_initialPosition.localPosition.x, 0.0f, 0.0f, Space.Self);
-			// Assing initial saw position 0
+			// Assing initial gem position 0
 			_gemPosition_0 = _initialPosition.localPosition.x;
 		}
 

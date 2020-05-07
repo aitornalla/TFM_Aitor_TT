@@ -18,6 +18,12 @@ namespace Assets.Scripts.UI
         [SerializeField]
         private Text _statsLastScoreText;                                       // Reference to stats last score text
         [SerializeField]
+        private Text _statsFirstTimeText;                                       // Reference to stats first time text
+        [SerializeField]
+        private Text _statsSecondTimeText;                                      // Reference to stats second time text
+        [SerializeField]
+        private Text _statsThirdTimeText;                                       // Reference to stats third time text
+        [SerializeField]
         private GameObject[] _statsMessages;                                    // Reference to the slides of the controllers
 
         private UINavigation _uiNavigation = null;                              // Reference to the UINavigation component
@@ -133,6 +139,15 @@ namespace Assets.Scripts.UI
                         _statsRibbonText.text = "Level " + _uiNavigation.CurrentSelectableID.ToString();
                         _statsMaxScoreText.text = l_levelScores[0].ToString();
                         _statsLastScoreText.text = l_levelScores[1].ToString();
+                    }
+                    // Retrieve level times
+                    string[] l_levelTimes = GameManager.Instance.RetrieveLevelTimes(_uiNavigation.CurrentSelectableID);
+                    // Set level times
+                    if (l_levelTimes != null)
+                    {
+                        _statsFirstTimeText.text = l_levelTimes[0];
+                        _statsSecondTimeText.text = l_levelTimes[1];
+                        _statsThirdTimeText.text = l_levelTimes[2];
                     }
                 }
             }

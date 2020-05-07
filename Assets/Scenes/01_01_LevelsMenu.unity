@@ -1704,6 +1704,9 @@ MonoBehaviour:
   _statsRibbonText: {fileID: 1381391856}
   _statsMaxScoreText: {fileID: 371003549}
   _statsLastScoreText: {fileID: 1475081203}
+  _statsFirstTimeText: {fileID: 1492223640}
+  _statsSecondTimeText: {fileID: 1676837595}
+  _statsThirdTimeText: {fileID: 1507729681}
   _statsMessages:
   - {fileID: 1581129724}
   - {fileID: 1741986966}
