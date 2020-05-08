@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Assets.Scripts.Player;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Scripts.EnemyController
 {
@@ -15,6 +16,8 @@ namespace Assets.Scripts.EnemyController
         private Transform _slashPoint;                                          // Slash point
         [SerializeField]
         private LayerMask _playerLayerMask;                                     // Player layer mask
+        [SerializeField]
+        private Slider _healthSlider;                                           // Enemy health slider
         [SerializeField]
         private float _idleTime = 5.0f;                                         // Time for the enemy to be idle
         [SerializeField]
@@ -54,6 +57,8 @@ namespace Assets.Scripts.EnemyController
         private void Start()
 		{
             _health = _maxHealth;
+
+            _healthSlider.normalizedValue = (float)_health / (float)_maxHealth;
 		}
 
         // Update is called once per frame
@@ -203,6 +208,9 @@ namespace Assets.Scripts.EnemyController
 
             // Take damage
             _health = _health - damage < 0 ? 0 : _health - damage;
+
+            // Set health slider
+            _healthSlider.normalizedValue = (float)_health / (float)_maxHealth;
 
             // Cancel coroutine
             if (_idleStateCoroutine != null)
