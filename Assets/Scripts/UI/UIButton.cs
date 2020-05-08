@@ -36,7 +36,7 @@ namespace Assets.Scripts.UI
 		private Image _image = null;                                            // Reference to Image component
 		private AudioSource _audioSource = null;                                // Reference to AudioSource component
 		private bool _firstEnable = true;
-		private Coroutine changeButtonSpriteToSelectedCoroutine = null;
+		private Coroutine _changeButtonSpriteToSelectedCoroutine = null;
 
 		#region IUISelectable implementation
 		public Selectable Selectable { get { return GetComponent<Button>(); } }
@@ -68,13 +68,30 @@ namespace Assets.Scripts.UI
         //private void Start()
         //{
         //
-		//}
+        //}
 
         // Update is called once per frame
         //private void Update()
         //{
         //
         //}
+
+        private void OnEnable()
+        {
+            if (this.gameObject.Equals(EventSystem.current.currentSelectedGameObject))
+            {
+				ChangeButtonSprite(EButtonSpriteType.Selected);
+            }
+            else
+            {
+				ChangeButtonSprite(EButtonSpriteType.Normal);
+            }
+        }
+
+        private void OnDisable()
+        {
+			_changeButtonSpriteToSelectedCoroutine = null;
+		}
 
         #region ISelectHandler implementation
         public void OnSelect(BaseEventData eventData)
@@ -107,8 +124,8 @@ namespace Assets.Scripts.UI
 			if (_audioSource != null)
 				_audioSource.PlayOneShot(_clickSound);
 
-			if (changeButtonSpriteToSelectedCoroutine == null)
-				changeButtonSpriteToSelectedCoroutine = StartCoroutine(ChangeButtonSpriteToSelectedCoroutine());
+			if (_changeButtonSpriteToSelectedCoroutine == null)
+				_changeButtonSpriteToSelectedCoroutine = StartCoroutine(ChangeButtonSpriteToSelectedCoroutine());
 		}
 
 		public void SelectOnEnable()
@@ -156,7 +173,7 @@ namespace Assets.Scripts.UI
 
 			ChangeButtonSprite(EButtonSpriteType.Selected);
 
-			changeButtonSpriteToSelectedCoroutine = null;
+			_changeButtonSpriteToSelectedCoroutine = null;
 		}
     }
 }
