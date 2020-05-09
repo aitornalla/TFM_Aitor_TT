@@ -19,6 +19,8 @@ namespace Assets.Scripts.GameManagerController.States
         public void StateAwake()
         {
             _gameManagerInstance.AssignLevelReferences();
+
+            _gameManagerInstance.SetSceneGameManagerAudioSource();
         }
 
         public void StateUpdate()

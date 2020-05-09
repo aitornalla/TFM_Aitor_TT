@@ -84,7 +84,8 @@ namespace Assets.Scripts.UI
             }
             else
             {
-				ChangeButtonSprite(EButtonSpriteType.Normal);
+                if (!_image.sprite.Equals(_lockedSprite))
+				    ChangeButtonSprite(EButtonSpriteType.Normal);
             }
         }
 

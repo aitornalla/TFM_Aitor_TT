@@ -29,6 +29,8 @@ namespace Assets.Scripts.GameManagerController
 		private IGameController _gameController = null;
 		// Main AudioMixer instance
 		private AudioMixerController _audioMixerController = null;
+		// GameManager AudioSource
+		private AudioSource _audioSource = null;
         // Player instance
 		private GameObject _playerInstance = null;
 		// Vector2 instance to hold current checkpoint spawn position
@@ -62,10 +64,12 @@ namespace Assets.Scripts.GameManagerController
         #region readonly variables
         // Path to xml file for controllers configuration
         private readonly string ControllersXMLPath = string.Join(Path.DirectorySeparatorChar.ToString(), new string[] { "Assets", "Resources", "ConfigFiles", "controllers.xml" });
-		// Path to xml file for controllers configuration
+		// Path to xml file for scenes configuration
 		private readonly string ScenesXMLPath = string.Join(Path.DirectorySeparatorChar.ToString(), new string[] { "Assets", "Resources", "ConfigFiles", "scenes.xml" });
-		// Path to xml file for controllers configuration
+		// Path to xml file for levels configuration and stats
 		private readonly string LevelsXMLPath = string.Join(Path.DirectorySeparatorChar.ToString(), new string[] { "Assets", "Resources", "ConfigFiles", "levels.xml" });
+		// Path to xml file for audios configuration
+		private readonly string AudiosXMLPath = string.Join(Path.DirectorySeparatorChar.ToString(), new string[] { "Assets", "Resources", "ConfigFiles", "audios.xml" });
 		// Initial player spawn position in levels
 		private readonly Vector2 _initialPlayerSpawnPosition = new Vector2(0.0f, 5.0f);
 		#endregion
@@ -255,6 +259,8 @@ namespace Assets.Scripts.GameManagerController
 			{
                 // Change time scale
 				Time.timeScale = 0.0f;
+				// Pause AudioSource
+				_instance._audioSource.Pause();
                 // If time trial
                 if (_instance._timeTrialClock.GetComponent<TimeTrial>().IsTimeTrial)
                 {
@@ -265,13 +271,14 @@ namespace Assets.Scripts.GameManagerController
 			{
                 // Change time scale
 				Time.timeScale = 1.0f;
+				// Resume AudioSource
+				_instance._audioSource.Play();
 				// If time trial
 				if (_instance._timeTrialClock.GetComponent<TimeTrial>().IsTimeTrial)
 				{
 					_instance._timeTrialClock.GetComponent<TimeTrial>().ResumeTimeTrial();
 				}
 			}
-
 			// Call event
 			_instance._onPauseEvent.Invoke(_instance._isPaused);
 		}
@@ -479,13 +486,83 @@ namespace Assets.Scripts.GameManagerController
 			return l_levelTimes;
 		}
 
-		/// <summary>
-		///     Create AudioMixerController instance
-		/// </summary>
-		public void SetUpAudioMixerController()
+        /// <summary>
+        ///     Set scene AudioSource of GameManager
+        /// </summary>
+        public void SetSceneGameManagerAudioSource()
         {
+			// Stop playing AudioSource
+			if (_instance._audioSource.isPlaying)
+				_instance._audioSource.Stop();
+
+			// Audio and sounds folder
+			string l_audioSoundFolder = "Audio&Sounds";
+			// Get scene name
+			string l_sceneName = SceneManager.GetActiveScene().name;
+			// Load audios xml file
+			XDocument l_xDoc = XDocument.Load(_instance.AudiosXMLPath);
+			// Find audio scene elements by attribute ("name")
+			XElement l_sceneXElem = l_xDoc.Descendants("scene").Where(atr => (string)atr.Attribute("name") == l_sceneName).FirstOrDefault();
+			// Check if set AudioSource
+			bool l_setAudioSource = false;
+            //
+            if (bool.TryParse(l_sceneXElem.Attribute("setAudioSource").Value, out l_setAudioSource))
+            {
+                // If no setting, null AudioSource and return
+				if (!l_setAudioSource)
+                {
+					// Set AudioSource to null
+                    _instance._audioSource.clip = null;
+					_instance._audioSource.outputAudioMixerGroup = null;
+					_instance._audioSource.playOnAwake = false;
+					_instance._audioSource.loop = false;
+					_instance._audioSource.volume = 0.0f;
+
+					return;
+				}
+            }
+
+            // Load AudioClip
+			AudioClip l_audioClip = Resources.Load<AudioClip>(string.Join(Path.DirectorySeparatorChar.ToString(), new string[] { l_audioSoundFolder, l_sceneXElem.Element("audioClip").Value }));
+			// Output AudioMixerGroup
+			int l_outputAudioMixerGroup = 0;
+			int.TryParse(l_sceneXElem.Element("outputAudioMixerGroup").Value, out l_outputAudioMixerGroup);
+			// Play on awake
+			bool l_playOnAwake = false;
+			bool.TryParse(l_sceneXElem.Element("playOnAwake").Value, out l_playOnAwake);
+			// Loop
+			bool l_loop = false;
+			bool.TryParse(l_sceneXElem.Element("loop").Value, out l_loop);
+			// Volume
+			float l_volume = 0.0f;
+			float.TryParse(l_sceneXElem.Element("volume").Value, out l_volume);
+
+			// Set AudioSource
+			_instance._audioSource.clip = l_audioClip;
+			_instance._audioSource.outputAudioMixerGroup = _instance._audioMixerController.MainAudioMixerGroups[l_outputAudioMixerGroup];
+			_instance._audioSource.playOnAwake = l_playOnAwake;
+			_instance._audioSource.loop = l_loop;
+			_instance._audioSource.volume = l_volume;
+            // Play
+			if (l_playOnAwake)
+				_instance._audioSource.Play();
+		}
+
+		/// <summary>
+        ///     Set up audio settings
+        /// </summary>
+        public void SetUpAudioSettings()
+        {
+			// Set up main AudioMixer
 			_instance._audioMixerController = new AudioMixerController();
-        }
+
+			// Get AudioSource component
+			_instance._audioSource = GetComponent<AudioSource>();
+
+			// Assign AudioMixerGroup for AudioSource component
+			_instance._audioSource.outputAudioMixerGroup =
+				_instance._audioMixerController.MainAudioMixerGroups[0];
+		}
 
 		/// <summary>
 		/// 	Adds controller components to GameManager gameObject.

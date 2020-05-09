@@ -19,7 +19,7 @@ namespace Assets.Scripts.GameManagerController.States
         #region IGameManagerState implementation
         public void StateAwake()
         {
-            //throw new NotImplementedException();
+            _gameManagerInstance.SetSceneGameManagerAudioSource();
         }
 
         public void StateUpdate()

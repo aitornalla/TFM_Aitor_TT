@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<scenes>
+    <scene name="00_Intro" setAudioSource="false">
+        <audioClip></audioClip>
+        <outputAudioMixerGroup></outputAudioMixerGroup>
+        <playOnAwake></playOnAwake>
+        <loop></loop>
+        <volume></volume>
+    </scene>
+    <scene name="01_00_MainMenu" setAudioSource="true">
+        <audioClip>01_00_MainMenu_[Tribal Town]</audioClip>
+        <outputAudioMixerGroup>0</outputAudioMixerGroup>
+        <playOnAwake>true</playOnAwake>
+        <loop>true</loop>
+        <volume>0.6</volume>
+    </scene>
+    <scene name="01_01_LevelsMenu" setAudioSource="true">
+        <audioClip>01_01_LevelsMenu_[Roof of the world]</audioClip>
+        <outputAudioMixerGroup>0</outputAudioMixerGroup>
+        <playOnAwake>true</playOnAwake>
+        <loop>true</loop>
+        <volume>0.6</volume>
+    </scene>
+    <scene name="01_02_SettingsMenu" setAudioSource="false">
+        <audioClip></audioClip>
+        <outputAudioMixerGroup></outputAudioMixerGroup>
+        <playOnAwake></playOnAwake>
+        <loop></loop>
+        <volume></volume>
+    </scene>
+    <scene name="01_03_HowToPlayMenu" setAudioSource="false">
+        <audioClip></audioClip>
+        <outputAudioMixerGroup></outputAudioMixerGroup>
+        <playOnAwake></playOnAwake>
+        <loop></loop>
+        <volume></volume>
+    </scene>
+    <scene name="02_LevelLoad" setAudioSource="false">
+        <audioClip></audioClip>
+        <outputAudioMixerGroup></outputAudioMixerGroup>
+        <playOnAwake></playOnAwake>
+        <loop></loop>
+        <volume></volume>
+    </scene>
+    <scene name="03_01_Level_01" setAudioSource="true">
+        <audioClip>03_01_Level_01_[Jungle Friends]</audioClip>
+        <outputAudioMixerGroup>0</outputAudioMixerGroup>
+        <playOnAwake>true</playOnAwake>
+        <loop>true</loop>
+        <volume>0.6</volume>
+    </scene>
+      <scene name="03_02_Level_02" setAudioSource="true">
+        <audioClip>03_02_Level_02_[Jungle Groove Grove]</audioClip>
+        <outputAudioMixerGroup>0</outputAudioMixerGroup>
+        <playOnAwake>true</playOnAwake>
+        <loop>true</loop>
+        <volume>0.6</volume>
+    </scene>
+    <scene name="03_03_Level_03" setAudioSource="true">
+        <audioClip>03_03_Level_03_[The Crypt Loop]</audioClip>
+        <outputAudioMixerGroup>0</outputAudioMixerGroup>
+        <playOnAwake>true</playOnAwake>
+        <loop>true</loop>
+        <volume>0.6</volume>
+    </scene>
+</scenes>

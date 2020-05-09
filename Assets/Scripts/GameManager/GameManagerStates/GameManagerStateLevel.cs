@@ -29,6 +29,8 @@ namespace Assets.Scripts.GameManagerController.States
             }
 
             _gameManagerInstance.PlayerLifesText.GetComponent<Text>().text = "x" + _gameManagerInstance.PlayerLifes.ToString();
+
+            _gameManagerInstance.SetSceneGameManagerAudioSource();
         }
 
         public void StateUpdate()

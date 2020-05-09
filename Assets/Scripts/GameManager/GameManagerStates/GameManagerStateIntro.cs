@@ -30,8 +30,8 @@ namespace Assets.Scripts.GameManagerController.States
             SceneManager.sceneUnloaded += _gameManagerInstance.OnSceneUnLoaded;
             // Set up the controller
             _gameManagerInstance.SetUpController();
-            // Set up AudioMixerController
-            _gameManagerInstance.SetUpAudioMixerController();
+            // Set up main audio settings
+            _gameManagerInstance.SetUpAudioSettings();
         }
 
         public void StateUpdate()
