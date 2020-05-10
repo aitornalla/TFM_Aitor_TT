@@ -21,19 +21,27 @@ namespace Assets.Scripts.LevelEndController
 		[SerializeField]
 		private GameObject _timeTrialCompletedBanner;                           // Time trial completed banner gameObject
 
-		// Use this for initialization
-		//private void Start()
-		//{
-		//
-		//}
+		private AudioSource _audioSource = null;                                 // Reference to AudioSource component
 
-		// Update is called once per frame
-		//private void Update()
-		//{
-		//
-		//}
+        private void Awake()
+        {
+			// Get AudioSource component
+			_audioSource = GetComponent<AudioSource>();
+        }
 
-		private void OnTriggerEnter2D(Collider2D collision)
+        // Use this for initialization
+        //private void Start()
+        //{
+        //
+        //}
+
+        // Update is called once per frame
+        //private void Update()
+        //{
+        //
+        //}
+
+        private void OnTriggerEnter2D(Collider2D collision)
         {
             // If player gets to the level end ...
             if (_playerLayer == (_playerLayer | (1 << collision.gameObject.layer)))
@@ -43,6 +51,12 @@ namespace Assets.Scripts.LevelEndController
 
 				// Disable player control
 				GameManager.Instance.PlayerInstance.GetComponent<CharacterFlags>().IsPlayerControlAllowed = false;
+
+				// Stop GameManager sound
+				GameManager.Instance.AudioSource.Stop();
+
+				// Play sound
+				_audioSource.Play();
 
 				// Check for time trial
 				TimeTrial l_timeTrial = GameManager.Instance.TimeTrialClock.GetComponent<TimeTrial>();

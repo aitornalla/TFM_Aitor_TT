@@ -15,6 +15,7 @@ namespace Assets.Scripts.CheckPointController
         private GameObject _checkpointBanner;                                   // Checkpoint banner gameObject
 
 		private ParticleSystem[] _particleSystems;                              // Array of ParticleSystem components from sakura tree
+        private AudioSource _audioSource;                                       // Reference to AudioSource component
         private bool _isChecked = false;                                        // Flag for checking the checkpoint
 
         #region Properties
@@ -25,6 +26,10 @@ namespace Assets.Scripts.CheckPointController
         {
             // Get ParticleSystem components in children gameObjects
 			_particleSystems = GetComponentsInChildren<ParticleSystem>();
+            // Get AudioSource component
+            _audioSource = GetComponent<AudioSource>();
+            // Set AudioMixerGroup
+            _audioSource.outputAudioMixerGroup = GameManager.Instance.AudioMixerController.MainAudioMixerGroups[0];
         }
 
         // Use this for initialization
@@ -62,6 +67,9 @@ namespace Assets.Scripts.CheckPointController
 
                 // Assign checkpoint respawn position to current GameManager respawn position
                 GameManager.Instance.CurrentCheckPointSpawnPosition = _respawnPoint.position;
+
+                // Play checkpoint sound
+                _audioSource.Play();
             }
         }
 

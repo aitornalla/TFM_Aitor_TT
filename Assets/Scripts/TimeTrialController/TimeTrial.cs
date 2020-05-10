@@ -46,7 +46,8 @@ namespace Assets.Scripts.TimeTrialController
 		private SpriteRenderer _spriteRenderer = null;                          // Reference to SpriteRenderer component
 		//private ParticleSystem _particleSystem = null;                          // Reference to ParticleSystem component
 		private CircleCollider2D _circleCollider2D = null;                      // Reference to CircleCollider2D component
-		private Coroutine _sandClockAnimationCoroutine = null;                  // Reference to coroutine
+		private AudioSource _audioSource = null;                                // Reference to AudioSource component
+        private Coroutine _sandClockAnimationCoroutine = null;                  // Reference to coroutine
 
 		public bool IsTimeTrial { get { return _isTimeTrial; } }
         public TimeSpan TimeTrialElapsedTime { get { return _stopwatch.Elapsed; } }
@@ -60,6 +61,8 @@ namespace Assets.Scripts.TimeTrialController
 			//_particleSystem = GetComponent<ParticleSystem>();
 			// Get CircleCollider2D component
 			_circleCollider2D = GetComponent<CircleCollider2D>();
+			// Get AudioSource component
+			_audioSource = GetComponent<AudioSource>();
 
 			// Instantiate Stopwatch
 			_stopwatch = new System.Diagnostics.Stopwatch();
@@ -126,6 +129,8 @@ namespace Assets.Scripts.TimeTrialController
 				_timeTrialText.gameObject.SetActive(true);
 				// Enable time trial UI image
 				_timeTrialImage.gameObject.SetActive(true);
+				// Play sound
+				_audioSource.Play();
 				// Start sand clock animation coroutine
 				_sandClockAnimationCoroutine = StartCoroutine(SandClockAnimationCoroutine());
 				// Start Stopwatch

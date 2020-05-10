@@ -68,8 +68,11 @@ namespace Assets.Scripts.DeathRespawnBlackPanelController
 			// If no more lifes left
 			if (GameManager.Instance.PlayerLifes - 1 == 0)
 			{
+                // Stop audio from GameManager
+				GameManager.Instance.AudioSource.Stop();
+                // Start coroutine
 				StartCoroutine(NoMoreLifesTextCoroutine());
-
+                // Go back
 				return;
             }
 

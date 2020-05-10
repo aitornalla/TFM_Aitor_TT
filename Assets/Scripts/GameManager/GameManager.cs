@@ -87,6 +87,7 @@ namespace Assets.Scripts.GameManagerController
         public Dictionary<EGameScenes, string> GameScenesDictionary { get { return _instance._gameScenesDictionary; } }
         public IGameController GameController { get { return _instance._gameController; } }
         public AudioMixerController AudioMixerController { get { return _instance._audioMixerController; } }
+        public AudioSource AudioSource { get { return _instance._audioSource; } }
         public GameObject PlayerInstance { get { return _instance._playerInstance; } }
         public Vector2 CurrentCheckPointSpawnPosition
 		{

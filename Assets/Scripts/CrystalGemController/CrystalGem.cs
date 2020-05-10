@@ -43,6 +43,7 @@ namespace Assets.Scripts.CrystalGemController
 		private ParticleSystem _particleSystem = null;                          // ParticleSystem component
 		private SpriteRenderer _spriteRenderer = null;                          // SpriteRenderer component
 		private CapsuleCollider2D _capsuleCollider2D = null;                    // CapsuleCollider2D component
+		private AudioSource _audioSource = null;                                // AudioSource component
 
         private Oscillator _oscillator;                                         // Oscillator object
 		private float _gemPosition_0;                                           // Gem previous position
@@ -58,6 +59,8 @@ namespace Assets.Scripts.CrystalGemController
 			_spriteRenderer = GetComponent<SpriteRenderer>();
 			// Get CapsuleCollider2D component reference
 			_capsuleCollider2D = GetComponent<CapsuleCollider2D>();
+			// Get AudioSource Component
+			_audioSource = GetComponent<AudioSource>();
 		}
 
         // Use this for initialization
@@ -128,6 +131,8 @@ namespace Assets.Scripts.CrystalGemController
 				_isDestroying = true;
                 // Play particle system effect
 				_particleSystem.Play();
+				// Play sound effect
+				_audioSource.Play();
 				// Destroy gem after particle system ends playing
 				StartCoroutine(WaitForDestroyCoroutine());
 			}
@@ -150,7 +155,7 @@ namespace Assets.Scripts.CrystalGemController
         private IEnumerator WaitForDestroyCoroutine()
         {
             // Wait for particle system to finish playing
-            while (_particleSystem.isPlaying)
+            while (_particleSystem.isPlaying || _audioSource.isPlaying)
             {
 				yield return null;
             }

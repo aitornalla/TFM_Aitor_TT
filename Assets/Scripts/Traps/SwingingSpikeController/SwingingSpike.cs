@@ -31,13 +31,20 @@ namespace Assets.Scripts.Traps.SwingingSpikeController
 		private float _bumpForceAngle = 45.0f;                                  // Angle of bump force
 
 
+		private AudioSource _audioSource = null;                                // Reference to AudioSource component
 		private Oscillator _oscillator;                                         // Oscillator object
 		private const float InitialSpriteRot = 270.0f;                          // Initial sprite angle
 		private float _angle;                                                   // Current angle
 		private float _angle_0;                                                 // Angle previous value
 
-		// Use this for initialization
-		private void Start()
+        private void Awake()
+        {
+			// Get AudioSource component
+			_audioSource = GetComponent<AudioSource>();
+        }
+
+        // Use this for initialization
+        private void Start()
 		{
             // Rotate spike and rope/chain to initial angle
             transform.RotateAround(_nut.transform.position, Vector3.forward, _angleLimit1 - InitialSpriteRot);
@@ -58,6 +65,21 @@ namespace Assets.Scripts.Traps.SwingingSpikeController
 			_angle = _angleLimit1 - (_angleLimit1 - _angleLimit2) * l_percent;
 			// Calculate increment to rotate
 			float l_increment = _angle - _angle_0;
+            // Play sound when spike is in the middle
+			if (l_increment > 0.0f)
+			{
+				float l_midAngle = (_angleLimit1 + _angleLimit2) / 2.0f;
+
+				if (_angle > l_midAngle && _angle_0 < l_midAngle)
+					_audioSource.Play();
+			}
+			else
+			{
+				float l_midAngle = (_angleLimit1 + _angleLimit2) / 2.0f;
+
+				if (_angle < l_midAngle && _angle_0 > l_midAngle)
+					_audioSource.Play();
+			}
 			// Rotate arrow
 			transform.RotateAround(_nut.transform.position, Vector3.forward, l_increment);
 			_ropechain.transform.RotateAround(_nut.transform.position, Vector3.forward, l_increment);
