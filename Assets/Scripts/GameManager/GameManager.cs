@@ -555,7 +555,9 @@ namespace Assets.Scripts.GameManagerController
         public void SetUpAudioSettings()
         {
 			// Set up main AudioMixer
-			_instance._audioMixerController = new AudioMixerController();
+			//_instance._audioMixerController = new AudioMixerController();
+			_instance._audioMixerController = GetComponent<AudioMixerController>();
+			_instance._audioMixerController.InitAudioMixerController();
 
 			// Get AudioSource component
 			_instance._audioSource = GetComponent<AudioSource>();

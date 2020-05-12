@@ -12,16 +12,16 @@ namespace Assets.Scripts.CustomClasses
         Down
     }
 
-    public class AudioMixerController
+    public class AudioMixerController : MonoBehaviour
     {
-        private readonly AudioMixer _mainAudioMixer;
-        private readonly AudioMixerGroup[] _mainAudioMixerGroups;
-        private readonly float _minimumAudioMixerdB; // = -80.0f;
-        private readonly float _maximumAudioMixerdB; // = 20.0f;
-        private readonly float _volumeIncrement; // = 5.0f;
+        private AudioMixer _mainAudioMixer;
+        private AudioMixerGroup[] _mainAudioMixerGroups;
+        private float _minimumAudioMixerdB; // = -80.0f;
+        private float _maximumAudioMixerdB; // = 20.0f;
+        private float _volumeIncrement; // = 5.0f;
         private readonly string _audioMixerAssetPath = string.Join(Path.DirectorySeparatorChar.ToString(), new string[] { "AudioMixers", "MainAudioMixer" });
         private readonly string _amExposedParamVolume = "Volume";
-        private readonly List<string> _amExposedParameters;
+        //private List<string> _amExposedParameters;
 
         #region Properties
         public AudioMixer MainAudioMixer { get { return _mainAudioMixer; } }
@@ -31,7 +31,25 @@ namespace Assets.Scripts.CustomClasses
         #endregion
 
         #region Constructor
-        public AudioMixerController()
+        //public AudioMixerController(AudioMixer audioMixer)
+        //{
+        //    // AudioMixer gameObject
+        //    //_mainAudioMixer = Resources.Load<AudioMixer>(_audioMixerAssetPath);
+        //    _mainAudioMixer = audioMixer;
+        //    // Get AudioMixerGroups
+        //    _mainAudioMixerGroups = _mainAudioMixer.FindMatchingGroups("Master");
+        //    // Main AudioMixer minimum/maximum volume values
+        //    _minimumAudioMixerdB = -80.0f;
+        //    _maximumAudioMixerdB = 20.0f;
+        //    // AudioMixer volume increment
+        //    _volumeIncrement = 5.0f;
+        //    // Get all AudioMixer exposed parameters
+        //    _amExposedParameters = GetAudioMixerExposedParameters();
+        //}
+        #endregion
+
+        #region Initializer
+        public void InitAudioMixerController()
         {
             // AudioMixer gameObject
             _mainAudioMixer = Resources.Load<AudioMixer>(_audioMixerAssetPath);
@@ -43,26 +61,26 @@ namespace Assets.Scripts.CustomClasses
             // AudioMixer volume increment
             _volumeIncrement = 5.0f;
             // Get all AudioMixer exposed parameters
-            _amExposedParameters = GetAudioMixerExposedParameters();
+            //_amExposedParameters = GetAudioMixerExposedParameters();
         }
         #endregion
 
         #region Private Methods
-        private List<string> GetAudioMixerExposedParameters()
-        {
-            List<string> l_paramsList = new List<string>();
+        //private List<string> GetAudioMixerExposedParameters()
+        //{
+        //    List<string> l_paramsList = new List<string>();
 
-            Array l_parameters = (Array)_mainAudioMixer.GetType().GetProperty("exposedParameters").GetValue(_mainAudioMixer, null);
+        //    Array l_parameters = (Array)_mainAudioMixer.GetType().GetProperty("exposedParameters").GetValue(_mainAudioMixer, null);
 
-            for (int i = 0; i < l_parameters.Length; i++)
-            {
-                var var_o = l_parameters.GetValue(i);
-                string l_param = (string)var_o.GetType().GetField("name").GetValue(var_o);
-                l_paramsList.Add(l_param);
-            }
+        //    for (int i = 0; i < l_parameters.Length; i++)
+        //    {
+        //        var var_o = l_parameters.GetValue(i);
+        //        string l_param = (string)var_o.GetType().GetField("name").GetValue(var_o);
+        //        l_paramsList.Add(l_param);
+        //    }
 
-            return l_paramsList;
-        }
+        //    return l_paramsList;
+        //}
         #endregion
 
         #region Public Methods
