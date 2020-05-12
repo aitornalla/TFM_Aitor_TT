@@ -18,6 +18,8 @@ namespace Assets.Scripts.EnemyController
         private LayerMask _playerLayerMask;                                     // Player layer mask
         [SerializeField]
         private Slider _healthSlider;                                           // Enemy health slider
+
+        [Header("Params")]
         [SerializeField]
         private float _idleTime = 5.0f;                                         // Time for the enemy to be idle
         [SerializeField]
@@ -33,6 +35,14 @@ namespace Assets.Scripts.EnemyController
         [SerializeField]
         private int _maxHealth = 35;                                            // Enemy max health
 
+        [Header("Audios")]
+        [SerializeField]
+        private AudioClip _audioClipAttack;                                     // Attack audio clip
+        [SerializeField]
+        private AudioClip _audioClipDamage;                                     // Damage audio clip
+        [SerializeField]
+        private AudioClip _audioClipDead;                                       // Death audio clip
+
         private bool _facingRight = true;                                       // Current facing direction
         private bool _isHurt = false;                                           // Flag for enemy hurt
         private int _health = 0;                                                // Enemy health
@@ -41,6 +51,7 @@ namespace Assets.Scripts.EnemyController
 		private Animator _animator = null;                                      // Reference to Animator component
         private SpriteRenderer _spriteRenderer = null;                          // Reference to SpriteRenderer component
         private CapsuleCollider2D _capsuleCollider2D = null;                    // Reference to CapsuleCollider2D component
+        private AudioSource _audioSource = null;                                // Reference to AudioSource component
         private Coroutine _idleStateCoroutine = null;                           // Reference to coroutine
 
         private void Awake()
@@ -51,6 +62,8 @@ namespace Assets.Scripts.EnemyController
             _spriteRenderer = GetComponent<SpriteRenderer>();
             // Get CapsuleCollider2D component
             _capsuleCollider2D = GetComponent<CapsuleCollider2D>();
+            // Get AudioSource component
+            _audioSource = GetComponent<AudioSource>();
         }
 
         // Use this for initialization
@@ -229,6 +242,8 @@ namespace Assets.Scripts.EnemyController
                 _enemyState = EEnemyStates.Dead;
                 // Change animator state
                 _animator.SetTrigger("IsDead");
+                // Play dead sound
+                _audioSource.PlayOneShot(_audioClipDead);
             }
             else
             {
@@ -238,6 +253,8 @@ namespace Assets.Scripts.EnemyController
                 _enemyState = EEnemyStates.Hurt;
                 // Change animator state
                 _animator.SetBool("IsHurt", true);
+                // Play damage sound
+                _audioSource.PlayOneShot(_audioClipDamage);
             }
         }
 
@@ -285,6 +302,8 @@ namespace Assets.Scripts.EnemyController
 
                 l_collider.GetComponent<Rigidbody2D>().AddForce(new Vector2(l_hForce, l_vForce));
             }
+            // Play attack sound
+            _audioSource.PlayOneShot(_audioClipAttack);
         }
     }
 }

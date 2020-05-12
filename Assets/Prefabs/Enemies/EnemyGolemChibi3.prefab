@@ -39,6 +39,8 @@ GameObject:
   - component: {fileID: 50996026354182300}
   - component: {fileID: 70234458228899722}
   - component: {fileID: 114017004243262670}
+  - component: {fileID: 82346200260374986}
+  - component: {fileID: 114880025137518960}
   m_Layer: 10
   m_Name: GolemChibi3
   m_TagString: Untagged
@@ -279,6 +281,87 @@ CapsuleCollider2D:
   m_Offset: {x: 0.017427921, y: -0.11625528}
   m_Size: {x: 0.68517065, y: 1.286746}
   m_Direction: 0
+--- !u!82 &82346200260374986
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1181612670859982}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 975defafe41894b7b9ef1f924520ee15,
+    type: 2}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 0.7
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 5
+  MaxDistance: 15
+  Pan2D: 0
+  rolloffMode: 1
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!95 &95631006157573780
 Animator:
   serializedVersion: 3
@@ -321,6 +404,9 @@ MonoBehaviour:
   _slashOverlapCircleRadius: 0.2
   _runSpeed: 4
   _maxHealth: 35
+  _audioClipAttack: {fileID: 8300000, guid: fa7ded45801924d5aa835bb7591c105f, type: 3}
+  _audioClipDamage: {fileID: 8300000, guid: e4262adb9aeda46a88ca6e1aba2cfba2, type: 3}
+  _audioClipDead: {fileID: 8300000, guid: fd092bead0f8e4cc0a8e6a27df56c95c, type: 3}
 --- !u!114 &114244548291321138
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -385,6 +471,17 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114880025137518960
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1181612670859982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 489c5377a63f64da99122d234c613b85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114896179337413378
 MonoBehaviour:
   m_ObjectHideFlags: 1

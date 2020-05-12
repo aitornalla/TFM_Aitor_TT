@@ -134,6 +134,8 @@ GameObject:
   - component: {fileID: 50307784468957590}
   - component: {fileID: 70334269086519024}
   - component: {fileID: 114934510420972708}
+  - component: {fileID: 82734156144571918}
+  - component: {fileID: 114583112491644800}
   m_Layer: 10
   m_Name: GolemChibi2
   m_TagString: Untagged
@@ -279,6 +281,87 @@ CapsuleCollider2D:
   m_Offset: {x: 0.017427921, y: -0.11625528}
   m_Size: {x: 0.68517065, y: 1.286746}
   m_Direction: 0
+--- !u!82 &82734156144571918
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1920715531090350}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 975defafe41894b7b9ef1f924520ee15,
+    type: 2}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 0.7
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 5
+  MaxDistance: 15
+  Pan2D: 0
+  rolloffMode: 1
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!95 &95319222795865172
 Animator:
   serializedVersion: 3
@@ -344,6 +427,17 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Slider+SliderEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114583112491644800
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1920715531090350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 489c5377a63f64da99122d234c613b85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114657421251038072
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -460,6 +554,9 @@ MonoBehaviour:
   _slashOverlapCircleRadius: 0.2
   _runSpeed: 4
   _maxHealth: 35
+  _audioClipAttack: {fileID: 8300000, guid: 409674fa5a683455587d1e6225962132, type: 3}
+  _audioClipDamage: {fileID: 8300000, guid: a79191f4290494c7abe8af8e44683987, type: 3}
+  _audioClipDead: {fileID: 8300000, guid: 760666a21597643ac911e3fdbafb7cef, type: 3}
 --- !u!212 &212287700466494246
 SpriteRenderer:
   m_ObjectHideFlags: 1
