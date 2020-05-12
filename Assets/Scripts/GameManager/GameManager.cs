@@ -601,7 +601,7 @@ namespace Assets.Scripts.GameManagerController
 			}
 			catch (IndexOutOfRangeException e)
 			{
-				Debug.LogException(e);
+				//Debug.LogException(e);
 				Debug.LogWarning("No controller connected");
 			}
 			catch (ArgumentNullException e)
