@@ -9,12 +9,8 @@ namespace Assets.Scripts.Player
 	public sealed class CharacterInputController2D : MonoBehaviour
     {
 		[SerializeField]
-		private CharacterController2D _characterController2D;                   // CharacterController2D component to control character physics
-		[SerializeField]
-		private CharacterFlags _characterFlags;                                 // CharacterFlags component to control character states
-		[SerializeField]
-		private Animator _animator;                                             // Animator component for setting player animation transitions
-
+		private CharacterComponents _characterComponents;                       // CharacterComponents component
+		
 		private IGameController _gameController;                                // IGameController component for player input
 		private ControlFlags _controlFlags;                                     // Control flags grouped in a class
 		private bool _wasPaused = false;                                        // Flag for game paused in previous frame
@@ -42,7 +38,7 @@ namespace Assets.Scripts.Player
 		private void Update ()
 		{
 			// If player is dead control is disabled
-			if (_characterFlags.IsDead)
+			if (_characterComponents.CharacterFlags.IsDead)
             {
 				return;
             }
@@ -73,22 +69,26 @@ namespace Assets.Scripts.Player
 
 			// Animator player speed parameter setting
 			//_animator.SetFloat("PlayerSpeed", Mathf.Abs(_controlFlags.HorizontalMove));
-			_animator.SetFloat("PlayerSpeed", Mathf.Abs(GetComponent<Rigidbody2D>().velocity.x));
+			_characterComponents.Animator.SetFloat("PlayerSpeed", Mathf.Abs(GetComponent<Rigidbody2D>().velocity.x));
             // For very low velocities set float to 0.0f
             if (Mathf.Abs(GetComponent<Rigidbody2D>().velocity.x) < 0.1f)
-				_animator.SetFloat("PlayerSpeed", 0.0f);
+				_characterComponents.Animator.SetFloat("PlayerSpeed", 0.0f);
 
 
 			// Player jump
 			if (_gameController.PlayerJump())
 			{
 				_controlFlags.Jump = true;
+                // Play jump sound
+				_characterComponents.CharacterAudio.Jump();
 			}
 
 			// Player slide
 			if (_gameController.PlayerSliding())
 			{
 				_controlFlags.Slide = true;
+				// Play slide sound
+				_characterComponents.CharacterAudio.Slide();
 			}
 			else if (_gameController.PlayerQuitSliding())
 			{
@@ -99,6 +99,8 @@ namespace Assets.Scripts.Player
 			if (_gameController.PlayerGliding())
 			{
 				_controlFlags.Glide = true;
+				// Play open parachute sound
+				_characterComponents.CharacterAudio.OpenParachute();
 			}
 			else if (_gameController.PlayerQuitGliding())
 			{
@@ -107,30 +109,32 @@ namespace Assets.Scripts.Player
 
             // Player attack
             if (_gameController.PlayerAttack() &&
-				_characterFlags.IsGrounded &&
-                !_characterFlags.IsAttacking &&
-				!_characterFlags.IsThrowing &&
-				!_characterFlags.WasSliding)
+				_characterComponents.CharacterFlags.IsGrounded &&
+                !_characterComponents.CharacterFlags.IsAttacking &&
+				!_characterComponents.CharacterFlags.IsThrowing &&
+				!_characterComponents.CharacterFlags.WasSliding)
             {
 				_controlFlags.Attack = true;
 				// Animator player attack parameter setting
-				_animator.SetBool("PlayerAttack", true);
+				_characterComponents.Animator.SetBool("PlayerAttack", true);
+				// Play attack sound
+				_characterComponents.CharacterAudio.Attack();
             }
 
 			// Player throw
 			if (_gameController.PlayerThrow() &&
-				_characterFlags.IsGrounded &&
-				!_characterFlags.IsAttacking &&
-                !_characterFlags.IsThrowing &&
-				!_characterFlags.WasSliding)
+				_characterComponents.CharacterFlags.IsGrounded &&
+				!_characterComponents.CharacterFlags.IsAttacking &&
+                !_characterComponents.CharacterFlags.IsThrowing &&
+				!_characterComponents.CharacterFlags.WasSliding)
 			{
 				_controlFlags.Throw = true;
 				// Animator player throw parameter setting
-				_animator.SetBool("PlayerThrow", true);
+				_characterComponents.Animator.SetBool("PlayerThrow", true);
 			}
 
 			// If player control is not allowed then reset control flags
-			if (!_characterFlags.IsPlayerControlAllowed)
+			if (!_characterComponents.CharacterFlags.IsPlayerControlAllowed)
 			{
 				_controlFlags.ResetFlags();
 			}
@@ -141,7 +145,7 @@ namespace Assets.Scripts.Player
 		// Update is called once per frame
 		private void FixedUpdate ()
 		{
-			_characterController2D.Control(_controlFlags);
+			_characterComponents.CharacterController2D.Control(_controlFlags);
 			// Put movement variable back to 0.0f
 			_controlFlags.HorizontalMove = 0.0f;
 			// Put jump flag back to false
@@ -173,14 +177,14 @@ namespace Assets.Scripts.Player
 		public void OnGrounded(bool playerIsGrounded)
         {
 			// Animator player grounded parameter setting
-			_animator.SetBool("PlayerIsGrounded", playerIsGrounded);
+			_characterComponents.Animator.SetBool("PlayerIsGrounded", playerIsGrounded);
 
             if (playerIsGrounded)
             {
 				// Animator player double jump parameter setting
-				_animator.SetBool("PlayerDoubleJump", false);
+				_characterComponents.Animator.SetBool("PlayerDoubleJump", false);
 				// Animator player glide parameter setting
-				_animator.SetBool("PlayerGlide", false);
+				_characterComponents.Animator.SetBool("PlayerGlide", false);
 			}
 		}
 
@@ -190,8 +194,8 @@ namespace Assets.Scripts.Player
 		/// <param name="playerSliding"><code>true</code> if player is sliding, otherwise <code>false</code></param>
 		public void OnSliding(bool playerSliding)
         {
-            // Animator player slide parameter setting
-			_animator.SetBool("PlayerSlide", playerSliding);
+			// Animator player slide parameter setting
+			_characterComponents.Animator.SetBool("PlayerSlide", playerSliding);
         }
 
         /// <summary>
@@ -200,7 +204,7 @@ namespace Assets.Scripts.Player
         public void OnDoubleJump()
         {
 			// Animator player double jump parameter setting
-			_animator.SetBool("PlayerDoubleJump", true);
+			_characterComponents.Animator.SetBool("PlayerDoubleJump", true);
 		}
 
 		/// <summary>
@@ -210,7 +214,7 @@ namespace Assets.Scripts.Player
 		public void OnGliding(bool playerGliding)
 		{
 			// Animator player slide parameter setting
-			_animator.SetBool("PlayerGlide", playerGliding);
+			_characterComponents.Animator.SetBool("PlayerGlide", playerGliding);
 		}
 
         /// <summary>
@@ -221,7 +225,7 @@ namespace Assets.Scripts.Player
 			// When attack animation ends, put attack flag back to false
 			_controlFlags.Attack = false;
 			// Animator player attack parameter setting
-			_animator.SetBool("PlayerAttack", false);
+			_characterComponents.Animator.SetBool("PlayerAttack", false);
         }
 
 		/// <summary>
@@ -232,7 +236,7 @@ namespace Assets.Scripts.Player
 			// When throw animation ends, put throw flag back to false
 			_controlFlags.Throw = false;
 			// Animator player attack parameter setting
-			_animator.SetBool("PlayerThrow", false);
+			_characterComponents.Animator.SetBool("PlayerThrow", false);
 		}
 		#endregion
 	}

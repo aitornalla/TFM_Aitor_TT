@@ -18,6 +18,8 @@ namespace Assets.Scripts.Player
         [SerializeField]
         private CharacterEvents _characterEvents;                               // Component to hold character events
         [SerializeField]
+        private CharacterAudio _characterAudio;                                 // Component to hold character audio
+        [SerializeField]
 	    private Rigidbody2D _rigidbody2D;                                       // Rigidbody2D component of the gameObject
 	    [SerializeField]
 	    private CapsuleCollider2D _mainCapCollider2D;                           // Not-sliding CapsuleCollider2D component of the gameObject
@@ -33,6 +35,8 @@ namespace Assets.Scripts.Player
         private Animator _animator;                                             // Animator component
         [SerializeField]
 	    private SpriteRenderer _spriteRenderer;                                 // SpriteRenderer component of the gameObject
+        [SerializeField]
+        private AudioSource _audioSource;                                       // AudioSource component
         #endregion
 
         [Header("Transform References")]
@@ -85,6 +89,14 @@ namespace Assets.Scripts.Player
             get
             {
                 return _characterEvents;
+            }
+        }
+
+        public CharacterAudio CharacterAudio
+        {
+            get
+            {
+                return _characterAudio;
             }
         }
 
@@ -149,6 +161,14 @@ namespace Assets.Scripts.Player
             get
             {
                 return _spriteRenderer;
+            }
+        }
+
+        public AudioSource AudioSource
+        {
+            get
+            {
+                return _audioSource;
             }
         }
 

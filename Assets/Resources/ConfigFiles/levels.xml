@@ -5,14 +5,14 @@
     <maxScore>2700</maxScore>
     <lastScore>1700</lastScore>
     <timeTrialEnabled>true</timeTrialEnabled>
-    <timeTrialFirstTime>00:00:34.548</timeTrialFirstTime>
-    <timeTrialSecondTime>00:00:34.877</timeTrialSecondTime>
-    <timeTrialThirdTime>00:00:35.210</timeTrialThirdTime>
+    <timeTrialFirstTime>00:00:34.410</timeTrialFirstTime>
+    <timeTrialSecondTime>00:00:34.548</timeTrialSecondTime>
+    <timeTrialThirdTime>00:00:34.877</timeTrialThirdTime>
   </level>
   <level name="03_02_Level_02" index="2">
     <unlocked>true</unlocked>
     <maxScore>12150</maxScore>
-    <lastScore>12150</lastScore>
+    <lastScore>2600</lastScore>
     <timeTrialEnabled>true</timeTrialEnabled>
     <timeTrialFirstTime>00:00:21.099</timeTrialFirstTime>
     <timeTrialSecondTime>00:00:21.316</timeTrialSecondTime>
@@ -20,8 +20,8 @@
   </level>
   <level name="03_03_Level_03" index="3">
     <unlocked>true</unlocked>
-    <maxScore>0</maxScore>
-    <lastScore>0</lastScore>
+    <maxScore>200</maxScore>
+    <lastScore>200</lastScore>
     <timeTrialEnabled>true</timeTrialEnabled>
     <timeTrialFirstTime>00:00:24.700</timeTrialFirstTime>
     <timeTrialSecondTime>00:00:25.095</timeTrialSecondTime>

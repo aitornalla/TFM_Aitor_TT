@@ -22,11 +22,9 @@ namespace Assets.Scripts.Player
         [Header("Components")]
         #region Components
         [SerializeField]
+        private CharacterComponents _characterComponents;
+        [SerializeField]
         private HealthBar _healthBar;
-        [SerializeField]
-        private Animator _animator;
-        [SerializeField]
-        private SpriteRenderer _renderer;
         [SerializeField]
         private CameraShake _cameraShake;
         #endregion
@@ -60,8 +58,8 @@ namespace Assets.Scripts.Player
             if (_healthBar != null)
                 _healthBar.SetStartHealth(_playerMaxHealth);
 
-            if (_renderer != null)
-                _defaultSpriteColor = _renderer.color;
+            if (_characterComponents.SpriteRenderer != null)
+                _defaultSpriteColor = _characterComponents.SpriteRenderer.color;
         }
 
         // Update is called once per frame
@@ -100,8 +98,15 @@ namespace Assets.Scripts.Player
                 // Set dead flag to true
                 GetComponent<CharacterFlags>().IsDead = true;
                 // Trigger animation
-                if (_animator != null)
-                    _animator.SetBool("PlayerDead", true);
+                if (_characterComponents.Animator != null)
+                    _characterComponents.Animator.SetBool("PlayerDead", true);
+                // Play dead sound
+                _characterComponents.CharacterAudio.Dead();
+            }
+            else
+            {
+                // Play damage sound
+                _characterComponents.CharacterAudio.Damage();
             }
         }
 
@@ -127,7 +132,7 @@ namespace Assets.Scripts.Player
                 if (_damageBlinkCoroutine != null)
                     StopCoroutine(_damageBlinkCoroutine);
 
-                _renderer.color = _defaultSpriteColor;
+                _characterComponents.SpriteRenderer.color = _defaultSpriteColor;
 
                 return;
             }
@@ -148,10 +153,10 @@ namespace Assets.Scripts.Player
 
             while (Time.realtimeSinceStartup - l_startTime <= _damageBlinkDuration)
             {
-                Color l_c = _renderer.color;
+                Color l_c = _characterComponents.SpriteRenderer.color;
                 l_c.g = 1.0f;
                 l_c.b = 1.0f;
-                _renderer.color = l_c;
+                _characterComponents.SpriteRenderer.color = l_c;
 
                 float l_f = 1.0f;
                 float l_v = 0.0f;
@@ -163,13 +168,13 @@ namespace Assets.Scripts.Player
                     l_c.g = l_f;
                     l_c.b = l_f;
 
-                    _renderer.color = l_c;
+                    _characterComponents.SpriteRenderer.color = l_c;
 
                     yield return null;
                 }
             }
 
-            _renderer.color = _defaultSpriteColor;
+            _characterComponents.SpriteRenderer.color = _defaultSpriteColor;
 
             _damageBlinkCoroutine = null;
         }
