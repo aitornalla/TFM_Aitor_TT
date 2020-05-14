@@ -204,6 +204,25 @@ namespace Assets.Scripts.GameManagerController
 		}
 
 		/// <summary>
+		///     Flag to tell whether level is boss level
+		/// </summary>
+		/// <param name="levelName">Current level</param>
+		/// <returns><code>true</code> if level is boss level, otherwise <code>false</code></returns>
+		public bool IsBossLevel(string levelName)
+        {
+			// Load levels xml file
+			XDocument l_xDoc = XDocument.Load(_instance.LevelsXMLPath);
+			// Find level elements by attribute ("name")
+			XElement l_currentLevelXElem = l_xDoc.Descendants("level").Where(atr => (string)atr.Attribute("name") == levelName).FirstOrDefault();
+			// Initialize flag
+			bool l_currentBossLevel = false;
+			// Parse current level time trial status
+			bool.TryParse(l_currentLevelXElem.Attribute("isBoss").Value, out l_currentBossLevel);
+			// Return flag
+			return l_currentBossLevel;
+		}
+
+		/// <summary>
         ///     Flag for level time trial enabled
         /// </summary>
         /// <param name="levelName">Current level</param>
@@ -289,11 +308,12 @@ namespace Assets.Scripts.GameManagerController
 		/// </summary>
 		public void ManagePlayerDeathAndRespawn()
         {
+			// Get scene name
+			string l_levelName = SceneManager.GetActiveScene().name;
+
 			// If time trial then reload the level
 			if (_instance._timeTrialClock.GetComponent<TimeTrial>().IsTimeTrial)
 			{
-                // Get scene name
-				string l_levelName = SceneManager.GetActiveScene().name;
                 // Prepare game scene enum
 				EGameScenes l_gameScene = EGameScenes.MainMenu;
                 // Look for game scene enum
@@ -306,6 +326,20 @@ namespace Assets.Scripts.GameManagerController
 
 			// Manage player lifes
 			_instance.PlayerLifes--;
+
+			// If boss level then reload the level (if lifes left greater than 0)
+			if (_instance.IsBossLevel(l_levelName) && _instance.PlayerLifes > 0)
+            {
+				// Prepare game scene enum
+				EGameScenes l_gameScene = EGameScenes.MainMenu;
+				// Look for game scene enum
+				l_gameScene = _instance._gameScenesDictionary.FirstOrDefault(x => x.Value == l_levelName).Key;
+				// Change state
+				_instance.GameManagerState.StateChange(l_gameScene);
+				// Return
+				return;
+			}
+
 			// Update remaining lifes
 			_instance._playerLifesText.GetComponent<Text>().text = "x" + _instance.PlayerLifes.ToString();
             // If no more lifes left, return to main menu

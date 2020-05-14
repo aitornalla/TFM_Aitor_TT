@@ -11022,7 +11022,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 30.159002}
   m_AnchorMin: {x: 0, y: 0.46666673}
   m_AnchorMax: {x: 0.42225003, y: 1}
-  m_AnchoredPosition: {x: -15.9999695, y: 30}
+  m_AnchoredPosition: {x: -16, y: 30}
   m_SizeDelta: {x: 4.399994, y: -90.41}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &753112450
@@ -14688,6 +14688,10 @@ Prefab:
         type: 2}
       propertyPath: m_Text
       value: Test Level
+      objectReference: {fileID: 0}
+    - target: {fileID: 1555835838580214, guid: 9a9fc335713144dfcbb90f5dd709dfb2, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9a9fc335713144dfcbb90f5dd709dfb2, type: 2}

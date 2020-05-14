@@ -393,7 +393,7 @@ MonoBehaviour:
   _leftLimit: {fileID: 4255529275021652}
   _rightLimit: {fileID: 4165668963605536}
   _slashPoint: {fileID: 4360004249404456}
-  _playerLayerMask:
+  _playerLayer:
     serializedVersion: 2
     m_Bits: 256
   _healthSlider: {fileID: 114896179337413378}

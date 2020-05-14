@@ -10,4 +10,5 @@
     <scene name="03_01_Level_01" enumValue="Level_01" />
     <scene name="03_02_Level_02" enumValue="Level_02" />
     <scene name="03_03_Level_03" enumValue="Level_03" />
+    <scene name="03_04_Level_04" enumValue="Level_04" />
 </scenes>

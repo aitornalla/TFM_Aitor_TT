@@ -21,7 +21,7 @@ namespace Assets.Scripts.LevelEndController
 		[SerializeField]
 		private GameObject _timeTrialCompletedBanner;                           // Time trial completed banner gameObject
 
-		private AudioSource _audioSource = null;                                 // Reference to AudioSource component
+		private AudioSource _audioSource = null;                                // Reference to AudioSource component
 
         private void Awake()
         {

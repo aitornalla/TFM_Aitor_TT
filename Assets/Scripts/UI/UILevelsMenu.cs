@@ -47,6 +47,7 @@ namespace Assets.Scripts.UI
             _uiNavigation.Selectables[1].GetComponent<UIButton>().OnClickCallback = OnButtonLevel01Clicked;
             _uiNavigation.Selectables[2].GetComponent<UIButton>().OnClickCallback = OnButtonLevel02Clicked;
             _uiNavigation.Selectables[3].GetComponent<UIButton>().OnClickCallback = OnButtonLevel03Clicked;
+            _uiNavigation.Selectables[4].GetComponent<UIButton>().OnClickCallback = OnButtonLevel04Clicked;
 
             // Set buttons for unlocked levels
             SetButtonsForUnlockedLevels();
@@ -225,6 +226,14 @@ namespace Assets.Scripts.UI
 
             // Load level 03 scene
             GameManager.Instance.GameManagerState.StateChange(EGameScenes.Level_03);
+        }
+
+        public void OnButtonLevel04Clicked(IUISelectable uiButton)
+        {
+            uiButton.OnClick();
+
+            // Load level 03 scene
+            GameManager.Instance.GameManagerState.StateChange(EGameScenes.Level_04);
         }
     }
 }

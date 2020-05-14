@@ -15,7 +15,7 @@ namespace Assets.Scripts.EnemyController
         [SerializeField]
         private Transform _slashPoint;                                          // Slash point
         [SerializeField]
-        private LayerMask _playerLayerMask;                                     // Player layer mask
+        private LayerMask _playerLayer;                                         // Player layer mask
         [SerializeField]
         private Slider _healthSlider;                                           // Enemy health slider
 
@@ -290,7 +290,7 @@ namespace Assets.Scripts.EnemyController
         public void EnemySlashAnimationEvent()
         {
             // Check if player has been hit
-            Collider2D l_collider = Physics2D.OverlapCircle(_slashPoint.position, _slashOverlapCircleRadius, _playerLayerMask);
+            Collider2D l_collider = Physics2D.OverlapCircle(_slashPoint.position, _slashOverlapCircleRadius, _playerLayer);
             // If player has been hit...
             if (l_collider != null)
             {
@@ -299,7 +299,7 @@ namespace Assets.Scripts.EnemyController
                 // Apply force
                 float l_hForce = transform.position.x > l_collider.transform.position.x ? -_attackForce : _attackForce;
                 float l_vForce = _attackForce;
-
+                // Add force to push away the player
                 l_collider.GetComponent<Rigidbody2D>().AddForce(new Vector2(l_hForce, l_vForce));
             }
             // Play attack sound

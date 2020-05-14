@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <levels>
-  <level name="03_01_Level_01" index="1">
+  <level name="03_01_Level_01" index="1" isBoss="false">
     <unlocked>true</unlocked>
     <maxScore>2700</maxScore>
     <lastScore>1700</lastScore>
@@ -9,7 +9,7 @@
     <timeTrialSecondTime>00:00:34.548</timeTrialSecondTime>
     <timeTrialThirdTime>00:00:34.877</timeTrialThirdTime>
   </level>
-  <level name="03_02_Level_02" index="2">
+  <level name="03_02_Level_02" index="2" isBoss="false">
     <unlocked>true</unlocked>
     <maxScore>12150</maxScore>
     <lastScore>2600</lastScore>
@@ -18,13 +18,23 @@
     <timeTrialSecondTime>00:00:21.316</timeTrialSecondTime>
     <timeTrialThirdTime>00:00:29.705</timeTrialThirdTime>
   </level>
-  <level name="03_03_Level_03" index="3">
+  <level name="03_03_Level_03" index="3" isBoss="false">
     <unlocked>true</unlocked>
     <maxScore>200</maxScore>
     <lastScore>200</lastScore>
     <timeTrialEnabled>true</timeTrialEnabled>
     <timeTrialFirstTime>00:00:24.700</timeTrialFirstTime>
     <timeTrialSecondTime>00:00:25.095</timeTrialSecondTime>
+    <timeTrialThirdTime>
+    </timeTrialThirdTime>
+  </level>
+  <level name="03_04_Level_04" index="4" isBoss="true">
+    <unlocked>true</unlocked>
+    <maxScore></maxScore>
+    <lastScore></lastScore>
+    <timeTrialEnabled></timeTrialEnabled>
+    <timeTrialFirstTime></timeTrialFirstTime>
+    <timeTrialSecondTime></timeTrialSecondTime>
     <timeTrialThirdTime>
     </timeTrialThirdTime>
   </level>
