@@ -80,6 +80,10 @@ namespace Assets.Scripts.EnemyController
 		private float _f3IdleTime = 5.0f;                                       // Time for the boss to be idle F3
         [SerializeField]
 		private float _f3AttackWaitTime = 1.5f;                                 // Wait time between attack fases
+		[SerializeField]
+		private float _f3LevitationMoveFreq = 150.0f;                           // Boss levitation move frequency
+		[SerializeField]
+		private float _f3LevitationMoveRad = 0.2f;                              // Boss levitation move radius
         [SerializeField]
 		private float _bossVanishTime = 2.0f;                                   // Time it takes to vanish the boss
         [SerializeField]
@@ -137,6 +141,7 @@ namespace Assets.Scripts.EnemyController
 		private Coroutine _f2ToF3StateCoroutine = null;                         // Reference to F2 to F3 state coroutine
 		private Coroutine _f3WaitBetweenAttackFasesCoroutine = null;            // Reference to F3 wait between attack fases
 		private Coroutine _f3VanishReappearCoroutine = null;                    // Reference to F3 vanish and reappear boss
+		private Coroutine _f3LevitationMove = null;                             // Reference to F3 boss levitation move
 
 		private void Awake()
 		{
@@ -459,7 +464,7 @@ namespace Assets.Scripts.EnemyController
             // Recharge attack bar
 			float l_waitedTime = 0.0f;
 			float l_alertTime = _bossFase == EBossFases.Fase1 ? _f1AlertTime : (_bossFase == EBossFases.Fase2 ? _f2AlertTime : _f3AlertTime);
-			while (l_waitedTime < l_alertTime)
+            while (l_waitedTime < l_alertTime)
             {
 				yield return new WaitForSeconds(0.1f);
 
@@ -496,6 +501,9 @@ namespace Assets.Scripts.EnemyController
 						_loopsLeft = _attackLoops;
 						// Change state
 						_enemyState = EEnemyStates.Attack;
+						// Stop boss levitation move
+						StopCoroutine(_f3LevitationMove);
+						_f3LevitationMove = null;
 					}
 					break;
 				default:
@@ -760,6 +768,9 @@ namespace Assets.Scripts.EnemyController
 			{
 				FlipFacingDirection();
 			}
+			// Boss levitation move
+			if (_f3LevitationMove == null)
+				_f3LevitationMove = StartCoroutine(F3LevitationMove());
 			// Make boss reappear
 			yield return StartCoroutine(MakeBossReappear(_bossVanishTime));
 			// Change state
@@ -815,12 +826,39 @@ namespace Assets.Scripts.EnemyController
 			{
 				FlipFacingDirection();
 			}
+			// Boss levitation move
+			if (_f3LevitationMove == null)
+				_f3LevitationMove = StartCoroutine(F3LevitationMove());
 			// Make boss reappear
 			yield return StartCoroutine(MakeBossReappear(_bossVanishTime));
 			// Change state
 			_enemyState = EEnemyStates.Alert;
 			// Clear coroutine reference
 			_f3VanishReappearCoroutine = null;
+		}
+
+		/// <summary>
+		///     Makes boss move levitation
+		/// </summary>
+		/// <returns>The reference to the coroutine</returns>
+		private IEnumerator F3LevitationMove()
+        {
+			// Make boss levitation move
+			float l_waitedTime = 0.0f;
+			float l_posY_0 = transform.position.y;
+
+			while (true)
+			{
+				yield return new WaitForSeconds(0.1f);
+
+				l_waitedTime += 0.1f;
+
+				transform.position =
+					new Vector3(
+                        transform.position.x,
+                        l_posY_0 + _f3LevitationMoveRad * Mathf.Sin(Mathf.Deg2Rad * _f3LevitationMoveFreq * l_waitedTime),
+                        transform.position.z);
+			}
 		}
 
 		/// <summary>

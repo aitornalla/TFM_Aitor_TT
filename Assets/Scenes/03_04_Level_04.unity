@@ -3507,6 +3507,8 @@ MonoBehaviour:
   _f3AlertTime: 2
   _f3IdleTime: 5
   _f3AttackWaitTime: 1
+  _f3LevitationMoveFreq: 150
+  _f3LevitationMoveRad: 0.2
   _bossVanishTime: 2
   _attackLoops: 3
   _attackDamage: 35
@@ -3518,15 +3520,15 @@ MonoBehaviour:
   _attackSlider: {fileID: 1430578921}
   _healthSlider: {fileID: 1951717013}
   _bossEnd: {fileID: 1732762222}
+  _attackAudioClips:
+  - {fileID: 8300000, guid: 6ba6659f5fadb4a34987563c479a75f2, type: 3}
+  - {fileID: 8300000, guid: 503c5e7fea07f449594a4c989c6aabff, type: 3}
+  - {fileID: 8300000, guid: c09ce333f73fb4e95b87f77ce6f623fc, type: 3}
   _deathAudioClip: {fileID: 8300000, guid: 9a87441ee82fb4fb3bc510f1b55f3c5e, type: 3}
   _hurtAudioClips:
   - {fileID: 8300000, guid: 21dadb85bbeca4566bc7afa6d40fc92a, type: 3}
   - {fileID: 8300000, guid: 4eb6dbd20a3974e78af7c36d54ff265f, type: 3}
   - {fileID: 8300000, guid: 90818f9e64d6548be8031a55d62c735d, type: 3}
-  _attackAudioClips:
-  - {fileID: 8300000, guid: 6ba6659f5fadb4a34987563c479a75f2, type: 3}
-  - {fileID: 8300000, guid: 503c5e7fea07f449594a4c989c6aabff, type: 3}
-  - {fileID: 8300000, guid: c09ce333f73fb4e95b87f77ce6f623fc, type: 3}
   _laughAudioClip: {fileID: 8300000, guid: 67c3932314ce840a68e032026a0b281e, type: 3}
 --- !u!1 &656510328
 GameObject:
