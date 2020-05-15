@@ -63,11 +63,11 @@
         <loop>true</loop>
         <volume>0.6</volume>
     </scene>
-    <scene name="03_04_Level_04" setAudioSource="false">
-        <audioClip></audioClip>
+    <scene name="03_04_Level_04" setAudioSource="true">
+        <audioClip>03_04_Level_04_[The Last Encounter (90s RPG Version) Medium Loop]</audioClip>
         <outputAudioMixerGroup>0</outputAudioMixerGroup>
-        <playOnAwake></playOnAwake>
-        <loop></loop>
-        <volume></volume>
+        <playOnAwake>true</playOnAwake>
+        <loop>true</loop>
+        <volume>0.6</volume>
     </scene>
 </scenes>

@@ -13,17 +13,21 @@ namespace Assets.Scripts.EnemyController
 		private float _speed = 5.0f;                                            // Kunai speed
 		[SerializeField]
 		private int _damage = 5;                                                // Kunai damage
+		[SerializeField]
+		private AudioSource _audioSource;                                       // Reference to AudioSource component
+        [SerializeField]
+		private AudioClip[] _swishAudioClips;                                   // Swish sounds
 
 		// Use this for initialization
 		private void Start()
 		{
-
+			PlaySwishSound();
 		}
 
 		// Update is called once per frame
 		private void Update()
 		{
-
+            
 		}
 
         private void FixedUpdate()
@@ -40,13 +44,28 @@ namespace Assets.Scripts.EnemyController
 				CharacterHealth l_characterHealth = collision.gameObject.GetComponent<CharacterHealth>();
 				// Take damage
 				l_characterHealth.TakeDamage(_damage);
-				// Destroy kunai
-				Destroy(this.gameObject);
 			}
-            else
-            {
-				// Destroy kunai
-				Destroy(this.gameObject);
+			// Destroy kunai
+			Destroy(this.gameObject);
+		}
+
+		private void PlaySwishSound()
+		{
+			float l_value = Random.value * 1000.0f;
+
+			if (l_value < 333.0f)
+			{
+				_audioSource.PlayOneShot(_swishAudioClips[0]);
+			}
+
+			if (l_value >= 333.0f && l_value < 666.0f)
+			{
+				_audioSource.PlayOneShot(_swishAudioClips[1]);
+			}
+
+			if (l_value >= 666.0f)
+			{
+				_audioSource.PlayOneShot(_swishAudioClips[2]);
 			}
 		}
     }

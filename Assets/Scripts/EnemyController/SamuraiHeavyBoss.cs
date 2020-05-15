@@ -107,6 +107,16 @@ namespace Assets.Scripts.EnemyController
 		[SerializeField]
 		private BossEnd _bossEnd;                                               // Reference to BossEnd component
 
+		[Header("Sounds")]
+		[SerializeField]
+		private AudioClip[] _attackAudioClips;                                  // Boss attack audio clips
+		[SerializeField]
+		private AudioClip _deathAudioClip;                                      // Boss death audio clip
+		[SerializeField]
+		private AudioClip[] _hurtAudioClips;                                    // Boss hurt audio clips
+		[SerializeField]
+		private AudioClip _laughAudioClip;                                      // Boss laugh audio clip
+
 		private bool _facingRight = true;                                       // Current facing direction
 		private bool _isHurt = false;                                           // Flag for boss hurt
         private int _hitsLeft = 0;                                              // Boss hits left
@@ -257,12 +267,14 @@ namespace Assets.Scripts.EnemyController
 				float l_y = _f3LeftLimit.position.y;
 
 				_attackTargetPosition = new Vector3(l_x, l_y, 0.0f);
-
+                // Flip is needed
 				if (transform.position.x < _attackTargetPosition.x && !_facingRight)
 					FlipFacingDirection();
-
+				// Flip is needed
 				if (transform.position.x > _attackTargetPosition.x && _facingRight)
 					FlipFacingDirection();
+                // Play attack sound
+				PlayRandomSound();
 			}
 			// Attack
 			// Distance to move
@@ -387,6 +399,8 @@ namespace Assets.Scripts.EnemyController
 						_enemyState = EEnemyStates.Idle;
 						// Change animator state
 						_animator.SetTrigger("ToIdle");
+						// Cancel sound invoking
+						CancelInvoke("PlayRandomSound");
 
 						return;
 					}
@@ -405,6 +419,9 @@ namespace Assets.Scripts.EnemyController
 					FlipFacingDirection();
 				}
 			}
+			// Invoke attack sounds
+			if (!IsInvoking("PlayRandomSound"))
+				InvokeRepeating("PlayRandomSound", 0.1f, 1.5f);
 		}
 		#endregion
 
@@ -820,6 +837,8 @@ namespace Assets.Scripts.EnemyController
 			_attackSlider.normalizedValue = 0.0f;
 			//_attackSlider.gameObject.SetActive(false);
 			//_healthSlider.gameObject.SetActive(false);
+			// Play laugh sound
+			_audioSource.PlayOneShot(_laughAudioClip);
 			// Vanishing process
 			while (l_waitedTime < vanishTime)
 			{
@@ -929,6 +948,47 @@ namespace Assets.Scripts.EnemyController
 
 			return new Vector3(_f3ReappearPoints[l_random].position.x, _f3ReappearPoints[l_random].position.y, _f3ReappearPoints[l_random].position.z);
         }
+
+        /// <summary>
+        ///     Plays a random sound depending on the enemy state
+        /// </summary>
+        private void PlayRandomSound()
+        {
+			AudioClip[] audioClips = null;
+
+            switch(_enemyState)
+            {
+				case EEnemyStates.Hurt:
+					audioClips = _hurtAudioClips;
+					break;
+				case EEnemyStates.Attack:
+				case EEnemyStates.RunSlash:
+					audioClips = _attackAudioClips;
+					break;
+				default:
+					break;
+            }
+
+			if (audioClips == null)
+				return;
+
+			float l_value = Random.value * 1000.0f;
+
+			if (l_value < 333.0f)
+			{
+				_audioSource.PlayOneShot(audioClips[0]);
+			}
+
+			if (l_value >= 333.0f && l_value < 666.0f)
+			{
+				_audioSource.PlayOneShot(audioClips[1]);
+			}
+
+			if (l_value >= 666.0f)
+			{
+				_audioSource.PlayOneShot(audioClips[2]);
+			}
+		}
         #endregion
 
         #region Public methods
@@ -967,7 +1027,7 @@ namespace Assets.Scripts.EnemyController
 				// Change animator state
 				_animator.SetTrigger("IsDead");
 				// Play dead sound
-				//_audioSource.PlayOneShot(_audioClipDead);
+				_audioSource.PlayOneShot(_deathAudioClip);
 			}
 			else
 			{
@@ -978,7 +1038,7 @@ namespace Assets.Scripts.EnemyController
 				// Change animator state
 				_animator.SetBool("IsHurt", true);
 				// Play damage sound
-				//_audioSource.PlayOneShot(_audioClipDamage);
+				PlayRandomSound();
 			}
 		}
 		#endregion
