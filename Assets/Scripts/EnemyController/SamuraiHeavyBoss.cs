@@ -107,6 +107,10 @@ namespace Assets.Scripts.EnemyController
 		[SerializeField]
 		private Slider _healthSlider;                                           // Boss health slider
 
+		[Header("FX")]
+		[SerializeField]
+		private GameObject _rechargeAttackPSFX;                                 // Reference to recharge attack FX gameObject
+
 		[Header("Boss end")]
 		[SerializeField]
 		private BossEnd _bossEnd;                                               // Reference to BossEnd component
@@ -460,8 +464,9 @@ namespace Assets.Scripts.EnemyController
 			}
 			// Set attack slider value to 0
 			_attackSlider.normalizedValue = 0.0f;
-			// stay sometime in alert state before changing to run slashing
-            // Recharge attack bar
+			// Enable particle system
+			_rechargeAttackPSFX.SetActive(true);
+			// Stay sometime in alert state before changing to next state and recharge atack bar
 			float l_waitedTime = 0.0f;
 			float l_alertTime = _bossFase == EBossFases.Fase1 ? _f1AlertTime : (_bossFase == EBossFases.Fase2 ? _f2AlertTime : _f3AlertTime);
             while (l_waitedTime < l_alertTime)
@@ -475,8 +480,10 @@ namespace Assets.Scripts.EnemyController
 
 				_attackSlider.normalizedValue = l_waitedTime / l_alertTime;
             }
+			// Disable particle system
+			_rechargeAttackPSFX.SetActive(false);
 			//
-            switch(_bossFase)
+			switch (_bossFase)
             {
 				case EBossFases.Fase1:
                     {
@@ -940,6 +947,12 @@ namespace Assets.Scripts.EnemyController
             {
 				_slashPoints[i].localPosition = new Vector3(-_slashPoints[i].localPosition.x, _slashPoints[i].localPosition.y, _slashPoints[i].localPosition.z);
 			}
+			// Flip particle system gameObject
+			_rechargeAttackPSFX.gameObject.transform.localPosition =
+				new Vector3(
+					-_rechargeAttackPSFX.gameObject.transform.localPosition.x,
+					_rechargeAttackPSFX.gameObject.transform.localPosition.y,
+					_rechargeAttackPSFX.gameObject.transform.localPosition.z);
 		}
 
         /// <summary>
