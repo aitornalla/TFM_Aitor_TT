@@ -156,6 +156,12 @@ namespace Assets.Scripts.TimeTrialController
 			// Stop Stopwatch
 			_stopwatch.Stop();
 
+			// Show time after Stopwatch stop
+			_timeTrialText.text =
+					_stopwatch.Elapsed.Minutes.ToString("D2") + ":" +
+					_stopwatch.Elapsed.Seconds.ToString("D2") + ":" +
+					_stopwatch.Elapsed.Milliseconds.ToString("D3");
+
 			// Stop sandclock animation coroutine
 			StopCoroutine(_sandClockAnimationCoroutine);
 
