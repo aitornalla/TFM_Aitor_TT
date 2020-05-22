@@ -80,7 +80,8 @@ namespace Assets.Scripts.Player
 			{
 				_controlFlags.Jump = true;
                 // Play jump sound
-				_characterComponents.CharacterAudio.Jump();
+                if (!_characterComponents.CharacterFlags.WasGliding && !_characterComponents.CharacterFlags.HasDoubleJumped)
+				    _characterComponents.CharacterAudio.Jump();
 			}
 
 			// Player slide
@@ -88,7 +89,8 @@ namespace Assets.Scripts.Player
 			{
 				_controlFlags.Slide = true;
 				// Play slide sound
-				_characterComponents.CharacterAudio.Slide();
+				if (_characterComponents.CharacterFlags.IsGrounded)
+				    _characterComponents.CharacterAudio.Slide();
 			}
 			else if (_gameController.PlayerQuitSliding())
 			{
@@ -100,7 +102,8 @@ namespace Assets.Scripts.Player
 			{
 				_controlFlags.Glide = true;
 				// Play open parachute sound
-				_characterComponents.CharacterAudio.OpenParachute();
+                if (!_characterComponents.CharacterFlags.IsGrounded && !_characterComponents.CharacterFlags.WasGliding)
+				    _characterComponents.CharacterAudio.OpenParachute();
 			}
 			else if (_gameController.PlayerQuitGliding())
 			{
